@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+@font-face {
+  font-family: Strong;
+  src: url('../Strong.ttf');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-image: url("165742-mont_fuji_noir_et_blanc-le_mont_fuji-fujiyoshida-fuji_cinq_lacs-volcan-3840x2160-modified.jpg");
+}
+
+form{
+  width: 80%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  gap: 20px;
+}
+input textarea{
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+}
+label{
+  margin: 10px 0;
+}
+.produits{
+  display: flex;
+  flex-direction: column;
+  background-color: #c11414;
+width: 500px;
+gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 20px;
+}
+.produits input{
+  width: 60%;
+}
+.name{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+}
+.quantity{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+}
+.price{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+}
+.reduction{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+}
+.devises{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+background-color: #1906ab;
+width: 300px;
+height: 250px;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 15px;
+  margin: 20px;
+}
+.devise{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+   background-color: rgba(69, 69, 69, 0.587);
+   padding: 0 5px;
+   border-radius: 10px;
+}
+.devise input{
+  width: 20px;
+}
+.devise:hover{
+  font-weight: 500;
+  background-color: rgba(69, 69, 69, 0.929);
+}
+
+/*GENDER*/
+.gender{
+  display: flex;
+  flex-direction: column;
+background-color: #745011;
+width: 300px;
+height: 150px;
+border-radius: 15px;
+  padding: 10px;
+  gap: 10px;
+}
+
+/*IMAGES*/
+.images{
+  display: flex;
+  flex-direction: column;
+  background-color: yellow;
+  justify-content: center;
+  border-radius: 15px;
+  color: black;
+  padding: 10px 20px;
+}
+
+.description{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(35, 2, 57);
+  border-radius: 15px;
+  padding: 10px;
+  width: 300px;
+}
+.description textarea{
+  width: 80%;
+  height: 200px;
+  padding: 20px;
+  resize: none;
+  cursor: text;
+}
+
+
+/*TYPES & COLORS*/
+.types{
+  display: flex;
+  flex-direction: column;
+background-color: #c11414;
+width: 300px;
+height: 250px;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 15px;
+  margin: 20px;
+}
+.type{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+   background-color: rgba(69, 69, 69, 0.587);
+   padding: 0 5px;
+   border-radius: 10px;
+}
+.type input{
+  width: 20px;
+  cursor: pointer;
+}
+.type:hover{
+  font-weight: 500;
+  background-color: rgba(69, 69, 69, 0.929);
+}
+.colors{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+background-color: #06ab42;
+width: 300px;
+height: 250px;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 15px;
+  margin: 20px;
+}
+.color{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+   background-color: rgba(69, 69, 69, 0.587);
+   padding: 0 5px;
+   border-radius: 10px;
+}
+.color input{
+  width: 20px;
+  cursor: pointer;
+}
+.color:hover{
+  font-weight: 500;
+  background-color: rgba(69, 69, 69, 0.929);
+}
+
+button{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2c5e97de;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover{
+  background-color: #002530;
+  font-weight: 500;
+}

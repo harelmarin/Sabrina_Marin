@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ADMIN</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <form action="/ajouter" method="post"  enctype="multipart/form-data" onsubmit="return ValidateForm()">
+    
+        <!--nom du produit-->
+        <div class="produits">
+        <div class="name">
+            <label for="name">Nom du Produit :</label>
+        <input type="text" id="name" name="name" required placeholder="Nom du produit">
+    </div>
+    <!--Quantity-->
+    <div class="quantity">
+        <label for="quantity">Quantité :</label>
+        <input type="number" id="quantity" name="quantity" required placeholder="Quantité">
+    </div>
+        
+        <!--prix-->
+         <div class="price">
+        <label for="price">Prix :</label>
+        <input type="number" id="price" name="price" step="0.01" required min="0" placeholder="Prix">
+         </div>
+      <!--reduction-->
+         <div class="reduction">
+            <label for="reduction">Réduction :</label>
+            <input type="number" id="reduction" name="reduction" step="0.01" required min="0" placeholder="Réduction">    
+         </div>
+        </div>
+          <!--images-->
+          <div class="images">
+            <label for="img_1">Image 1 :</label>
+            <input type="file" id="img_1" name="img_1" required accept=".png, .jpeg, .jpg">
+          
+            <label for="img_2">Image 2 :</label>
+            <input type="file" id="img_2" name="img_2" required accept=".png, .jpeg, .jpg">
+          
+            <label for="img_3">Image 3 :</label>
+            <input type="file" id="img_3" name="img_3" required accept=".png, .jpeg, .jpg">
+          </div>
+        <!--devise-->
+      <div class="devises">
+        <label for="devise">Devise</label>
+        <div class="devise">
+        <input type="radio" id="devise1" name="devise" value="euro">
+        <label for="devise1">EURO</label>
+    </div>
+    <div class="devise">
+        <input type="radio" id="devise2" name="devise" value="dollars">
+        <label for="devise1">DOLLARS</label>
+    </div>
+</div>
+      
+       <!--DESCRIPTION-->
+       <div class="description">
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required></textarea>
+    </div>
+
+        <!--CARACTERISTIQUES-->
+        <h1>--CARACTERISTIQUES--</h1>
+<div class="gender">
+        <label for="gender">Genre :</label>
+        <select id="gender" name="gender">
+          <option value="femme">Femme</option>
+          <option value="homme">Homme</option>
+        </select>
+    </div>
+      <!--TYPE-->
+      <div class="types">
+        <label for="type">Type :</label>
+        <div class="type">
+        <input type="radio" id="pantalon" name="type" value="pantalon">
+        <label for="type1">Pantalon</label>
+    </div>
+        <div class="type">
+        <input type="radio" id="chemise" name="type" value="chemise">
+        <label for="type2">Chemise</label>
+        </div>
+        <div class="type">
+        <input type="radio" id="chaussures" name="type" value="chaussures">
+        <label for="type3">Chaussures</label>
+    </div>
+      </div>
+      <!--TAILLES-->
+      <div class="colors">
+        <label>Tailles :</label>
+        <div class="color">
+          <input type="checkbox" id="xl_size" name="size[]" value="xl">
+          <label for="size1">XL</label>
+        </div>
+        <div class="color">
+          <input type="checkbox" id="m_size" name="size[]" value="m">
+          <label for="size2">M</label>
+        </div>
+      </div>
+        <!--COULEUR-->
+      <div class="colors">
+        <label>Couleurs :</label>
+        <div class="color">
+        <input type="checkbox" id="black" name="colors[]" value="black" >
+        <label for="color1">Noir</label>
+    </div>
+    <div class="color">
+        <input type="checkbox" id="white" name="colors[]" value="white">
+        <label for="color2">Blanc</label>
+    </div>
+</div>
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+<script src="./assets/js/main.js"></script>
+
+</html>

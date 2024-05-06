@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tous les produits</title>
+</head>
+<body>
+    <h1>Liste des Produits</h1>
+    <% produits.forEach(function(produit) { %>
+        <div>
+            <h2>nom:  
+                <%= produit.name %>
+            </h2>
+            <p>description: <br>
+                <%= produit.description %>
+            </p>
+            <p>
+                <%= produit.price %>   <%= produit.devise %>
+            </p>
+            <p>genre:
+                <%=  produit.gender %> 
+            </p>
+            <p>type:
+                <%=  produit.type %> 
+            </p>
+            <p>couleurs:
+                <%=  produit.colors %> 
+            </p>
+            <p>taille:
+                <%=  produit.size %> 
+            </p>
+            <img  src="<%= produit.img_1 %>" alt="  <%= produit.name %>" width="50px">
+            <img  src="<%= produit.img_2 %>" alt="  <%= produit.name %>" width="50px">
+
+            <input type="button" value="Supprimer" onclick="supprimer('<%= produit.id %>')">
+            <input type="button" value="Modifier"
+                onclick="remplirDonnees('')">
+        </div>
+        <% }) %>
+
+        <script src="../assets/js/main.js"></script>
+</body>
+</html>
