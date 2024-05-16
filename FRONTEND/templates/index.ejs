@@ -1,45 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tous les produits</title>
-</head>
+    <head>
+        <title>liste des produits</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../assets/css/style.css">
+    </head>
 <body>
     <h1>Liste des Produits</h1>
-    <% produits.forEach(function(produit) { %>
+    <% produits.forEach(produit => { %>
         <div>
-            <h2>nom:  
-                <%= produit.name %>
-            </h2>
-            <p>description: <br>
-                <%= produit.description %>
-            </p>
-            <p>
-                <%= produit.price %>   <%= produit.devise %>
-            </p>
-            <p>genre:
-                <%=  produit.gender %> 
-            </p>
-            <p>type:
-                <%=  produit.type %> 
-            </p>
-            <p>couleurs:
-                <%=  produit.colors %> 
-            </p>
-            <p>taille:
-                <%=  produit.size %> 
-            </p>
-            <img  src="<%= produit.img_1 %>" alt="  <%= produit.name %>" width="50px">
-            <img  src="<%= produit.img_2 %>" alt="  <%= produit.name %>" width="50px">
-
-            <input type="button" value="Supprimer" onclick="supprimer('<%= produit.id %>')">
-            <input type="button" value="Modifier"
-                onclick="remplirDonnees('')">
+            <h2><%= produit.name %></h2>
+            <p>Description: <%= produit.description %></p>
+            <p>Prix: <%= produit.price %> <%= produit.devise %></p>
+            <p>Réduction: <%= produit.reduction %> <%= produit.devise %></p>
+            <p>Quantité: <%= produit.quantity %></p>
+            <p>Genre: <%= produit.gender %></p>
+            <p>Type: <%= produit.type %></p>
+            <p>Couleurs: <%= produit.colors %></p>
+            <p>Taille: <%= produit.size %></p>
+            <h3>Images:</h3>
+            <% const imagesPaths = produit.images_paths.split(','); %>
+            <% imagesPaths.forEach(imagePath => { %>
+                <img src="<%= imagePath %>" alt="Image du produit" width="150px">
+            <% }); %>
         </div>
-        <% }) %>
-
-        <script src="../assets/js/main.js"></script>
+    <% }); %>
 </body>
 </html>

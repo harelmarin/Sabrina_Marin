@@ -45,8 +45,14 @@ app.get('/', (req, res) => {
         if (erreur) {
             console.log(erreur);
         } else {
-            connection.query('SELECT p.*,c.gender,c.type,c.colors,c.size FROM produits p JOIN caracteristiques c ON p.idCaracter= c.idCaracter',
-                [], (erreur, resultats) => {
+            connection.query(
+                `SELECT p.*, c.gender, c.type, c.colors, c.size,
+                 GROUP_CONCAT(i.path) AS images_paths
+                FROM produits p
+                JOIN caracteristiques c ON p.idCaracter = c.idCaracter
+                LEFT JOIN images i ON p.idProduct = i.idProduct
+                GROUP BY p.idProduct;
+                `, (erreur, resultats) => {
                     if (erreur) {
                         console.log(erreur);
                     } else {
@@ -65,105 +71,109 @@ const multer = require('multer');
 //config de multer pour specifier le dossier d'enregistrement des fichiers
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      if (file.fieldname === 'img_1') {
-        cb(null, 'Images_BD/Img1');
-      } else if (file.fieldname === 'img_2') {
-        cb(null, 'Images_BD/Img2');
-      } else if (file.fieldname === 'img_3') {
-        cb(null, 'Images_BD/Img3');
-      } else {
-        cb(null, 'Images_BD');
-      }
+        cb(null, '/Images_BD');
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now() + file.originalname);
+        cb(null, Date.now() + file.originalname);
     }
-  });
+});
+
   
-  const upload = multer({ storage: storage }).fields([
-    { name: 'img_1', maxCount: 1 },
-    { name: 'img_2', maxCount: 1 },
-    { name: 'img_3', maxCount: 1 }
-  ]);
-  
-  // AJOUTER DES PRODUITS DANS LA BASE DE DONNÉES
+  const upload = multer({ storage: storage }).any();
+ 
   app.post('/ajouter', (req, res) => {
     upload(req, res, (erreur) => {
-      if (erreur) {
-        console.log(erreur);
-      } else {
-        // Récupérer les noms de fichiers téléchargés
-        const img_1 = req.files['img_1'][0].filename;
-        const img_2 = req.files['img_2'][0].filename;
-        const img_3 = req.files['img_3'][0].filename;
-  
-        // Récupérer les données soumises à partir de la requête (req.body)
-        const { 
-          name, 
-          quantity,
-          price, 
-          reduction,
-          description,
-          gender,
-          type,
-          size,
-          colors,
-          devise
-        } = req.body;
-  
-        // Insérer les données dans la base de données
-        req.getConnection((erreur, connection) => {
-          if (erreur) {
+        if (erreur) {
             console.log(erreur);
-          } else {
-            const insertProduitQuery = 'INSERT INTO produits (name, quantity, price, devise, reduction, img_1, img_2, img_3, description, idCaracter) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-            const insertCaracterQuery = 'INSERT INTO caracteristiques (gender, type, colors, size) VALUES (?, ?, ?, ?)';
-  
-            connection.beginTransaction((erreur) => {
-              if (erreur) {
+            return res.status(500).send("Une erreur est survenue lors du téléchargement des images.");
+        }
+        
+        const { 
+            name, 
+            quantity,
+            price, 
+            reduction,
+            description,
+            gender,
+            type,
+            size,
+            colors,
+            devise
+        } = req.body;
+
+        // Valider les données du formulaire
+        if (!name || !quantity || !price || !reduction || !description || !gender || !type || !devise) {
+            return res.status(400).send("Tous les champs du formulaire sont requis.");
+        }
+
+        req.getConnection((erreur, connection) => {
+            if (erreur) {
                 console.log(erreur);
-              } else {
-                // Insérer les caractéristiques
-                const colorsArray = colors ? colors.join(',') : [];
-                const sizeArray = size ? size.join(',') : [];
-                
-                const caracteristiques = [gender, type, colorsArray.join(','), sizeArray.join(',')];
-                connection.query(insertCaracterQuery, caracteristiques, (erreur, resultatsCaracter) => {
-                  if (erreur) {
-                    connection.rollback(() => {
-                      console.log(erreur);
-                    });
-                  } else {
-                    // Insérer le produit avec la référence à la caractéristique
-                    const idCaracter = resultatsCaracter.insertId;
-                    const produit = [name, quantity, price, devise, reduction, img_1, img_2, img_3, description, idCaracter];
-                    connection.query(insertProduitQuery, produit, (erreur, resultatsProduit) => {
-                      if (erreur) {
+                return res.status(500).send("Erreur de connexion à la base de données.");
+            }
+
+            connection.beginTransaction((erreur) => {
+                if (erreur) {
+                    console.log(erreur);
+                    return res.status(500).send("Une erreur est survenue lors de la transaction.");
+                }
+
+                const insertCaracterQuery = 'INSERT INTO caracteristiques (gender, type, colors, size) VALUES (?, ?, ?, ?)';
+                const insertProduitQuery = 'INSERT INTO produits (name, quantity, price, devise, reduction, description, idCaracter) VALUES (?, ?, ?, ?, ?, ?, ?)';
+
+                const colorsArray = colors ? colors.join(',') : '';
+                const sizeArray = size ? size.join(',') : '';
+
+                connection.query(insertCaracterQuery, [gender, type, colorsArray, sizeArray], (erreur, resultatsCaracter) => {
+                    if (erreur) {
                         connection.rollback(() => {
-                          console.log(erreur);
+                            console.log(erreur);
+                            return res.status(500).send("Une erreur est survenue lors de l'insertion des caractéristiques.");
                         });
-                      } else {
-                        connection.commit((erreur) => {
-                          if (erreur) {
-                            connection.rollback(() => {
-                              console.log(erreur);
-                            });
-                          } else {
-                            console.log('Produit ajouté avec succès');
-                            res.redirect('/admin');
-                          }
+                    } else {
+                        const idCaracter = resultatsCaracter.insertId;
+
+                        // Stockage des images
+                        colors.forEach(color => {
+                            for (let j = 1; j <= 3; j++) {
+                                const imgPath = `Images_BD/${color}/Img${j}/${req.files[`img_${color}_${j}`][0].filename}`;
+                                connection.query('INSERT INTO images (idProduct, path) VALUES (?, ?)', [idCaracter, imgPath], (erreur) => {
+                                    if (erreur) {
+                                        connection.rollback(() => {
+                                            console.log(erreur);
+                                            return res.status(500).send("Une erreur est survenue lors de l'insertion de l'image.");
+                                        });
+                                    }
+                                });
+                            }
                         });
-                      }
-                    });
-                  }
+
+                        connection.query(insertProduitQuery, [name, quantity, price, devise, reduction, description, idCaracter], (erreur, resultatsProduit) => {
+                            if (erreur) {
+                                connection.rollback(() => {
+                                    console.log(erreur);
+                                    return res.status(500).send("Une erreur est survenue lors de l'insertion du produit.");
+                                });
+                            } else {
+                                connection.commit((erreur) => {
+                                    if (erreur) {
+                                        connection.rollback(() => {
+                                            console.log(erreur);
+                                            return res.status(500).send("Une erreur est survenue lors de la validation de la transaction.");
+                                        });
+                                    } else {
+                                        console.log('Produit ajouté avec succès');
+                                        res.redirect('/admin');
+                                    }
+                                });
+                            }
+                        });
+                    }
                 });
-              }
             });
-          }
         });
-      }
     });
-  });
+});
 
 
 

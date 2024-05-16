@@ -1,9 +1,53 @@
-function remplirDonnees(id, titre, desc) {
-    document.getElementById('id').value = id;
-    document.getElementById('titre').value = titre;
-    document.getElementById('description').value = desc;
-    document.getElementById('image').value = image;
+// Fonction pour ajouter dynamiquement des champs d'images pour chaque couleur sélectionnée
+function gestionImages() {
+  var container = document.getElementById('images_container');
+  container.innerHTML = ''; // Vide le conteneur actuel
+
+  var couleurs = document.getElementsByName('colors[]');
+  for (var i = 0; i < couleurs.length; i++) {
+      var couleur = couleurs[i];
+      if (couleur.checked) {
+          var colorImages = document.createElement('div');
+          colorImages.classList.add('color_images');
+
+          colorImages.innerHTML += '<h3>' + couleur.value + '</h3>';
+          for (var j = 1; j <= 3; j++) {
+              colorImages.innerHTML += `
+                  <label for="${couleur.value}_img_${j}">Image ${j} (${couleur.value}) :</label>
+                  <input type="file" id="${couleur.value}_img_${j}" name="${couleur.value}_img_${j}" required accept=".png, .jpeg, .jpg"> <br>
+              `;
+              console.log(couleur.value)
+              console.log(`${couleur.value}_img_${j}`)
+              colorImages.style.display="flex";
+              colorImages.style.flexDirection="column";
+              colorImages.style.justifyContent="space-around"
+          }
+         
+
+          container.appendChild(colorImages);
+      }
+  }
+
+  // Affiche le conteneur s'il contient des images
+  container.style.display = container.innerHTML.trim() !== '' ? 'block' : 'none';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function supprimer(id) {
     let pointFinal = "/ajouter/" + id;
     fetch(pointFinal, {
@@ -17,6 +61,7 @@ function supprimer(id) {
         (error) => console.log(error)
     )
 }
+
 
 //valider le formulaire et verifier toutes les données
 function ValidateForm() {
@@ -45,15 +90,6 @@ function ValidateForm() {
     var reduction = document.getElementById("reduction").value;
     if (reduction === "") {
       alert("Veuillez entrer une réduction.");
-      return false;
-    }
-  
-    // Vérification des champs d'images
-    var img1 = document.getElementById("img_1").value;
-    var img2 = document.getElementById("img_2").value;
-    var img3 = document.getElementById("img_3").value;
-    if (img1 === "" || img2 === "" || img3 === "") {
-      alert("Veuillez sélectionner les trois images.");
       return false;
     }
   

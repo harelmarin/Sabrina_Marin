@@ -120,9 +120,10 @@ border-radius: 15px;
 .images{
   display: flex;
   flex-direction: column;
-  background-color: yellow;
-  justify-content: center;
+  background-color: #7867c2;
+  justify-content:space-between;
   border-radius: 15px;
+  min-height: 250px;
   color: black;
   padding: 10px 20px;
 }
@@ -202,7 +203,7 @@ height: 250px;
   background-color: rgba(69, 69, 69, 0.929);
 }
 
-button{
+.button{
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -210,7 +211,7 @@ button{
   color: #fff;
   cursor: pointer;
 }
-button:hover{
+.button:hover{
   background-color: #002530;
   font-weight: 500;
 }
