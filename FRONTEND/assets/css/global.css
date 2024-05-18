@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Gotham';
 }
 
 @font-face {
@@ -33,6 +32,12 @@
     font-family: 'Thin';
     src: url(../font/Outfit-Thin.ttf)
 }
+
+@font-face {
+    font-family: 'Black';
+    src: url(../font/Outfit-Black.ttf)
+}
+
 
 
 
