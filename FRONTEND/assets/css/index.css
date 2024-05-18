@@ -1,83 +1,5 @@
-@font-face {
-    font-family: 'Gotham';
-    src: url(../font/Gotham-Bold.otf)
-}
 
 
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Gotham';
-}
-
-body {
-    background-color: #F1F6F9;
-}
-
-header {
-    width: 100%;    
-    height: 80px;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    z-index: 1000;
-    background-color: #F1F6F9;
-}
-
-h1 {
-    font-size: 40px;
-    font-weight: semi-bold;
-    margin-left: 30px;
-}
-
-a {
-    text-decoration: none;
-    color: #000;
-    opacity: 0.7;
-    font-size: 20px;
-}
-
-a:hover {
-    opacity: 1; 
-}
-
-.Catalogue-Euro {
-    margin-left: 60px;
-    width: 230px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.Fav-Panier {
-    margin-left: 100px;
-    width: 70px;
-    display: flex;
-    justify-content: space-between;
-}
-input {
-    margin-left: 170px;
-    width: 596px;
-    height: 46px;
-    border-radius: 5px;
-    opacity: 0.5;
-    padding-left: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-input:hover {
-    opacity: 1;
-}
-
-header img {
-    width: 20px;
-    height: 20px;
-    opacity: 0.7;
-}
-
-img:hover {
-    opacity: 1;
-}
 
 .container-index img {
     height: 780px;
@@ -116,12 +38,13 @@ img:hover {
 
 .container-decouvrir-text h2 {
     font-size: 25px;
-    font-weight: bold;
+    font-family: 'Regular';
 }
 
 .container-decouvrir-text h3 {
     margin-top: 15px;
     font-size: 15px;
+    font-family: 'Thin';
     font-style: italic;
     opacity: 0.7;
 }
@@ -156,9 +79,14 @@ img:hover {
     height: 50px;
     border-radius: 5px;
     font-size: 40px;
-    font-weight: bolder;
     text-align: center;
     color: #F1F6F9;
+}
+
+.new p {
+  font-family: 'Bold';
+  font-weight: bolder;
+
 }
 
 .swiper {
@@ -221,17 +149,20 @@ img:hover {
     margin-top: 15px;
     font-weight: bold;
     font-size: 18px;
+    font-family: 'Bold';
   }
   .swiper h4 {
     margin-top: 5px;
     font-style: italic;
     color: #939292;
     font-size: 15px;
+    font-family: 'Thin';
   }
 
   .swiper h5 {
     margin-top: 5px;
     font-size: 18px;
+    font-family: 'Bold';
   }
 
   .coeur {
@@ -249,19 +180,6 @@ img:hover {
     background-image: url('../img/coeurplein.png');
   }
 
-footer {
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-footer a {
-    font-size: 15px;
-    font-style: italic;
-    margin-left: 15px;
-}
 
 .swiper [class^="swiper-button-"]{
     width: 60px;
@@ -269,4 +187,8 @@ footer a {
     border: 1px solid #000; 
     border-radius: 5px;
     padding: 10px;
+}
+
+.container-decouvrir-text p{
+  font-family: 'Bold';
 }

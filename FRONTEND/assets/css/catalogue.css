@@ -1,0 +1,149 @@
+
+.container-catalogue {
+    height: 100%;
+    padding-top: 120px;
+    padding-left: 80px;
+}
+
+h2 {
+    font-family: 'Regular';
+    font-size: 60px;
+    font-weight: 400;
+}
+
+.container-marque {
+    width: 1300px;
+    height: 150px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.marque {
+    width: 250px;
+    height: 100px;
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+}
+.marque img {
+    width: 80px;
+    height: 80px;
+}
+
+.marque p {
+    text-align: center;
+    margin-left: 50px;
+    font-family: 'Regular';
+}
+
+.other {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.container-filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 1300px;
+    height: 150px;
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black
+}
+
+.container-filter p {
+    font-family: 'Regular';
+    font-size: 30px;
+    margin-right: 10px;
+}
+.container-filter img {
+    width: 40px;
+    height: 35px;
+}
+
+.container-produits {
+    margin-top: 40px;
+    width: 1300px;
+    height: 850px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;;
+}
+
+.container-produits img {
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
+}
+
+.coeur {
+    position: absolute;
+    top: 15px;
+    left: 260px;
+    width: 20px;
+    height: 20px;
+    background-image: url('../img/coeur.png');
+    background-size: cover;
+    cursor: pointer;
+  }
+
+.coeur:hover {
+    background-image: url('../img/coeurplein.png');
+  }
+
+.produits {
+    height: 400px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.produits h3 {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Bold';
+  }
+
+.produits h4 {
+    margin-top: 5px;
+    font-style: italic;
+    color: #939292;
+    font-size: 15px;
+    font-family: 'Thin';
+  }
+
+.produits h5 {
+    margin-top: 5px;
+    font-size: 18px;
+    font-family: 'Bold';
+  }
+
+.pagination-container {
+    height: 150px;
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.pagination img {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000; 
+    border-radius: 5px;
+    padding: 10px;
+}

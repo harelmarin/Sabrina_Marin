@@ -5,12 +5,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../assets/css/index.css">
+        <link rel="stylesheet" href="../assets/css/global.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     </head>
     <header class="header"> 
-        <h1> wethefoot</h1>
+        <a class="title" href="./accueil.html"><h1> wethefoot</h1> </a>
         <nav class="Catalogue-Euro">
-        <a href="/">Catalogue</a>
+        <a href="./catalogue.html">Catalogue</a>
         <a href="/">Euro 2024</a>
         </nav>
         <form action="/" method="post">
@@ -27,7 +28,7 @@
             <div class="container-decouvrir-text">
             <h2>Retrouvez vos équipes favorites.</h2>
             <h3> Tous les maillots anciens ou nouveaux de vos clubs préférés sont disponible sur notre site dès maintenant. </h3>
-            <button> Découvrir </button>
+            <a href="./catalogue.html"><button> <p>Découvrir </p> </button></a>
             </div>
         </div>
     </section>
@@ -88,8 +89,10 @@
 
 
     <footer>
-        <a href=""> CONTACT </a>
-        <a href=""> MENTIONS LEGALES </a>
+        <div class="nav-footer">
+            <a href=""> CONTACT </a>
+            <a href=""> MENTIONS LEGALES </a>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Gotham';
+}
+
+@font-face {
+    font-family: 'Title';
+    src: url(../font/Gotham-Bold.otf)
+}
+
+@font-face {
+    font-family: 'Medium';
+    src: url(../font/Outfit-Medium.ttf)
+}
+
+@font-face {
+    font-family: 'Regular';
+    src: url(../font/Outfit-Regular.ttf)
+}
+
+@font-face {
+    font-family: 'Light';
+    src: url(../font/Outfit-Light.ttf)
+}
+
+@font-face {
+    font-family: 'Bold';
+    src: url(../font/Outfit-Bold.ttf)
+}
+
+@font-face {
+    font-family: 'Thin';
+    src: url(../font/Outfit-Thin.ttf)
+}
+
+
+
+header {
+    width: 100%;    
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    background-color: #F1F6F9;
+}
+
+footer {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Thin';
+  }
+
+body {
+    background-color: #F1F6F9;
+    height: 100%;
+}
+
+footer a {
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    font-style: italic;
+    opacity: 0.7;
+    margin-right: 50px;
+    margin-left: 100px;
+}
+
+footer a:hover {
+    opacity: 1;
+}
+
+
+h1 {
+    font-family: 'Title';
+    font-size: 40px;
+    font-weight: semi-bold;
+    margin-left: 30px;
+}
+
+.title {
+    text-decoration: none;
+    color: #000;
+}
+
+nav a {
+    text-decoration: none;
+    color: #000;
+    opacity: 0.7;
+    font-size: 20px;
+    font-family: 'Regular';
+}
+
+nav a:hover {
+    opacity: 1; 
+}
+
+.Catalogue-Euro {
+    margin-left: 60px;
+    width: 230px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Fav-Panier {
+    margin-left: 100px;
+    width: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+input {
+    margin-left: 170px;
+    width: 596px;
+    height: 46px;
+    border-radius: 5px;
+    opacity: 0.5;
+    padding-left: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Regular';
+}
+
+input:hover {
+    opacity: 1;
+}
+
+header img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+}
+
+header img:hover {
+    opacity: 1;
+}
+
