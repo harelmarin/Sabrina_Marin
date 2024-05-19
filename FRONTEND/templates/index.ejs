@@ -9,11 +9,13 @@
 <body>
     <h1>Liste des Produits</h1>
     <% produits.forEach(produit => { %>
+
         <div>
+            <a href="/produit/<%= produit.idProduct %>">voir les détails</a>
             <h2><%= produit.name %></h2>
             <p>Description: <%= produit.description %></p>
             <p>Prix: <%= produit.price %> <%= produit.devise %></p>
-            <p>Réduction: <%= produit.reduction %> <%= produit.devise %></p>
+            <p>Réduction: <%= produit.reduction %> %</p>
             <p>Quantité: <%= produit.quantity %></p>
             <p>Genre: <%= produit.gender %></p>
             <p>Type: <%= produit.type %></p>
@@ -22,7 +24,9 @@
             <h3>Images:</h3>
             <% const imagesPaths = produit.images_paths.split(','); %>
             <% imagesPaths.forEach(imagePath => { %>
-                <img src="<%= imagePath %>" alt="Image du produit" width="150px">
+                
+                <img src="<%=
+                 imagePath %>" alt="Image du produit" width="150px">
             <% }); %>
         </div>
     <% }); %>

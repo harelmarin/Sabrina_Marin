@@ -9,14 +9,17 @@
   "author": "Sabrina Kaporal",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-myconnection": "^1.0.4",
     "formidable": "^3.5.1",
+    "fs": "^0.0.1-security",
     "multer": "^1.4.5-lts.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

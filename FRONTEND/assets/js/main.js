@@ -1,40 +1,33 @@
 // Fonction pour ajouter dynamiquement des champs d'images pour chaque couleur sélectionnée
 function gestionImages() {
   var container = document.getElementById('images_container');
-  container.innerHTML = ''; // Vide le conteneur actuel
+  container.innerHTML = ''; // Clear the container
 
-  var couleurs = document.getElementsByName('colors[]');
-  for (var i = 0; i < couleurs.length; i++) {
-      var couleur = couleurs[i];
-      if (couleur.checked) {
+  var colors = document.getElementsByName('colors[]');
+  for (var i = 0; i < colors.length; i++) {
+      var color = colors[i];
+      if (color.checked) {
           var colorImages = document.createElement('div');
           colorImages.classList.add('color_images');
 
-          colorImages.innerHTML += '<h3>' + couleur.value + '</h3>';
+          colorImages.innerHTML += '&lt;h3&gt;' + color.value + '&lt;/h3&gt;';
           for (var j = 1; j <= 3; j++) {
               colorImages.innerHTML += `
-                  <label for="${couleur.value}_img_${j}">Image ${j} (${couleur.value}) :</label>
-                  <input type="file" id="${couleur.value}_img_${j}" name="${couleur.value}_img_${j}" required accept=".png, .jpeg, .jpg"> <br>
+                  &lt;label for="${color.value}_img_${j}"&gt;Image ${j} (${color.value}) :&lt;/label&gt;
+                  &lt;input type="file" id="${color.value}_img_${j}" name="${color.value}_img_${j}" required accept=".png, .jpeg, .jpg"&gt; &lt;br&gt;
               `;
-              console.log(couleur.value)
-              console.log(`${couleur.value}_img_${j}`)
-              colorImages.style.display="flex";
-              colorImages.style.flexDirection="column";
-              colorImages.style.justifyContent="space-around"
+              colorImages.style.display = "flex";
+              colorImages.style.flexDirection = "column";
+              colorImages.style.justifyContent = "space-around";
           }
-         
 
           container.appendChild(colorImages);
       }
   }
 
-  // Affiche le conteneur s'il contient des images
+  // Display the container if it contains images
   container.style.display = container.innerHTML.trim() !== '' ? 'block' : 'none';
 }
-
-
-
-
 
 
 

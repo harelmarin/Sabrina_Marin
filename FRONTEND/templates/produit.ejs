@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Produit</title>
+</head>
+<body>
+    <!--afficher les details d'un produit-->
+    <div>
+        <h2><%= produit.name %></h2>
+        <p>Description: <%= produit.description %></p>
+            <p>Prix: <%= produit.price %> <%= produit.devise %></p>
+            <p>Réduction: <%= produit.reduction %> %</p>
+            <p>Quantité: <%= produit.quantity %></p>
+            <p>Genre: <%= produit.gender %></p>
+            <p>Type: <%= produit.type %></p>
+            <p>Couleurs: <%= produit.colors %></p>
+            <p>Taille: <%= produit.size %></p>
+            <h3>Images:</h3>
+            <% imagesPaths.forEach(imagePath => { %>
+                <img src="<%= imagePath %>" alt="Image du produit" width="140px">
+            <% }); %>
+    </div>
+</body>
+</html>
