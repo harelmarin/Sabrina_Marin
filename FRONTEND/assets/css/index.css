@@ -1,0 +1,182 @@
+
+
+
+.container-index img {
+    height: 780px;
+    width: 100%;
+}
+
+.container-index {
+    width: 100%;
+    position: relative;
+}
+  
+.container-decouvrir {
+    position: absolute;
+    top: 50%;
+    right: 0.6%;
+    transform: translate(-50%, -50%);
+    width: 410px;
+    height: 260px;
+    padding: 40px;
+    border-radius: 5px;
+    background-color: #F1F6F9;
+    box-shadow: #000 0px 0px 10px;
+}
+
+.container-decouvrir-text h2 {
+    font-size: 25px;
+    font-family: 'Regular';
+}
+
+.container-decouvrir-text h3 {
+    margin-top: 15px;
+    font-size: 15px;
+    font-family: 'Thin';
+    font-style: italic;
+    opacity: 0.7;
+}
+.container-decouvrir-text {
+    width: 300px;
+    height: 250px;
+}
+
+.container-decouvrir-text button {
+    width: 240px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #F1F6F9;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.container-new {
+    margin-top: 30px;
+    padding-left: 140px; 
+    position: relative;   
+}
+
+.new {
+    margin-left: 10px;
+    background-color: #333333;
+    border-radius: 5px;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 40px;
+    text-align: center;
+    color: #F1F6F9;
+}
+
+.new p {
+  font-family: 'Bold';
+  font-weight: bolder;
+
+}
+
+.swiper {
+    width: 100%;
+    height: 550px;
+    padding-top: 150px;
+    position: relative;
+}
+
+.swiper img {
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
+}
+
+
+.swiper-wrapper {
+    padding-top: 60px;
+    padding-left: 10px;
+}
+
+.swiper-slide {
+    width: 300px;
+}
+
+.swiper-button-next {
+    background-image: url(../img/fleche-droite.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    position: absolute;
+    transform: translate(-150px, -250px);
+    z-index: 10;
+  }
+
+  .swiper-button-prev {
+    background-image: url(../img/fleche-gauche.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 59px;
+    height: 68px;
+    position: absolute;
+    transform: translate(920px, -250px);
+    z-index: 10;
+
+  }
+
+  .swiper-button-next::after {
+    display: none;
+  }
+
+  .swiper-button-prev::after {
+    display: none;
+  }
+
+  .swiper h3 {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Bold';
+  }
+  .swiper h4 {
+    margin-top: 5px;
+    font-style: italic;
+    color: #939292;
+    font-size: 15px;
+    font-family: 'Thin';
+  }
+
+  .swiper h5 {
+    margin-top: 5px;
+    font-size: 18px;
+    font-family: 'Bold';
+  }
+
+  .coeur {
+    position: absolute;
+    top: 15px;
+    left: 260px;
+    width: 20px;
+    height: 20px;
+    background-image: url('../img/coeur.png');
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  .coeur:hover {
+    background-image: url('../img/coeurplein.png');
+  }
+
+
+.swiper [class^="swiper-button-"]{
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000; 
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.container-decouvrir-text p{
+  font-family: 'Bold';
+}
