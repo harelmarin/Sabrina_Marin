@@ -1,11 +1,16 @@
-const produitController ={};
+const produitController = {};
+const helperUtils = require('../helperFolder/helpers');
+
 const multer = require('multer');
 const fs = require('fs');
+const connection = require('express-myconnection');
 const port = 8000;
 // Function to create directory if it doesn't exist
 function createDirectoryIfNotExist(dir) {
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir, { recursive: true });}}
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
 //function pour sauvegarder chaque image dans le bon dossier
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -19,45 +24,82 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
-// Fonction pour obtenir les derniers produits ajoutés
-const getLastestProducts = (connection, limit, callback) => {
-    connection.query(
-      `SELECT p.*, c.gender, c.type, c.colors, c.size,
-       GROUP_CONCAT(i.path) AS images_paths
-      FROM produits p
-      JOIN caracteristiques c ON p.idCaracter = c.idCaracter
-      LEFT JOIN images i ON p.idProduct = i.idProduct
-      GROUP BY p.idProduct
-      ORDER BY p.dateAjout DESC
-      LIMIT ?;
-      `,
-      [limit],
-      (erreur, resultats) => {
-        if (erreur) {
-          console.log(erreur);
-          callback(erreur, null);
-        } else {
-          callback(null, resultats);
-        }
-      }
-    );
-  };
-
-
-
-
-
-  //
-  //
-  //
-  //
+//
+//
+//
+//
 
 //page admin
-produitController.admin = (req,res)=>{
+produitController.admin = (res) => {
     res.render('admin');
 }
+produitController.catalogue = (req, res) => {
+    const { gender, type, colors } = req.query;
 
-produitController.getIndex=(req,res)=> {
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log(erreur);
+        } else {
+            if (gender || type || colors) {
+                // Utiliser la fonction de filtrage
+                let query = {};
+                if (gender) query.gender = gender;
+                if (type) query.type = type;
+                if (colors) query.colors = colors;
+
+                helperUtils.displayByCategory(connection, query, (err, resultats) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.render('catalogue', { produits: resultats });
+                    }
+                });
+            } else {
+                // Afficher tous les produits si aucun filtre n'est appliqué
+                connection.query(
+                    `SELECT p.*, c.gender, c.type, c.colors, c.size,
+                     GROUP_CONCAT(i.path) AS images_paths
+                    FROM produits p
+                    JOIN caracteristiques c ON p.idCaracter = c.idCaracter
+                    LEFT JOIN images i ON p.idProduct = i.idProduct
+                    GROUP BY p.idProduct;`,
+                    (erreur, resultats) => {
+                        if (erreur) {
+                            console.log(erreur);
+                        } else {
+                            res.render('catalogue', { produits: resultats });
+                        }
+                    }
+                );
+            }
+        }
+    });
+};
+
+
+//rechercher un produit  par son nom
+produitController.searchProduct = (req, res) => {
+    const search = req.query.search;
+    req.getConnection((erreur,connection)=>{
+        if(erreur){
+            console.log(erreur);
+            }else{
+//fappel de lma fonction pour chercher le produit 
+      helperUtils.searchFunction(connection, search, (erreur, resultats) => {
+        if (erreur) {
+            console.log(erreur);
+        }
+        else {
+            console.log(resultats, search)
+            res.render('search', { produits: resultats ,search:search});
+        }
+    }
+    );
+}});
+};
+
+
+produitController.getIndex = (req, res) => {
     req.getConnection((erreur, connection) => {
         if (erreur) {
             console.log(erreur);
@@ -70,39 +112,50 @@ produitController.getIndex=(req,res)=> {
                 LEFT JOIN images i ON p.idProduct = i.idProduct
                 GROUP BY p.idProduct;
                 `, (erreur, resultats) => {
-                    if (erreur) {
-                        console.log(erreur);
-                    } else {
-                        
-                        console.log(resultats)
-                        res.render('index', { produits: resultats });
-                    } }); }  });
+                if (erreur) {
+                    console.log(erreur);
+                } else {
+                    //appel de la fonction pour afficher les3 derniers produits
+                    const limite = 1; //Limiter les résultats à 3
+                    helperUtils.getLastestProducts(connection, limite, (erreur, derniersProduits) => {
+                        if (erreur) {
+                            console.log(erreur);
+                        } else {
+                            console.log("les derniers produits", derniersProduits);
+                            res.render('index', { produits: resultats, lastProducts: derniersProduits });
+                        };
+                    });
+                };
+            });
+        }
+    });
 };
 
-
-produitController.getProduit = (req,res) =>{
+produitController.getProduit = (req, res) => {
     req.getConnection((erreur, connection) => {
         if (erreur) {
             console.log(erreur);
-            } else {
-                connection.query(
-                    `SELECT p.*, c.gender, c.type, c.colors, c.size,
+        } else {
+            connection.query(
+                `SELECT p.*, c.gender, c.type, c.colors, c.size,
                     GROUP_CONCAT(i.path) AS images_paths
                     FROM produits p
                     JOIN caracteristiques c ON p.idCaracter = c.idCaracter
                     LEFT JOIN images i ON p.idProduct = i.idProduct
                     WHERE p.idProduct = ?`, [req.params.id], (erreur, resultats) => {
-                        if (erreur) {
-                            console.log(erreur);
-                            } else {
-                                const baseUrl = req.app.get('baseUrl') || `http://localhost:${port}`; // Set default if not configured
-                                const imagesPaths = resultats[0].images_paths.split(',');
-                                const formattedImagePaths = imagesPaths.map(path => `${baseUrl}/${path}`);
-                                console.log(formattedImagePaths);
-                                res.render('produit', { produit: resultats[0],imagesPaths:formattedImagePaths });
-                             } }); }  });
+                if (erreur) {
+                    console.log(erreur);
+                } else {
+                    const baseUrl = req.app.get('baseUrl') || `http://localhost:${port}`; // Set default if not configured
+                    const imagesPaths = resultats[0].images_paths.split(',');
+                    const formattedImagePaths = imagesPaths.map(path => `${baseUrl}/${path}`);
+                    console.log(formattedImagePaths);
+                    res.render('produit', { produit: resultats[0], imagesPaths: formattedImagePaths });
+                }
+            });
+        }
+    });
 };
-
 
 produitController.postAjouter = (req, res) => {
     upload(req, res, function (err) {
@@ -112,10 +165,10 @@ produitController.postAjouter = (req, res) => {
             return res.status(500).json({ error: err.message });
         }
 
-        const { 
-            name, 
+        const {
+            name,
             quantity,
-            price, 
+            price,
             reduction,
             description,
             gender,
@@ -172,8 +225,8 @@ produitController.postAjouter = (req, res) => {
                                     const color = file.fieldname.split('_')[0];
                                     const imgNumber = file.fieldname.split('_')[2]; // Extract img number from fieldname
                                     const dir = path.join(__dirname, 'Images_BD', color, `Img${imgNumber}`);
-                                  
-                                    const imgPath = path.join('Images_BD', color,`Img${imgNumber}`, file.filename);
+
+                                    const imgPath = path.join('Images_BD', color, `Img${imgNumber}`, file.filename);
                                     imageQueries.push(new Promise((resolve, reject) => {
                                         connection.query('INSERT INTO images (idProduct, path) VALUES (?, ?)', [idProduct, imgPath], (erreur) => {
                                             if (erreur) {
