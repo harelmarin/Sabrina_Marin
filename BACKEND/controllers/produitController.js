@@ -1,38 +1,57 @@
 const produitController = {};
 const helperUtils = require('../helperFolder/helpers');
-
 const multer = require('multer');
 const fs = require('fs');
 const connection = require('express-myconnection');
 const port = 8000;
-// Function to create directory if it doesn't exist
-function createDirectoryIfNotExist(dir) {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-}
-//function pour sauvegarder chaque image dans le bon dossier
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const color = file.fieldname.split('_')[0]; // Extract color from fieldname
-        const imgNumber = file.fieldname.split('_')[2]; // Extract img number from fieldname
-        const dir = path.join(__dirname, 'Images_BD', color, `Img${imgNumber}`);
-        createDirectoryIfNotExist(dir);
-        cb(null, dir);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
+
+//const  API NEUTRINO
+const NEUTRINO_API_KEY = 'yot66w2T8JzN47jkGmjhQ8ngrfTgOIQDFFS1TKPOdykf3l5W';
+const NEUTRINO_ENDPOINT = 'https://neutrinoapi.net/geocode-address';
+
 //
 //
 //
 //
 
-//page admin
+
+
+//neutrino pour la géolocalisation
+produitController.neutrinoApiRequest = async (req, res) => {
+    const { address } = req.body;
+
+    try {
+        // Importation dynamique de node-fetch
+        const fetch = await import('node-fetch');
+
+        const response = await fetch.default(NEUTRINO_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'User-ID': 'kaporal77@sabrina',
+                'API-Key': NEUTRINO_API_KEY
+            },
+            body: new URLSearchParams({
+                address: address,
+                'fuzzy-search': true
+            })
+        });
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('Error fetching data from Neutrino:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
+//page admin et hgestion de produit
 produitController.admin = (res) => {
     res.render('admin');
 }
+//afficher tous les produits et pouvoir filtrer
 produitController.catalogue = (req, res) => {
     const { gender, type, colors } = req.query;
 
@@ -75,7 +94,6 @@ produitController.catalogue = (req, res) => {
         }
     });
 };
-
 
 //rechercher un produit  par son nom
 produitController.searchProduct = (req, res) => {
@@ -263,5 +281,23 @@ produitController.postAjouter = (req, res) => {
         });
     });
 };
-
+// Function to create directory if it doesn't exist
+function createDirectoryIfNotExist(dir) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
+//function pour sauvegarder chaque image dans le bon dossier
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const color = file.fieldname.split('_')[0]; // Extract color from fieldname
+        const imgNumber = file.fieldname.split('_')[2]; // Extract img number from fieldname
+        const dir = path.join(__dirname, 'Images_BD', color, `Img${imgNumber}`);
+        createDirectoryIfNotExist(dir);
+        cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
 module.exports = produitController;

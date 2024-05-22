@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>Résultats de recherche</h1>
+        <% if (produits.length === 0) { %>
+            <h2>Aucun produit correspondant à votre recherche.</h2>
+        <% } else { %>
+            <% let hasResults = false; %>
+            <% produits.forEach(produit => { %>
+                <% const productName = produit.name.toLowerCase(); %>
+                <% const searchTerm = search.toLowerCase(); %>
+                <% if (productName.includes(searchTerm)) { %>
+                    <% hasResults = true; %>
+                    <div>
+                        <a href="/produit/<%= produit.idProduct %>">Voir les détails</a>
+                        <h2><%= produit.name %></h2>
+                        <p>Description: <%= produit.description %></p>
+                        <p>Prix: <%= produit.price %> <%= produit.devise %></p>
+                        <p>Réduction: <%= produit.reduction %> %</p>
+                        <p>Quantité: <%= produit.quantity %></p>
+                        <p>Genre: <%= produit.gender %></p>
+                        <p>Type: <%= produit.type %></p>
+                        <p>Couleurs: <%= produit.colors %></p>
+                        <p>Taille: <%= produit.size %></p>
+                        <h3>Images:</h3>
+                        <% produit.images.forEach(imagePath => { %>
+                            <img src="<%= imagePath %>" alt="Image du produit" width="150px">
+                        <% }); %>
+                    </div>
+                <% } %>
+            <% }); %>
+            <% if (!hasResults) { %>
+                <h2>Aucun produit correspondant à votre recherche.</h2>
+            <% } %>
+        <% } %>
+    </div>
+</body>
+</html>

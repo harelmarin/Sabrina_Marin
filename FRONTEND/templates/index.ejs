@@ -1,34 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>liste des produits</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../assets/css/style.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adresse Autocomplete</title>
+</head>
 <body>
-    <h1>Liste des Produits</h1>
-    <% produits.forEach(produit => { %>
+    <h1>Autocomplétion d'Adresse</h1>
+    <label for="address-input">Entrez votre adresse:</label>
+    <input type="text" id="address-input" placeholder="Saisissez votre adresse">
 
-        <div>
-            <a href="/produit/<%= produit.idProduct %>">voir les détails</a>
-            <h2><%= produit.name %></h2>
-            <p>Description: <%= produit.description %></p>
-            <p>Prix: <%= produit.price %> <%= produit.devise %></p>
-            <p>Réduction: <%= produit.reduction %> %</p>
-            <p>Quantité: <%= produit.quantity %></p>
-            <p>Genre: <%= produit.gender %></p>
-            <p>Type: <%= produit.type %></p>
-            <p>Couleurs: <%= produit.colors %></p>
-            <p>Taille: <%= produit.size %></p>
-            <h3>Images:</h3>
-            <% const imagesPaths = produit.images_paths.split(','); %>
-            <% imagesPaths.forEach(imagePath => { %>
-                
-                <img src="<%=
-                 imagePath %>" alt="Image du produit" width="150px">
-            <% }); %>
-        </div>
-    <% }); %>
+    <!-- Liste pour afficher les suggestions -->
+    <ul id="suggestions-list"></ul>
+
+    <script>
+        const inputElement = document.getElementById('address-input');
+
+        inputElement.addEventListener('input', async (event) => {
+            const query = event.target.value.trim();
+
+            try {
+    const response = await fetch('/autocomplete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ address: query })
+    });
+
+    const data = await response.json();
+    
+    // Accès direct aux propriétés de l'objet data
+    const fullAddress = data.address;
+    const city = data.city;
+    const postalCode = data['postal-code'];
+    // Et ainsi de suite pour d'autres propriétés nécessaires
+
+    // Affichez les détails de l'adresse
+    console.log('Adresse géocodée trouvée:');
+    console.log('Adresse complète:', fullAddress);
+    console.log('Ville:', city);
+    console.log('Code postal:', postalCode);
+    // Et d'autres détails d'adresse si nécessaire
+
+} catch (error) {
+    console.error('Erreur lors de la requête API Neutrino:', error);
+}
+
+        });
+
+        function displaySuggestions(suggestions) {
+            // Affichez les suggestions dans votre interface utilisateur
+        }
+    </script>
 </body>
 </html>
