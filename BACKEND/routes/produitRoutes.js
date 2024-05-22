@@ -1,8 +1,12 @@
 const express = require('express');
 const produitController = require('../controllers/produitController');
+const   paymentController= require('../controllers/paymentController')
 
 const router = express.Router();
-router.post('/autocomplete',produitController.neutrinoApiRequest)
+router.post('/autocomplete',produitController.neutrinoApiRequest);
+//stripe payment
+router.post('/payment/process',paymentController.processPayment);
+router.get('/payment/confirmation',paymentController.confirmation);
 
 router.get('/', produitController.getIndex);
 router.get('/produit/:id', produitController.getProduit);

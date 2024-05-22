@@ -4,23 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails du Produit</title>
+    <link rel="stylesheet" href="../assets/css/produit.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="../assets/js/paymentStripe.js"></script>
 </head>
 <body>
-    <!--afficher les details d'un produit-->
+    <!-- Afficher les détails d'un produit -->
     <div>
-        <h2><%= produit.name %></h2>
-        <p>Description: <%= produit.description %></p>
-            <p>Prix: <%= produit.price %> <%= produit.devise %></p>
-            <p>Réduction: <%= produit.reduction %> %</p>
-            <p>Quantité: <%= produit.quantity %></p>
-            <p>Genre: <%= produit.gender %></p>
-            <p>Type: <%= produit.type %></p>
-            <p>Couleurs: <%= produit.colors %></p>
-            <p>Taille: <%= produit.size %></p>
-            <h3>Images:</h3>
-            <% imagesPaths.forEach(imagePath => { %>
-                <img src="<%= imagePath %>" alt="Image du produit" width="140px">
-            <% }); %>
+        <h2 id="product-name" data-name="<%= produit.name %>"><%= produit.name %></h2>
+        <p id="product-description" data-description="<%= produit.description %>">Description: <%= produit.description %></p>
+        <p id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>">Prix: <%= produit.price %> <%= produit.devise %></p>
+        <p id="product-reduction" data-reduction="<%= produit.reduction %>">Réduction: <%= produit.reduction %> %</p>
+        <p>Quantité: <%= produit.quantity %></p>
+        <p>Genre: <%= produit.gender %></p>
+        <p>Type: <%= produit.type %></p>
+        <p>Couleurs: <%= produit.colors %></p>
+        <p>Taille: <%= produit.size %></p>
+        <h3>Images:</h3>
+        <% imagesPaths.forEach(imagePath => { %>
+            <img src="<%= imagePath %>" alt="Image du produit" width="140px">
+        <% }); %>
     </div>
+    <form id="payment-form">
+        <div class="quantity">
+            <label for="quantity">Quantité:</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" max="<%= produit.quantity %>">
+        </div>
+        <div>
+            <label for="card-element">
+                Carte de crédit ou de débit
+            </label>
+            <div id="card-element">
+                <!-- Stripe.js injectera le formulaire de saisie de la carte ici -->
+            </div>
+        </div>
+        
+        <button id="submit-payment">
+            Payer
+        </button>
+        
+        <div id="card-errors" role="alert"></div>
+    </form>
 </body>
 </html>
