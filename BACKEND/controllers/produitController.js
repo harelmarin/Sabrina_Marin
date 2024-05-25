@@ -45,12 +45,15 @@ produitController.neutrinoApiRequest = async (req, res) => {
     }
 };
 
-
-
 //page admin et hgestion de produit
 produitController.admin = (res) => {
     res.render('admin');
 }
+//page paier d'achat
+produitController.cartPage=(req, res)=>{
+    res.render('panier')
+} 
+
 //afficher tous les produits et pouvoir filtrer
 produitController.catalogue = (req, res) => {
     const { gender, type, colors } = req.query;

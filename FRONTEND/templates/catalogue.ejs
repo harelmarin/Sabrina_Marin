@@ -1,91 +1,82 @@
+
+<!--    -->
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <title>Catalogue</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/catalogue.css">
     <link rel="stylesheet" href="../assets/css/global.css">
-  
+
 </head>
-<header class="header"> 
-    <a class="title" href="./accueil.html"><h1> wethefoot</h1> </a>
+<header class="header">
+    <a class="title" href="./accueil">
+        <h1> wethefoot</h1>
+    </a>
     <nav class="Catalogue-Euro">
         <a href="./catalogue">Catalogue</a>
-    <a href="/">Euro 2024</a>
+        <a href="/">Euro 2024</a>
     </nav>
     <form action="/search" method="GET">
         <input type="text" name="search" id="recherche" placeholder="Search for a team, a brand..." autocomplete="off">
     </form>
+
     <nav class="Fav-Panier">
-        <a href="./favoris.html"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
-        <a href="./panier.html"><img src="../assets/img/sac-de-courses.png"></a>
+        <a href="./favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
+        <a href="./panier"><img src="../assets/img/sac-de-courses.png"></a>
     </nav>
 </header>
+
 <body>
+    <section class="container-catalogue">
+        <h2> Tous nos Maillots </h2>
 
-<section class="container-catalogue">
-    <div class="filter">
-        <form method="GET" action="/catalogue">
-            <label for="gender">Genre:</label>
-            <select name="gender" id="gender" multiple>
-                <option value="">Tous</option>
-                <option value="homme">Homme</option>
-                <option value="femme">Femme</option>
-            </select>
-        
-            <label for="type">Type:</label>
-            <select name="type" id="type" multiple>
-                <option value="">Tous</option>
-                <option value="maillot">Maillot</option>
-                <option value="pantalon">Pantalon</option>
-                <!-- Ajoutez d'autres types selon vos besoins -->
-            </select>
-        
-            <label for="colors">Couleurs:</label>
-            <select name="colors" id="colors" multiple>
-                <option value="">Toutes</option>
-                <option value="red">Rouge</option>
-                <option value="blue">Bleu</option>
-                <!-- Ajoutez d'autres couleurs selon vos besoins -->
-            </select>
-        
-            <button type="submit">Filtrer</button>
-        </form>
-</div>
+        <div class="container-filter">
+            <p> Filtre </p> <img src="../assets/img/filtre.png">
+        </div>
+        <div class="container-produits">
+            <% if (produits.length===0){ %>
+                <h2>Aucun produit correspondant au filtre n'a été trouvé.</h2>
+                <% } else { %>
+                    <% produits.forEach(produit=> { %>
+                        <div class="produits">
+                            <% const imagesPaths=produit.images_paths.split(','); %>
+                            <a href="/produit/<%= produit.idProduct %>">
+                             <img src="<%=imagesPaths[0] %>" alt="Image du produit">
+                            </a>
+                                <div class="coeur"></div>
+                                <h3>
+                                    <%= produit.name %>
+                                </h3>
+                                <h4>
+                                    <%= produit.gender %>
+                                </h4>
+                                <h5> Prix: <%= produit.price %>
+                                        <%= produit.devise %>
+                                </h5>
+                        </div>
+                        <% }); %>
+                            <% }; %>
+        </div>
 
-    <div>
-       
-        <h1>Liste des Produits</h1>
-        <% if (produits.length===0){ %>
-            <h2>Aucun produit correspondant au filtre n'a été trouvé.</h2>
-            <% } else { %>
-        <% produits.forEach(produit => { %>
-    
-            <div>
-                <a href="/produit/<%= produit.idProduct %>">voir les détails</a>
-                <h2><%= produit.name %></h2>
-                <p>Description: <%= produit.description %></p>
-                <p>Prix: <%= produit.price %> <%= produit.devise %></p>
-                <p>Réduction: <%= produit.reduction %> %</p>
-                <p>Quantité: <%= produit.quantity %></p>
-                <p>Genre: <%= produit.gender %></p>
-                <p>Type: <%= produit.type %></p>
-                <p>Couleurs: <%= produit.colors %></p>
-                <p>Taille: <%= produit.size %></p>
-                <h3>Images:</h3>
-                <% const imagesPaths = produit.images_paths.split(','); %>
-             
-                    <img src="<%=
-                    imagesPaths[0] %>" alt="Image du produit" width="150px">
-    
+        <section class="pagination-container">
+            <div class="pagination">
+                <img src="../assets/img/fleche-gauche.png">
+                <img src="../assets/img/fleche-droite.png">
             </div>
-        <% }); %>
-        <% }; %>
-    </div>
-              
-</section>
+        </section>
+    </section>
 
+
+    <footer>
+        <div class="nav-footer">
+            <a href=""> CONTACT </a>
+            <a href=""> MENTIONS LEGALES </a>
+        </div>
+    </footer>
 
 </body>
+
 </html>

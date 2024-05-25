@@ -11,6 +11,7 @@ router.get('/payment/confirmation',paymentController.confirmation);
 router.get('/', produitController.getIndex);
 router.get('/produit/:id', produitController.getProduit);
 router.post('/ajouter', produitController.postAjouter);
+router.get('/panier', produitController.cartPage);
 router.get('/admin',produitController.admin)
 router.get('/catalogue',produitController.catalogue)
 router.get('/search',produitController.searchProduct)

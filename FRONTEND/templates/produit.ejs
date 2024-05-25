@@ -1,30 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
+    <title>Détails du Produit</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails du Produit</title>
+    <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="../assets/css/produit.css">
     <script src="https://js.stripe.com/v3/"></script>
     <script src="../assets/js/paymentStripe.js"></script>
+    <script src="../assets/js/produit.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
+    <header class="header">
+        <a class="title" href="/accueil">
+            <h1> wethefoot</h1>
+        </a>
+        <nav class="Catalogue-Euro">
+            <a href="/catalogue">Catalogue</a>
+            <a href="/">Euro 2024</a>
+        </nav>
+        <form action="/" method="post">
+            <input type="text" name="recherche" id="recherche" placeholder="Search for a team, a brand..."
+                autocomplete="off">
+        </form>
+        <nav class="Fav-Panier">
+            <a href="/favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
+            <a href="/panier"><img src="../assets/img/sac-de-courses.png"></a>
+        </nav>
+    </header>
     <!-- Afficher les détails d'un produit -->
-    <div>
-        <h2 id="product-name" data-name="<%= produit.name %>"><%= produit.name %></h2>
-        <p id="product-description" data-description="<%= produit.description %>">Description: <%= produit.description %></p>
-        <p id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>">Prix: <%= produit.price %> <%= produit.devise %></p>
-        <p id="product-reduction" data-reduction="<%= produit.reduction %>">Réduction: <%= produit.reduction %> %</p>
-        <p>Quantité: <%= produit.quantity %></p>
-        <p>Genre: <%= produit.gender %></p>
-        <p>Type: <%= produit.type %></p>
-        <p>Couleurs: <%= produit.colors %></p>
-        <p>Taille: <%= produit.size %></p>
-        <h3>Images:</h3>
-        <% imagesPaths.forEach(imagePath => { %>
-            <img src="<%= imagePath %>" alt="Image du produit" width="140px">
-        <% }); %>
-    </div>
+   <!-- Afficher les détails d'un produit -->
+   <div>
+    <input type="hidden" id="produit-idProduct" data-id="<%= produit.idProduct %>">
+    <h2 id="product-name" data-name="<%= produit.name %>"><%= produit.name %></h2>
+    <p id="product-description" data-description="<%= produit.description %>">Description: <%= produit.description %></p>
+    <p id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>">Prix: <%= produit.price %> <%= produit.devise %></p>
+    <p id="product-reduction" data-reduction="<%= produit.reduction %>">Réduction: <%= produit.reduction %> %</p>
+    <p>Genre: <%= produit.gender %></p>
+    <p>Type: <%= produit.type %></p>
+
+    <form id="product-form">
+        <div>
+            <label>Couleur:</label>
+            <% produit.colors.split(',').forEach((color, index) => { %>
+                <label>
+                    <input type="radio" name="color" value="<%= color %>" <%= index === 0 ? 'checked' : '' %>>
+                    <%= color.charAt(0).toUpperCase() + color.slice(1) %>
+                </label>
+            <% }); %>
+        </div>
+
+        <div>
+            <label>Taille:</label>
+            <% produit.size.split(',').forEach((size, index) => { %>
+                <label>
+                    <input type="radio" name="size" value="<%= size %>" <%= index === 0 ? 'checked' : '' %>>
+                    <%= size.toUpperCase() %>
+                </label>
+            <% }); %>
+        </div>
+
+        <div class="quantity">
+            <label for="quantity">Quantité:</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" max="<%= produit.quantity %>">
+        </div>
+
+        <div id="product-images">
+            <% produit.images_paths.split(',').filter(path => path.includes('white')).forEach(imagePath => { %>
+                <img src="http://localhost:8000/<%= imagePath.replace(/\\/g, '/') %>" alt="Image du produit" width="140px">
+            <% }); %>
+        </div>
+
+        <button type="button" id="add-to-cart-button">Ajouter au panier</button>
+    </form>
+</div>
+
+
     <form id="payment-form">
         <div class="quantity">
             <label for="quantity">Quantité:</label>
@@ -45,5 +98,11 @@
         
         <div id="card-errors" role="alert"></div>
     </form>
+
+      
+
 </body>
+<script>
+ 
+</script>
 </html>
