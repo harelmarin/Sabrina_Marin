@@ -120,7 +120,7 @@
     width: 59px;
     height: 68px;
     position: absolute;
-    transform: translate(920px, -250px);
+    transform: translate(830px, -250px);
     z-index: 10;
 
   }
@@ -180,3 +180,124 @@
 .container-decouvrir-text p{
   font-family: 'Bold';
 }
+
+
+@media (max-width: 1255px) {
+  .swiper-button-next {
+    transform: translate(-50px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(750px, -250px);
+  }
+}
+
+@media (max-width: 1155px) {
+  .swiper-button-next {
+    transform: translate(-20px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(670px, -250px);
+  }
+}
+
+@media (max-width: 1050px) {
+  .swiper-button-next {
+    transform: translate(-130px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(450px, -250px);
+  }
+}
+
+@media (max-width: 900px) {
+  .swiper-button-next {
+    transform: translate(-60px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(380px, -250px);
+  }
+}
+
+@media (max-width: 764px) {
+  .swiper-button-next {
+    
+    transform: translate(-60px, 250px);
+  }
+
+  .swiper-button-prev {
+    
+    transform: translate(0px, 250px);
+  }
+  .swiper {
+    height: 700px;
+   
+}
+}
+
+
+@media (max-width: 528px) {
+.container-new {
+  padding-left: 50px; 
+}
+}
+
+@media (max-width: 382px) {
+  .container-new {
+    padding-left: 20px; 
+  }
+  }
+
+@media (max-width: 970px) {
+  .container-decouvrir {
+    transform: translate(-20%, -50%);
+}
+}
+@media (max-width: 720px) {
+  .container-decouvrir {
+    transform: translate(-10%, -50%);
+    width: 280px;
+}
+.container-index img {
+  height: 780px;
+  width: 100%;
+}
+}
+
+@media (max-width: 400px) {
+  .container-decouvrir {
+    transform: translate(-20%, -50%);
+    width: 150px;
+    height: 200px;
+}
+.container-index img {
+  height: 780px;
+  width: 100%;
+}
+.container-decouvrir-text button {
+  width: 150px;
+  
+  font-size: 15px;
+}
+
+.container-decouvrir-text h2 {
+  font-size: 12px;
+  font-family: 'Regular';
+}
+
+.container-decouvrir-text h3 {
+  margin-top: 15px;
+  font-size: 8px;
+  font-family: 'Thin';
+  font-style: italic;
+  opacity: 0.7;
+}
+.container-decouvrir-text {
+  width: 100px;
+  height: 250px;
+}
+}
+
