@@ -112,7 +112,8 @@ nav a:hover {
 }
 
 .Fav-Panier {
-    margin-left: 100px;
+    margin-left: 40px;
+    margin-right: 20px;
     width: 70px;
     display: flex;
     justify-content: space-between;
