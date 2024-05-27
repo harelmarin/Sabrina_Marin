@@ -63,40 +63,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Ajout au panier
-    const addToCartButton = document.getElementById('add-to-cart-button');
-    if (addToCartButton) {
-        addToCartButton.addEventListener('click', function() {
-            const productIdElement = document.getElementById('produit-idProduct');
-            const productNameElement = document.getElementById('product-name');
-            const productPriceElement = document.getElementById('product-price');
-            const productReductionElement = document.getElementById('product-reduction');
-            const quantityElement = document.getElementById('quantity');
-
-            if (productIdElement && productNameElement && productPriceElement && productReductionElement && quantityElement) {
-                const product = {
-                    id: productIdElement.dataset.id,
-                    name: productNameElement.dataset.name,
-                    price: parseFloat(productPriceElement.dataset.price),
-                    currency: productPriceElement.dataset.currency,
-                    reduction: parseFloat(productReductionElement.dataset.reduction),
-                    quantity: parseInt(quantityElement.value)
-                };
-
-                let cart = localStorage.getItem('cart');
-                cart = cart ? JSON.parse(cart) : []; // Si le panier n'existe pas, créer un tableau vide
-                const existingProductIndex = cart.findIndex(item => item.id === product.id);
-                if (existingProductIndex > -1) {
-                    cart[existingProductIndex].quantity += product.quantity;
-                } else {
-                    cart.push(product);
-                }
-                localStorage.setItem('cart', JSON.stringify(cart));
-                alert('Produit ajouté au panier');
-                console.log('Produit ajouté au panier');
-            } else {
-                console.error("Un ou plusieurs éléments nécessaires sont manquants.");
-            }
-        });
-    }
 });

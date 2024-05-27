@@ -14,12 +14,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cart.forEach(product => {
         const productDiv = document.createElement('div');
-        productDiv.innerHTML = `
+        productDiv.className = 'cart-item';
+
+        const productImg = document.createElement('img');
+        productImg.src = product.imagePath;
+        productImg.alt = product.name;
+        productImg.className = 'cart-item-image';
+
+        const productDetails = document.createElement('div');
+        productDetails.className = 'cart-item-details';
+        productDetails.innerHTML = `
             <p>${product.name} - ${product.price} ${product.currency} x ${product.quantity}</p>
+            <p>Couleur: ${product.color}</p>
+            <p>Taille: ${product.size}</p>
         `;
-        productDiv.innerHTML=`
-        `
+
+        productDiv.appendChild(productImg);
+        productDiv.appendChild(productDetails);
         cartItemsDiv.appendChild(productDiv);
+
         total += product.price * product.quantity;
     });
 

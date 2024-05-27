@@ -31,21 +31,20 @@
 </header>
 
 <section class="container-panier">
-    <h2>Votre Panier</h2>
-    <div id="cart-items" class="swiper-wrapper"></div>
+    <h1>Votre Panier</h1>
+    <div id="cart-items"></div>
+    <p id="total-price">Total: 0 EUR</p>
     <button id="clear-cart">Vider le panier</button>
-    <div id="total-price">Total: 0 EUR</div>
-
-    
+</section>
   
-        <form id="payment-form">
+        <form id="payment-form" style="width: 200px; background-color: aqua;">
             <div id="card-element">
                 <!-- Stripe.js injectera le formulaire de saisie de la carte ici -->
             </div>
-            <button id="submit-payment" style="height: 50px;">Payer</button>
+            <button id="submit-payment" style="height: 30px; width: 100px;">Payer</button>
             <div id="card-errors" role="alert"></div>
         </form>
-</section>
+
 
 
 

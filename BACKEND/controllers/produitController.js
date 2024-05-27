@@ -119,7 +119,6 @@ produitController.searchProduct = (req, res) => {
 }});
 };
 
-
 produitController.getIndex = (req, res) => {
     req.getConnection((erreur, connection) => {
         if (erreur) {
@@ -152,6 +151,7 @@ produitController.getIndex = (req, res) => {
     });
 };
 
+//afficher les détails d'un produit
 produitController.getProduit = (req, res) => {
     req.getConnection((erreur, connection) => {
         if (erreur) {
