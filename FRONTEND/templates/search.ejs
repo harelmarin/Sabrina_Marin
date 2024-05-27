@@ -33,7 +33,9 @@
         <h2>Résultats de recherche</h2>
         <div class="container-produits">
         <% if (produits.length === 0) { %>
-            <h2>Aucun produit correspondant à votre recherche.</h2>
+            <div class="container-noresult">
+            <p class="noresult">Aucun produit correspondant à votre recherche.</p>
+         </div>
         <% } else { %>
             <% let hasResults = false; %>
             <% produits.forEach(produit => { %>
@@ -51,21 +53,25 @@
                         <h3><%= produit.name %></h3>
                         <h4>Genre: <%= produit.gender %></h4>
                         <h5 class="old-price">Prix: <%= produit.price %> <%= produit.devise %></h5>
-                        <p>Réduction: <%= produit.reduction %> %</p>
+                        <p><%= produit.reduction %> %</p>
 
                             </section>
-                       
+                        </div>
+                    </section>
                        
                 <% } %>
             <% }); %>
             <% if (!hasResults) { %>
-                <h2>Aucun produit correspondant à votre recherche.</h2>
+                <section class="container">
+                <div class="container-noresult">
+                    <p class="noresult">Aucun produit correspondant à votre recherche.</p>
+                </div>
+            </section>
             <% } %>
         <% } %>
         
     
-</div>
-    </section>
+
 </body>
 <footer>
     <div class="nav-footer">

@@ -69,7 +69,6 @@ h2 {
 .container-produits {
     margin-top: 40px;
     width: 1300px;
-    height: 850px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;;
@@ -83,8 +82,7 @@ h2 {
     box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
 }
 .container-produits img:hover{
-    transition: 0.5s;
-transform: scale(1.05);
+transform: scale(1.02);
 }
 .coeur {
     position: absolute;
