@@ -1,0 +1,99 @@
+
+.container-produits {
+    margin-bottom: 40px;
+    margin-top: 40px;
+    width: 1300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;;
+}
+
+.container-catalogue {
+    height: 100%;
+    padding-top: 120px;
+    padding-left: 80px;
+}
+
+.container-produits img {
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
+}
+.container-produits img:hover{
+
+    transform: scale(1.02);
+}
+.coeur {
+    position: absolute;
+    top: 15px;
+    left: 260px;
+    width: 20px;
+    height: 20px;
+    background-image: url('../img/coeur.png');
+    background-size: cover;
+    cursor: pointer;
+  }
+
+.coeur:hover {
+    background-image: url('../img/coeurplein.png');
+  }
+
+.produits {
+    margin-top: 50px;
+    height: 450px;
+    position: relative;
+}
+
+.produits h3 {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Bold';
+  }
+
+.produits h4 {
+    margin-top: 5px;
+    font-style: italic;
+    color: #939292;
+    font-size: 15px;
+    font-family: 'Thin';
+  }
+
+.produits h5 {
+    margin-top: 5px;
+    font-size: 18px;
+    font-family: 'Bold';
+  }
+
+  .container-catalogue h2 {
+    font-family: 'Bold';
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  .old-price {
+    text-decoration: line-through;
+    color: red;
+    margin-right: 10px;
+}
+
+.produits p {
+    font-size: 30px;
+    font-family: 'Bold';
+}
+
+.noresult {
+    font-size: 30px;
+    font-family: 'Bold';
+    text-align: center;
+}
+
+.container-noresult {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
