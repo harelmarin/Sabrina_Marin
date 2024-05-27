@@ -148,3 +148,72 @@
     cursor: pointer;
     font-family: 'Black';
 }
+
+@media (max-width: 1255px) {
+  .swiper-button-next {
+    transform: translate(-50px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(750px, -250px);
+  }
+}
+
+@media (max-width: 1155px) {
+  .swiper-button-next {
+    transform: translate(-20px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(670px, -250px);
+  }
+}
+
+@media (max-width: 1050px) {
+  .swiper-button-next {
+    transform: translate(-130px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(450px, -250px);
+  }
+}
+
+@media (max-width: 900px) {
+  .swiper-button-next {
+    transform: translate(-60px, -250px);
+  }
+
+  .swiper-button-prev {
+    transform: translate(380px, -250px);
+  }
+}
+
+@media (max-width: 764px) {
+  .swiper-button-next {
+    
+    transform: translate(-60px, 250px);
+  }
+
+  .swiper-button-prev {
+    
+    transform: translate(0px, 250px);
+  }
+  .swiper {
+    height: 700px;
+   
+}
+}
+
+@media (max-width: 528px) {
+  .container-new {
+    padding-left: 50px; 
+  }
+  }
+  
+  @media (max-width: 382px) {
+    .container-new {
+      padding-left: 20px; 
+    }
+    }
+  
