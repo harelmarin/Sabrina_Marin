@@ -14,39 +14,8 @@ const NEUTRINO_ENDPOINT = 'https://neutrinoapi.net/geocode-address';
 //
 //
 
-
-
-//neutrino pour la géolocalisation
-produitController.neutrinoApiRequest = async (req, res) => {
-    const { address } = req.body;
-
-    try {
-        // Importation dynamique de node-fetch
-        const fetch = await import('node-fetch');
-
-        const response = await fetch.default(NEUTRINO_ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'User-ID': 'kaporal77@sabrina',
-                'API-Key': NEUTRINO_API_KEY
-            },
-            body: new URLSearchParams({
-                address: address,
-                'fuzzy-search': true
-            })
-        });
-
-        const data = await response.json();
-        res.json(data);
-    } catch (error) {
-        console.error('Error fetching data from Neutrino:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
 //page admin et hgestion de produit
-produitController.admin = (res) => {
+produitController.admin = (req,res) => {
     res.render('admin');
 }
 //page paier d'achat
@@ -56,7 +25,7 @@ produitController.cartPage=(req, res)=>{
 
 //afficher tous les produits et pouvoir filtrer || pagination comprise
 produitController.catalogue = (req, res) => {
-    const { gender, type, colors, page = 1, limit = 2 } = req.query;
+    const { gender, type, colors, page = 1, limit = 5 } = req.query;
 
     req.getConnection((erreur, connection) => {
         if (erreur) {
@@ -213,6 +182,12 @@ produitController.getProduit = (req, res) => {
     });
 };
 
+// Function to create directory if it doesn't exist
+function createDirectoryIfNotExist(dir) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
 produitController.postAjouter = (req, res) => {
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
@@ -319,12 +294,7 @@ produitController.postAjouter = (req, res) => {
         });
     });
 };
-// Function to create directory if it doesn't exist
-function createDirectoryIfNotExist(dir) {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-}
+
 //function pour sauvegarder chaque image dans le bon dossier
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

@@ -10,11 +10,11 @@ function gestionImages() {
           var colorImages = document.createElement('div');
           colorImages.classList.add('color_images');
 
-          colorImages.innerHTML += '&lt;h3&gt;' + color.value + '&lt;/h3&gt;';
+          colorImages.innerHTML += '<h3>' + color.value + '</h3>';
           for (var j = 1; j <= 3; j++) {
               colorImages.innerHTML += `
-                  &lt;label for="${color.value}_img_${j}"&gt;Image ${j} (${color.value}) :&lt;/label&gt;
-                  &lt;input type="file" id="${color.value}_img_${j}" name="${color.value}_img_${j}" required accept=".png, .jpeg, .jpg"&gt; &lt;br&gt;
+                 <label for="${color.value}_img_${j}">Image ${j} (${color.value}) :</label>
+                  <input type="file" id="${color.value}_img_${j}" name="${color.value}_img_${j}"> <br>
               `;
               colorImages.style.display = "flex";
               colorImages.style.flexDirection = "column";
