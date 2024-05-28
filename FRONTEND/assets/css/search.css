@@ -24,7 +24,6 @@
     box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
 }
 .container-produits img:hover{
-
     transform: scale(1.02);
 }
 .coeur {
@@ -85,3 +84,20 @@
     font-size: 30px;
     font-family: 'Bold';
 }
+
+@media (max-width: 980px) {
+  .container-catalogue h2 {
+    font-family: 'Bold';
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+@media (max-width: 680px) {
+  .container-produits {
+    justify-content: center;
+  }
+  .container-catalogue {
+    padding-left: 0;
+  }
+  }

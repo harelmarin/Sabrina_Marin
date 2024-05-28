@@ -2,8 +2,8 @@
 /******CARD CSS****/
 /* Ajoutez ce code à votre fichier CSS produit.css */
 #payment-form {
-    max-width: 400px;
-    margin: 0 auto;
+    width: 50%;
+    margin-top: 20px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -24,7 +24,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
+    width: 50%;
 }
 
 #submit-payment:hover {
