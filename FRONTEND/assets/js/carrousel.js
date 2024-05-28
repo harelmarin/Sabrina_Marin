@@ -18,4 +18,24 @@ const swiper = new Swiper('.swiper', {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
+    breakpoints: {
+      1050: {
+        slidesPerView: 3,
+        spaceBetweenSlides: 0,
+        centeredSlides: true,
+      },
+      762: {
+        slidesPerView: 2,
+        spaceBetween: 0,
+        centeredSlides: false,
+      },
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        centeredSlides: true,
+      },
+
+
+      
+    },
 });
