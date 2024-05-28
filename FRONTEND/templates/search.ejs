@@ -31,12 +31,11 @@
     <section class="container-catalogue">
        
         <h2>Résultats de recherche</h2>
-        <div class="container-produits">
+       
         <% if (produits.length === 0) { %>
-            <div class="container-noresult">
-            <p class="noresult">Aucun produit correspondant à votre recherche.</p>
-         </div>
+
         <% } else { %>
+            <div class="container-produits">
             <% let hasResults = false; %>
             <% produits.forEach(produit => { %>
                 <% const productName = produit.name.toLowerCase(); %>
@@ -54,22 +53,20 @@
                         <h4>Genre: <%= produit.gender %></h4>
                         <h5 class="old-price">Prix: <%= produit.price %> <%= produit.devise %></h5>
                         <p><%= produit.reduction %> %</p>
-
-                            </section>
-                        </div>
                     </section>
+                
                        
                 <% } %>
             <% }); %>
             <% if (!hasResults) { %>
-                <section class="container">
-                <div class="container-noresult">
                     <p class="noresult">Aucun produit correspondant à votre recherche.</p>
-                </div>
-            </section>
+           
             <% } %>
         <% } %>
-        
+
+</div>
+
+</section>
     
 
 </body>
