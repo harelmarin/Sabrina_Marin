@@ -54,49 +54,84 @@ produitController.cartPage=(req, res)=>{
     res.render('panier')
 } 
 
-//afficher tous les produits et pouvoir filtrer
+//afficher tous les produits et pouvoir filtrer || pagination comprise
 produitController.catalogue = (req, res) => {
-    const { gender, type, colors } = req.query;
+    const { gender, type, colors, page = 1, limit = 2 } = req.query;
 
     req.getConnection((erreur, connection) => {
         if (erreur) {
             console.log(erreur);
+            return res.status(500).send("Erreur de connexion à la base de données");
         } else {
-            if (gender || type || colors) {
-                // Utiliser la fonction de filtrage
-                let query = {};
-                if (gender) query.gender = gender;
-                if (type) query.type = type;
-                if (colors) query.colors = colors;
+            const offset = (page - 1) * limit;
 
-                helperUtils.displayByCategory(connection, query, (err, resultats) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        res.render('catalogue', { produits: resultats });
-                    }
-                });
-            } else {
-                // Afficher tous les produits si aucun filtre n'est appliqué
-                connection.query(
-                    `SELECT p.*, c.gender, c.type, c.colors, c.size,
-                     GROUP_CONCAT(i.path) AS images_paths
-                    FROM produits p
-                    JOIN caracteristiques c ON p.idCaracter = c.idCaracter
-                    LEFT JOIN images i ON p.idProduct = i.idProduct
-                    GROUP BY p.idProduct;`,
-                    (erreur, resultats) => {
-                        if (erreur) {
-                            console.log(erreur);
-                        } else {
-                            res.render('catalogue', { produits: resultats });
-                        }
-                    }
-                );
+            const baseQuery = `
+                SELECT p.*, c.gender, c.type, c.colors, c.size,
+                       GROUP_CONCAT(i.path) AS images_paths
+                FROM produits p
+                JOIN caracteristiques c ON p.idCaracter = c.idCaracter
+                LEFT JOIN images i ON p.idProduct = i.idProduct
+            `;
+
+            let whereClauses = [];
+            let queryParams = [];
+
+            if (gender) {
+                whereClauses.push("c.gender = ?");
+                queryParams.push(gender);
             }
+            if (type) {
+                whereClauses.push("c.type = ?");
+                queryParams.push(type);
+            }
+            if (colors) {
+                whereClauses.push("c.colors = ?");
+                queryParams.push(colors);
+            }
+
+            let whereQuery = "";
+            if (whereClauses.length > 0) {
+                whereQuery = "WHERE " + whereClauses.join(" AND ");
+            }
+
+            // Count total number of products
+            const countQuery = `SELECT COUNT(*) as totalCount FROM (${baseQuery} ${whereQuery} GROUP BY p.idProduct) as total`;
+
+            connection.query(countQuery, queryParams, (err, countResult) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).send("Erreur lors du comptage des produits");
+                } else {
+                    const totalCount = countResult[0].totalCount;
+                    const totalPages = Math.ceil(totalCount / limit);
+
+                    const query = `
+                        ${baseQuery} ${whereQuery}
+                        GROUP BY p.idProduct
+                        LIMIT ? OFFSET ?
+                    `;
+                    queryParams.push(parseInt(limit), parseInt(offset));
+
+                    connection.query(query, queryParams, (err, resultats) => {
+                        if (err) {
+                            console.log(err);
+                            return res.status(500).send("Erreur lors de la récupération des produits");
+                        } else {
+                            res.render('catalogue', {
+                                produits: resultats,
+                                currentPage: parseInt(page),
+                                totalPages: totalPages,
+                                limit: parseInt(limit)
+                            });
+                        }
+                    });
+                }
+            });
         }
     });
 };
+
+
 
 //rechercher un produit  par son nom
 produitController.searchProduct = (req, res) => {

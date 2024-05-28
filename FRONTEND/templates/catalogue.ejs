@@ -47,9 +47,30 @@
                 <p class="other"> Autres marques </p>
             </div>
         </div>
-
+       
         <div class="container-filter">
             <p> Filtre </p> <img src="../assets/img/filtre.png">
+            <div class="container-filter-content">
+                <form action="/catalogue">
+                <select name="gender" id="gender">Genre
+               <option value="">TOUS</option>
+                <option value="femme">Femme</option>
+                <option value="homme">Homme</option>
+            </select>
+            
+                <select name="type" id="type">Type
+                    <option value="">TOUS</option>
+                <option value="maillot">Maillot</option>
+                <option value="short">Short</option>
+            </select>
+                <select name="color" id="color">Couleur
+                    <option value="">TOUS</option>
+                <option value="black">Extérieur</option>
+                <option value="white">Domicile</option>
+            </select>
+                <input type="submit" value="Filtrer">
+                </form>
+            </div>
         </div>
         <div class="container-produits">
             <% if (produits.length===0){ %>
@@ -78,9 +99,27 @@
 
         <section class="pagination-container">
             <div class="pagination">
-                <img src="../assets/img/fleche-gauche.png">
-                <img src="../assets/img/fleche-droite.png">
-            </div>
+                <% if (typeof currentPage !== 'undefined' && currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">
+                        <img src="../assets/img/fleche-gauche.png" alt="fleche-gauche">
+                    </a>
+                <% } %>
+            
+                <!-- <% if (typeof totalPages !== 'undefined') { %>
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <a href="?page=<%= i %>&limit=<%= limit %>"
+                           class="<%= currentPage === i ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                <% } %> -->
+            
+                <% if (typeof currentPage !== 'undefined' && typeof totalPages !== 'undefined' && currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">
+                        <img src="../assets/img/fleche-droite.png" alt="fleche-droite">
+                    </a>
+                <% } %>
+            </div>            
         </section>
     </section>
 

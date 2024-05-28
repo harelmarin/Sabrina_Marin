@@ -5,12 +5,15 @@
     <title>Détails du Produit</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/detailsproduits.css">
     <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
     <link rel="stylesheet" href="../assets/css/produit.css">
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../assets/js/paymentStripe.js"></script>
     <script src="../assets/js/produit.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         .selected {
             background-color: #ddd;
@@ -70,15 +73,34 @@
                 <input type="number" id="quantity" name="quantity" value="1" min="1" max="<%= produit.quantity %>">
             </div>
 
-            <div id="product-images">
-                <% imagesPaths.forEach(imagePath => { %>
-                    <img class="product-image" src="<%= imagePath %>" alt="Image du produit" width="150px" style="display: none;">
-                <% }); %>
-            </div>
-
+            <section class="container-carrousel">
+                <section class="swiper-top">
+                    <div class="swiper-wrapper" id="swiper-wrapper-top">
+                        <% imagesPaths.forEach(imagePath => { %>
+                            <div class="swiper-slide">
+                                <img class="product-image" src="<%= imagePath %>" alt="Image du produit">
+                            </div>
+                        <% }); %>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </section>
+            
+                <div class="container-swiper-bottom">
+                    <section class="swiper-bottom">
+                        <div class="swiper-wrapper" id="swiper-wrapper-bottom">
+                            <% imagesPaths.forEach(imagePath => { %>
+                                <div class="swiper-slide">
+                                    <img class="product-image" src="<%= imagePath %>" alt="Image du produit" >
+                                </div>
+                            <% }); %>
+                        </div>
+                    </section>
+                </div>
+            </section>
             <button type="button" id="add-to-cart-button">Ajouter au panier</button>
         </form>
-    </div>
+        </div>
 
     <form id="payment-form">
         <div>
@@ -88,6 +110,13 @@
         <button id="submit-payment">Payer Directement</button>
         <div id="card-errors" role="alert"></div>
     </form>
-</body>
+<style>
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+  
+</style>
 
+</body>
 </html>
