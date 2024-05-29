@@ -2,35 +2,32 @@ const produitController = {};
 const helperUtils = require('../helperFolder/helpers');
 const multer = require('multer');
 const fs = require('fs');
-const connection = require('express-myconnection');
 const port = 8000;
 
-//const  API NEUTRINO
-const NEUTRINO_API_KEY = 'yot66w2T8JzN47jkGmjhQ8ngrfTgOIQDFFS1TKPOdykf3l5W';
-const NEUTRINO_ENDPOINT = 'https://neutrinoapi.net/geocode-address';
-
 //
 //
 //
 //
-
+//
+//
+//
 //page admin et hgestion de produit
 produitController.admin = (req,res) => {
     res.render('admin');
-}
+};
 //page paier d'achat
 produitController.cartPage=(req, res)=>{
     res.render('panier')
-} 
-
+};
 //afficher tous les produits et pouvoir filtrer || pagination comprise
 produitController.catalogue = (req, res) => {
-    const { gender, type, colors, page = 1, limit = 5 } = req.query;
+    const { gender, type, colors, page = 1, limit = 2, api = false } = req.query;
 
     req.getConnection((erreur, connection) => {
         if (erreur) {
             console.log(erreur);
-            return res.status(500).send("Erreur de connexion à la base de données");
+            const errorResponse = { error: "Erreur de connexion à la base de données" };
+            return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
         } else {
             const offset = (page - 1) * limit;
 
@@ -69,7 +66,8 @@ produitController.catalogue = (req, res) => {
             connection.query(countQuery, queryParams, (err, countResult) => {
                 if (err) {
                     console.log(err);
-                    return res.status(500).send("Erreur lors du comptage des produits");
+                    const errorResponse = { error: "Erreur lors du comptage des produits" };
+                    return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
                 } else {
                     const totalCount = countResult[0].totalCount;
                     const totalPages = Math.ceil(totalCount / limit);
@@ -84,14 +82,16 @@ produitController.catalogue = (req, res) => {
                     connection.query(query, queryParams, (err, resultats) => {
                         if (err) {
                             console.log(err);
-                            return res.status(500).send("Erreur lors de la récupération des produits");
+                            const errorResponse = { error: "Erreur lors de la récupération des produits" };
+                            return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
                         } else {
-                            res.render('catalogue', {
+                            const responseData = {
                                 produits: resultats,
                                 currentPage: parseInt(page),
                                 totalPages: totalPages,
                                 limit: parseInt(limit)
-                            });
+                            };
+                            return api ? res.json(responseData) : res.render('catalogue', responseData);
                         }
                     });
                 }
@@ -100,24 +100,35 @@ produitController.catalogue = (req, res) => {
     });
 };
 
-
-
 //rechercher un produit  par son nom
 produitController.searchProduct = (req, res) => {
-    const search = req.query.search;
+    const search = req.query.search ;
+    const api = false;
+     
     req.getConnection((erreur,connection)=>{
         if(erreur){
             console.log(erreur);
+            const errorResponse = { error: "Erreur lors de la récupération des produits" };
+        return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
+                       
             }else{
-//fappel de lma fonction pour chercher le produit 
+//appel de lma fonction pour chercher le produit 
       helperUtils.searchFunction(connection, search, (erreur, resultats) => {
         if (erreur) {
             console.log(erreur);
+            const errorResponse = { error: "Erreur lors de la récupération des produits" };
+            return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
+                
         }
         else {
-            console.log(resultats, search)
-            res.render('search', { produits: resultats ,search:search});
+            const responseData = {
+                produits: resultats,
+                search:   search
+            }
+            return api ?res.json(responseData) : res.render('search', responseData)
+           
         }
+        
     }
     );
 }});
@@ -154,7 +165,6 @@ produitController.getIndex = (req, res) => {
         }
     });
 };
-
 //afficher les détails d'un produit
 produitController.getProduit = (req, res) => {
     req.getConnection((erreur, connection) => {
@@ -181,13 +191,6 @@ produitController.getProduit = (req, res) => {
         }
     });
 };
-
-// Function to create directory if it doesn't exist
-function createDirectoryIfNotExist(dir) {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-}
 produitController.postAjouter = (req, res) => {
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
@@ -294,7 +297,12 @@ produitController.postAjouter = (req, res) => {
         });
     });
 };
-
+// Function to create directory if it doesn't exist
+function createDirectoryIfNotExist(dir) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
 //function pour sauvegarder chaque image dans le bon dossier
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

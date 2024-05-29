@@ -7,6 +7,7 @@ function gestionImages() {
   for (var i = 0; i < colors.length; i++) {
       var color = colors[i];
       if (color.checked) {
+    
           var colorImages = document.createElement('div');
           colorImages.classList.add('color_images');
 
@@ -16,6 +17,7 @@ function gestionImages() {
                  <label for="${color.value}_img_${j}">Image ${j} (${color.value}) :</label>
                   <input type="file" id="${color.value}_img_${j}" name="${color.value}_img_${j}"> <br>
               `;
+              console.log(color.value);
               colorImages.style.display = "flex";
               colorImages.style.flexDirection = "column";
               colorImages.style.justifyContent = "space-around";

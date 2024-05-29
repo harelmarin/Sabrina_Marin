@@ -4,7 +4,6 @@ const path = require('path');
 const myConnection = require('express-myconnection');
 const bodyParser = require('body-parser');
 const port = 8000;
-const fs = require('fs');
 require('dotenv').config();
 
 // Configuration de la connexion à la base de données
