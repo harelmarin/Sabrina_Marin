@@ -48,11 +48,11 @@
     width: 95px;
     height: 95px;
     display: flex;
+    margin-bottom: 10px;
 }
 .swiper-bottom  .swiper-slide img{
     width: 100%;
     height: 100%;
-    object-fit: contain;
 }
 
 
@@ -180,4 +180,68 @@ margin-bottom: 10px;
 .container-paiement h3 {
     font-family: 'Title';
     font-size: 30px;
+}
+
+@media (max-width: 1070px) {
+    .container-global {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .container-carrousel {
+        width: 500px;   
+    }
+    
+.container-text {
+    margin-top: 50px;  
+    margin-left: 80px; 
+}
+}
+
+
+@media (max-width: 734px) {
+    .swiper-slide.swiper-slide-next {
+        width: 100px;
+    }
+    .swiper-top img {
+        width:300px;
+        height: 300px;
+    }
+    .swiper-top  {
+        width:350px;
+    }
+    .swiper-bottom  .swiper-slide img {
+        width:80px;
+        height: 80px;
+        margin-left: 20px;
+    }
+
+    .container-carrousel {
+        width: 80vw;
+        margin-left: 20px;
+    }
+    
+    
+.container-text {
+   width: 60%;
+}
+}
+
+
+@media (max-width: 545px) {
+    .container-global {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container-carrousel {
+        margin-left: 0;
+    }
+    .swiper-top img {
+        width:250px;
+        height: 250px;
+    }
+    .swiper-bottom  .swiper-slide{
+        width:100px;
+        height: 50px;
+    }
 }
