@@ -4,22 +4,23 @@
     <title>Search</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/search.css">
+    <link rel="stylesheet" href="../assets/css/detailsproduits.css">
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 
+<body>
+    
 <header class="header">
     <a class="title" href="/accueil">
-        <h1> wethefoot</h1>
+        <h1>wethefoot</h1>
     </a>
     <nav class="Catalogue-Euro">
         <a href="/catalogue">Catalogue</a>
         <a href="/">Euro 2024</a>
     </nav>
-    <form action="/" method="post">
-        <input type="text" name="recherche" id="recherche" placeholder="Search for a team, a brand..."
-            autocomplete="off">
+    <form action="/search" method="post">
+        <input type="text" name="recherche" id="recherche" placeholder="Search for a team, a brand..." autocomplete="off">
     </form>
     <nav class="Fav-Panier">
         <a href="/favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
@@ -27,10 +28,8 @@
     </nav>
 </header>
 
-<body>
-    <section class="container-catalogue">
-       
-        <h2>Résultats de recherche</h2>
+    <section>
+        <h2 >Résultats de recherche</h2>
        
         <% if (produits.length === 0) { %>
 

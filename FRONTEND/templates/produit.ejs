@@ -39,88 +39,92 @@
         </nav>
     </header>
 
+    <!-- Afficher les détails d'un produit -->
     <section class="container-global">
 
-            <section class="container-carrousel">
-                <section class="swiper-top">
-                    <div class="swiper-wrapper" id="swiper-wrapper-top">
+        <section class="container-carrousel">
+            <section class="swiper-top">
+                <div class="swiper-wrapper" id="swiper-wrapper-top">
+                    <% imagesPaths.forEach(imagePath => { %>
+                        <div class="swiper-slide">
+                            <img class="product-image" src="<%= imagePath %>" alt="Image du produit">
+                        </div>
+                    <% }); %>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </section>
+        
+            <div class="container-swiper-bottom">
+                <section class="swiper-bottom">
+                    <div class="swiper-wrapper" id="swiper-wrapper-bottom">
                         <% imagesPaths.forEach(imagePath => { %>
                             <div class="swiper-slide">
-                                <img class="product-image" src="<%= imagePath %>" alt="Image du produit">
+                                <img class="product-image" src="<%= imagePath %>" alt="Image du produit" >
                             </div>
                         <% }); %>
                     </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
                 </section>
-            
-                <div class="container-swiper-bottom">
-                    <section class="swiper-bottom">
-                        <div class="swiper-wrapper" id="swiper-wrapper-bottom">
-                            <% imagesPaths.forEach(imagePath => { %>
-                                <div class="swiper-slide">
-                                    <img class="product-image" src="<%= imagePath %>" alt="Image du produit" >
-                                </div>
-                            <% }); %>
-                        </div>
-                    </section>
-                </div>
-            </section>
-             <!-- Afficher les détails d'un produit -->
-    <div>
-        <section class="container-text">
-        <input type="hidden" id="produit-idProduct" data-id="<%= produit.idProduct %>">
-        <h2 id="product-name" data-name="<%= produit.name %>"><%= produit.name %></h2>
-        <h3 id="product-description" data-description="<%= produit.description %>"><%= produit.description %></h3>
-        <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%= produit.price %> <%= produit.devise %></h4>
-       
-       
-        <form id="product-form">
-           
-                
-                    <section class="container-choix">
-                <label> <h5> Sélectionner un maillot </h5></label>
-                <div class="container-button">
-                <% produit.colors.split(',').forEach((color, index) => { %>
-                <button type="button" class="color-button <%= index === 0 ? 'selected' : '' %>" data-color="<%= color %>">
-                    <%= color.charAt(0).toUpperCase() + color.slice(1) %>
-                </button>
-                <% }); %>
             </div>
-
-            <div>
-                <h5><label>Taille</label></h5>
-                <div class="container-button-taille">
-                <% produit.size.split(',').forEach((size, index) => { %>
-                <button type="button" class="size-button <%= index === 0 ? 'selected' : '' %>" data-size="<%= size %>">
-                    <%= size.toUpperCase() %>
-                </button>
-                <% }); %>
-                </div>
-            </div>
-
-            <div class="quantity">
-               <h5> <label for="quantity">Quantité</label> </h5>
-                <input type="number" id="quantity" name="quantity" value="1" min="1" max="<%= produit.quantity %>">
-            </div>
-
-            <button type="button" class="add" id="add-to-cart-button">Ajouter au panier</button>
         </section>
-        </section>
-        </form>
+         <!-- Afficher les détails d'un produit -->
+<div>
+    <section class="container-text">
+    <input type="hidden" id="produit-idProduct" data-id="<%= produit.idProduct %>">
+    <h2 id="product-name" data-name="<%= produit.name %>"><%= produit.name %></h2>
+    <h3 id="product-description" data-description="<%= produit.description %>"><%= produit.description %></h3>
+    <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%= produit.price %> <%= produit.devise %></h4>
+    <p id="product-reduction" data-reduction="<%= produit.reduction %>" style="display: none;">Réduction: <%= produit.reduction %> %</p>
+
+    <form id="product-form">
+
+
+                <section class="container-choix">
+            <label> <h5> Sélectionner un maillot </h5></label>
+            <div class="container-button">
+            <% produit.colors.split(',').forEach((color, index) => { %>
+            <button type="button" class="color-button <%= index === 0 ? 'selected' : '' %>" data-color="<%= color %>">
+                <%= color.charAt(0).toUpperCase() + color.slice(1) %>
+            </button>
+            <% }); %>
         </div>
-    </section>
-    
-    <section class="container-paiement">
-        <h3> Paiement </h3>
-    <form id="payment-form">
+
         <div>
-            <label for="card-element">Carte de crédit ou de débit</label>
-            <div id="card-element"></div>
+            <h5><label>Taille</label></h5>
+            <div class="container-button-taille">
+            <% produit.size.split(',').forEach((size, index) => { %>
+            <button type="button" class="size-button <%= index === 0 ? 'selected' : '' %>" data-size="<%= size %>">
+                <%= size.toUpperCase() %>
+            </button>
+            <% }); %>
+            </div>
         </div>
-        <button id="submit-payment">Payer Directement</button>
-        <div id="card-errors" role="alert"></div>
+
+        <div class="quantity">
+           <h5> <label for="quantity">Quantité</label> </h5>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" max="<%= produit.quantity %>">
+        </div>
+
+        <button type="button" class="add"  id="add-to-cart-button">Ajouter au panier</button>
+       
+    </section>
+    </section>
     </form>
+    </div>
+
+</section>
+
+<section class="container-paiement">
+    <h3> Paiement </h3>
+<form id="payment-form">
+    <div>
+        <label for="card-element">Carte de crédit ou de débit</label>
+        <div id="card-element"></div>
+    </div>
+    <button id="submit-payment">Payer Directement</button>
+    <div id="card-errors" role="alert"></div>
+</form>
+
 </section>
 <footer>
     <div class="nav-footer">

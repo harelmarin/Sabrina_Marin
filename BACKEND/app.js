@@ -39,13 +39,7 @@ app.use((req, res, next) => {
     res.status(404).render('security', { errorMessage: "Page introuvable" });
   });
   
-  // Autres erreurs de serveur
-  app.use((err, req, res, next) => {
-    // Déterminez le statut de l'erreur
-    const status = err.status || 500; // Si aucun statut n'est défini, utilisez 500 (erreur interne du serveur)
-    // Renvoyez le code d'erreur et la page de sécurité avec un message approprié
-    res.status(status).render('security', { errorMessage: "Erreur serveur" });
-  });
+
   
 
 app.listen(port, () => {

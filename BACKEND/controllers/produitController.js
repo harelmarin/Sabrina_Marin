@@ -2,8 +2,144 @@ const produitController = {};
 const helperUtils = require('../helperFolder/helpers');
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
+const { error } = require('console');
 const port = 8000;
 
+// Function to create directory if it doesn't exist
+function createDirectoryIfNotExist(dir) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
+
+//function pour sauvegarder chaque image dans le bon dossier
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const color = file.fieldname.split('_')[0]; // Extract color from fieldname
+        const imgNumber = file.fieldname.split('_')[2]; // Extract img number from fieldname
+        const dir = path.join(__dirname, '..', 'Images_BD', color, `Img${imgNumber}`);
+        createDirectoryIfNotExist(dir);
+        cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+// Create multer instance
+const upload = multer({ storage: storage });
+
+// Function to add a product to the database
+produitController.postAjouter = (req, res) => {
+    console.log("Access to the function");
+    upload.any()(req, res, function (err) { // Make sure to call upload.any()
+        if (err instanceof multer.MulterError) {
+            console.log("Multer error:", err.message);
+            return res.status(500).json({ error: err.message });
+        } else if (err) {
+            console.log("Other error:", err.message);
+            return res.status(500).json({ error: err.message });
+        }
+
+        const {
+            name,
+            quantity,
+            price,
+            reduction,
+            description,
+            gender,
+            type,
+            size,
+            colors,
+            devise
+        } = req.body;
+        console.log("Request body: ", req.body);
+        // Validate form data
+        if (!name || !quantity || !price || !reduction || !description || !gender || !type || !devise) {
+            return res.status(400).send("All form fields are required.");
+        }
+
+        req.getConnection((erreur, connection) => {
+            if (erreur) {
+                console.log(erreur);
+                return res.status(500).send("Database connection error.");
+            }
+
+            connection.beginTransaction((erreur) => {
+                if (erreur) {
+                    console.log(erreur);
+                    return res.status(500).send("An error occurred during the transaction.");
+                }
+
+                const insertCaracterQuery = 'INSERT INTO caracteristiques (gender, type, colors, size) VALUES (?, ?, ?, ?)';
+                const insertProduitQuery = 'INSERT INTO produits (name, quantity, price, devise, reduction, description, idCaracter) VALUES (?, ?, ?, ?, ?, ?, ?)';
+
+                const colorsArray = colors ? colors.join(',') : '';
+                const sizeArray = size ? size.join(',') : '';
+
+                connection.query(insertCaracterQuery, [gender, type, colorsArray, sizeArray], (erreur, resultatsCaracter) => {
+                    if (erreur) {
+                        connection.rollback(() => {
+                            console.log(erreur);
+                            return res.status(500).send("An error occurred while inserting characteristics.");
+                        });
+                    } else {
+                        const idCaracter = resultatsCaracter.insertId;
+
+                        connection.query(insertProduitQuery, [name, quantity, price, devise, reduction, description, idCaracter], (erreur, resultatsProduit) => {
+                            if (erreur) {
+                                connection.rollback(() => {
+                                    console.log(erreur);
+                                    return res.status(500).send("An error occurred while inserting the product.");
+                                });
+                            } else {
+                                const idProduct = resultatsProduit.insertId;
+
+                                // Store images in the images table
+                                const imageQueries = [];
+                                req.files.forEach(file => {
+                                    const color = file.fieldname.split('_')[0];
+                                    const imgNumber = file.fieldname.split('_')[2]; // Extract img number from fieldname
+                                    const dir = path.join(__dirname, 'Images_BD', color, `Img${imgNumber}`);
+
+                                    const imgPath = path.join('Images_BD', color, `Img${imgNumber}`, file.filename);
+                                    imageQueries.push(new Promise((resolve, reject) => {
+                                        connection.query('INSERT INTO images (idProduct, path) VALUES (?, ?)', [idProduct, imgPath], (erreur) => {
+                                            if (erreur) {
+                                                return reject(erreur);
+                                            }
+                                            resolve();
+                                        });
+                                    }));
+                                });
+
+                                Promise.all(imageQueries).then(() => {
+                                    connection.commit((erreur) => {
+                                        if (erreur) {
+                                            connection.rollback(() => {
+                                                console.log(erreur);
+                                                return res.status(500).send("An error occurred during transaction commit.");
+                                            });
+                                        } else {
+                                            console.log('Product added successfully');
+                                            res.redirect('/admin');
+                                        }
+                                    });
+                                }).catch(erreur => {
+                                    connection.rollback(() => {
+                                        console.log(erreur);
+                                        return res.status(500).send("An error occurred while inserting images.");
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    });
+};
 //
 //
 //
@@ -12,11 +148,11 @@ const port = 8000;
 //
 //
 //page admin et hgestion de produit
-produitController.admin = (req,res) => {
+produitController.admin = (req, res) => {
     res.render('admin');
 };
 //page paier d'achat
-produitController.cartPage=(req, res)=>{
+produitController.cartPage = (req, res) => {
     res.render('panier')
 };
 //afficher tous les produits et pouvoir filtrer || pagination comprise
@@ -33,7 +169,7 @@ produitController.catalogue = (req, res) => {
 
             const baseQuery = `
                 SELECT p.*, c.gender, c.type, c.colors, c.size,
-                       GROUP_CONCAT(i.path) AS images_paths
+                GROUP_CONCAT(i.path) AS images_paths
                 FROM produits p
                 JOIN caracteristiques c ON p.idCaracter = c.idCaracter
                 LEFT JOIN images i ON p.idProduct = i.idProduct
@@ -102,36 +238,37 @@ produitController.catalogue = (req, res) => {
 
 //rechercher un produit  par son nom
 produitController.searchProduct = (req, res) => {
-    const search = req.query.search ;
+    const search = req.query.search;
     const api = false;
-     
-    req.getConnection((erreur,connection)=>{
-        if(erreur){
-            console.log(erreur);
-            const errorResponse = { error: "Erreur lors de la récupération des produits" };
-        return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
-                       
-            }else{
-//appel de lma fonction pour chercher le produit 
-      helperUtils.searchFunction(connection, search, (erreur, resultats) => {
+
+    req.getConnection((erreur, connection) => {
         if (erreur) {
             console.log(erreur);
             const errorResponse = { error: "Erreur lors de la récupération des produits" };
             return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
-                
-        }
-        else {
-            const responseData = {
-                produits: resultats,
-                search:   search
+
+        } else {
+            //appel de lma fonction pour chercher le produit 
+            helperUtils.searchFunction(connection, search, (erreur, resultats) => {
+                if (erreur) {
+                    console.log(erreur);
+                    const errorResponse = { error: "Erreur lors de la récupération des produits" };
+                    return api ? res.status(500).json(errorResponse) : res.status(500).render('error', errorResponse);
+
+                }
+                else {
+                    const responseData = {
+                        produits: resultats,
+                        search: search
+                    }
+                    return api ? res.json(responseData) : res.render('search', responseData)
+
+                }
+
             }
-            return api ?res.json(responseData) : res.render('search', responseData)
-           
+            );
         }
-        
-    }
-    );
-}});
+    });
 };
 
 produitController.getIndex = (req, res) => {
@@ -151,7 +288,7 @@ produitController.getIndex = (req, res) => {
                     console.log(erreur);
                 } else {
                     //appel de la fonction pour afficher les3 derniers produits
-                    const limite = 1; //Limiter les résultats à 3
+                    const limite = 10; //Limiter les résultats à 3
                     helperUtils.getLastestProducts(connection, limite, (erreur, derniersProduits) => {
                         if (erreur) {
                             console.log(erreur);
@@ -173,7 +310,7 @@ produitController.getProduit = (req, res) => {
         } else {
             connection.query(
                 `SELECT p.*, c.gender, c.type, c.colors, c.size,
-                    GROUP_CONCAT(i.path) AS images_paths
+                   GROUP_CONCAT(i.path) AS images_paths
                     FROM produits p
                     JOIN caracteristiques c ON p.idCaracter = c.idCaracter
                     LEFT JOIN images i ON p.idProduct = i.idProduct
@@ -181,8 +318,8 @@ produitController.getProduit = (req, res) => {
                 if (erreur) {
                     console.log(erreur);
                 } else {
-                    const baseUrl = req.app.get('baseUrl') || `http://localhost:${port}`; // Set default if not configured
                     const imagesPaths = resultats[0].images_paths.split(',');
+                    const baseUrl = req.app.get('baseUrl') || `http://localhost:${port}`; // Set default if not configured
                     const formattedImagePaths = imagesPaths.map(path => `${baseUrl}/${path}`);
                     console.log(formattedImagePaths);
                     res.render('produit', { produit: resultats[0], imagesPaths: formattedImagePaths });
@@ -191,129 +328,6 @@ produitController.getProduit = (req, res) => {
         }
     });
 };
-produitController.postAjouter = (req, res) => {
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json({ error: err.message });
-        } else if (err) {
-            return res.status(500).json({ error: err.message });
-        }
 
-        const {
-            name,
-            quantity,
-            price,
-            reduction,
-            description,
-            gender,
-            type,
-            size,
-            colors,
-            devise
-        } = req.body;
 
-        // Valider les données du formulaire
-        if (!name || !quantity || !price || !reduction || !description || !gender || !type || !devise) {
-            return res.status(400).send("Tous les champs du formulaire sont requis.");
-        }
-
-        req.getConnection((erreur, connection) => {
-            if (erreur) {
-                console.log(erreur);
-                return res.status(500).send("Erreur de connexion à la base de données.");
-            }
-
-            connection.beginTransaction((erreur) => {
-                if (erreur) {
-                    console.log(erreur);
-                    return res.status(500).send("Une erreur est survenue lors de la transaction.");
-                }
-
-                const insertCaracterQuery = 'INSERT INTO caracteristiques (gender, type, colors, size) VALUES (?, ?, ?, ?)';
-                const insertProduitQuery = 'INSERT INTO produits (name, quantity, price, devise, reduction, description, idCaracter) VALUES (?, ?, ?, ?, ?, ?, ?)';
-
-                const colorsArray = colors ? colors.join(',') : '';
-                const sizeArray = size ? size.join(',') : '';
-
-                connection.query(insertCaracterQuery, [gender, type, colorsArray, sizeArray], (erreur, resultatsCaracter) => {
-                    if (erreur) {
-                        connection.rollback(() => {
-                            console.log(erreur);
-                            return res.status(500).send("Une erreur est survenue lors de l'insertion des caractéristiques.");
-                        });
-                    } else {
-                        const idCaracter = resultatsCaracter.insertId;
-
-                        connection.query(insertProduitQuery, [name, quantity, price, devise, reduction, description, idCaracter], (erreur, resultatsProduit) => {
-                            if (erreur) {
-                                connection.rollback(() => {
-                                    console.log(erreur);
-                                    return res.status(500).send("Une erreur est survenue lors de l'insertion du produit.");
-                                });
-                            } else {
-                                const idProduct = resultatsProduit.insertId;
-
-                                // Stockage des images dans la table images
-                                const imageQueries = [];
-                                req.files.forEach(file => {
-                                    const color = file.fieldname.split('_')[0];
-                                    const imgNumber = file.fieldname.split('_')[2]; // Extract img number from fieldname
-                                    const dir = path.join(__dirname, 'Images_BD', color, `Img${imgNumber}`);
-
-                                    const imgPath = path.join('Images_BD', color, `Img${imgNumber}`, file.filename);
-                                    imageQueries.push(new Promise((resolve, reject) => {
-                                        connection.query('INSERT INTO images (idProduct, path) VALUES (?, ?)', [idProduct, imgPath], (erreur) => {
-                                            if (erreur) {
-                                                return reject(erreur);
-                                            }
-                                            resolve();
-                                        });
-                                    }));
-                                });
-
-                                Promise.all(imageQueries).then(() => {
-                                    connection.commit((erreur) => {
-                                        if (erreur) {
-                                            connection.rollback(() => {
-                                                console.log(erreur);
-                                                return res.status(500).send("Une erreur est survenue lors de la validation de la transaction.");
-                                            });
-                                        } else {
-                                            console.log('Produit ajouté avec succès');
-                                            res.redirect('/admin');
-                                        }
-                                    });
-                                }).catch(erreur => {
-                                    connection.rollback(() => {
-                                        console.log(erreur);
-                                        return res.status(500).send("Une erreur est survenue lors de l'insertion des images.");
-                                    });
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    });
-};
-// Function to create directory if it doesn't exist
-function createDirectoryIfNotExist(dir) {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-}
-//function pour sauvegarder chaque image dans le bon dossier
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const color = file.fieldname.split('_')[0]; // Extract color from fieldname
-        const imgNumber = file.fieldname.split('_')[2]; // Extract img number from fieldname
-        const dir = path.join(__dirname, 'Images_BD', color, `Img${imgNumber}`);
-        createDirectoryIfNotExist(dir);
-        cb(null, dir);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
 module.exports = produitController;
