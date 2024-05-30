@@ -7,12 +7,13 @@ const router = express.Router();
 router.post('/payment/process',paymentController.processPayment);
 router.get('/payment/confirmation',paymentController.confirmation);
 
-router.get('/', produitController.home);
+router.get('/', produitController.index);
+router.get('/mentions', produitController.mentionPage);
 router.get('/produit/:id', produitController.getProduit);
 router.post('/ajouter', produitController.postAjouter);
 router.get('/panier', produitController.cartPage);
 router.get('/admin',produitController.admin);
-router.get('/acceuil',produitController.getIndex);
+router.get('/home',produitController.getIndex);
 
 router.get('/catalogue',produitController.catalogue);
 router.get('/search',produitController.searchProduct);

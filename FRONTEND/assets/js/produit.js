@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         direction: 'vertical',
         allowTouchMove: false,
         noSwiping: true,
+        autoplay: {                    
+            delay: 3500,  
+        },
         thumbs: {
             swiper: swiperBottom,
         },

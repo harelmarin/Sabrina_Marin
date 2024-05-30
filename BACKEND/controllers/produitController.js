@@ -179,7 +179,12 @@ produitController.getIndex = (req, res) => {
         }
     });
 };
-produitController.home = (req, res) => {
+//page de contacts
+produitController.mentionPage = (req, res) => {
+    res.render('mentions');
+};
+//index
+produitController.index = (req, res) => {
     res.render('index');
 };
 //page admin et hgestion de produit
