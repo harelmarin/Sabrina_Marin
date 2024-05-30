@@ -146,7 +146,42 @@ produitController.postAjouter = (req, res) => {
 //
 //
 //
-//
+//page d'acceuil
+
+produitController.getIndex = (req, res) => {
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log(erreur);
+        } else {
+            connection.query(
+                `SELECT p.*, c.gender, c.type, c.colors, c.size,
+                 GROUP_CONCAT(i.path) AS images_paths
+                FROM produits p
+                JOIN caracteristiques c ON p.idCaracter = c.idCaracter
+                LEFT JOIN images i ON p.idProduct = i.idProduct
+                GROUP BY p.idProduct;
+                `, (erreur, resultats) => {
+                if (erreur) {
+                    console.log(erreur);
+                } else {
+                    //appel de la fonction pour afficher les3 derniers produits
+                    const limite = 5; //Limiter les résultats à 3
+                    helperUtils.getLastestProducts(connection, limite, (erreur, derniersProduits) => {
+                        if (erreur) {
+                            console.log(erreur);
+                        } else {
+                            console.log("les derniers produits", derniersProduits);
+                            res.render('acceuil', { produits: resultats, lastProducts: derniersProduits });
+                        };
+                    });
+                };
+            });
+        }
+    });
+};
+produitController.home = (req, res) => {
+    res.render('index');
+};
 //page admin et hgestion de produit
 produitController.admin = (req, res) => {
     res.render('admin');
@@ -157,7 +192,7 @@ produitController.cartPage = (req, res) => {
 };
 //afficher tous les produits et pouvoir filtrer || pagination comprise
 produitController.catalogue = (req, res) => {
-    const { gender, type, colors, page = 1, limit = 2, api = false } = req.query;
+    const { gender, type, colors, page = 1, limit =10, api = false } = req.query;
 
     req.getConnection((erreur, connection) => {
         if (erreur) {
@@ -271,37 +306,6 @@ produitController.searchProduct = (req, res) => {
     });
 };
 
-produitController.getIndex = (req, res) => {
-    req.getConnection((erreur, connection) => {
-        if (erreur) {
-            console.log(erreur);
-        } else {
-            connection.query(
-                `SELECT p.*, c.gender, c.type, c.colors, c.size,
-                 GROUP_CONCAT(i.path) AS images_paths
-                FROM produits p
-                JOIN caracteristiques c ON p.idCaracter = c.idCaracter
-                LEFT JOIN images i ON p.idProduct = i.idProduct
-                GROUP BY p.idProduct;
-                `, (erreur, resultats) => {
-                if (erreur) {
-                    console.log(erreur);
-                } else {
-                    //appel de la fonction pour afficher les3 derniers produits
-                    const limite = 10; //Limiter les résultats à 3
-                    helperUtils.getLastestProducts(connection, limite, (erreur, derniersProduits) => {
-                        if (erreur) {
-                            console.log(erreur);
-                        } else {
-                            console.log("les derniers produits", derniersProduits);
-                            res.render('index', { produits: resultats, lastProducts: derniersProduits });
-                        };
-                    });
-                };
-            });
-        }
-    });
-};
 //afficher les détails d'un produit
 produitController.getProduit = (req, res) => {
     req.getConnection((erreur, connection) => {
