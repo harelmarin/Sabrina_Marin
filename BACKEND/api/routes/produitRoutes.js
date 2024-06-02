@@ -7,5 +7,4 @@ router.get('/search', produitController.searchProduct);
 router.get('/catalogue', produitController.catalogue);
 router.get('/:id', produitController.getProduit);
 router.post('/ajouter', produitController.postAjouter);
-
 module.exports = router;

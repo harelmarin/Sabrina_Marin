@@ -11,7 +11,7 @@ produitBackController.getIndex = async (req, res) => {
     try {
         const response = await axios.get(`${apiBaseUrl}/`);
         const produits = response.data.lastProducts;
-        res.render('acceuil', { produits });
+        res.render('home', { produits });
     } catch (error) {
         console.error('Error fetching products:', error);
         res.status(500).render('security', { errorMessage: "Erreur lors de la récupération des produits" });
@@ -69,12 +69,16 @@ produitBackController.getProduit = async (req, res) => {
 // Ajouter un produit (pour admin)
 produitBackController.postAjouter = async (req, res) => {
     try {
+        console.log('req.body:', req.body);
+        console.log('req.files:', req.files);
+
         await axios.post(`${apiBaseUrl}/ajouter`, req.body);
         res.redirect('/backend/admin');
     } catch (error) {
-        console.log(error);
+        console.error('Erreur lors de l\'ajout du produit:', error);
         res.status(500).render('security', { errorMessage: "Erreur lors de l'ajout du produit" });
     }
 };
+
 
 module.exports = produitBackController;

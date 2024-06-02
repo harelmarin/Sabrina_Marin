@@ -47,7 +47,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const port =8000;
+const port = 8000;
 app.listen(port, () => {
     console.log(`Backend server running on port ${port}`);
 });
