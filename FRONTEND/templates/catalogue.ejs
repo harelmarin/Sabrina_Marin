@@ -52,7 +52,7 @@
         <div class="container-filter">
             <p> Filtre </p> <img src="../assets/img/filtre.png">
             <div class="container-filter-content">
-                <form action="/catalogue">
+                <form action="/backend/catalogue">
                 <select name="gender" id="gender">Genre
                <option value="">TOUS</option>
                 <option value="femme">Femme</option>
@@ -64,11 +64,7 @@
                 <option value="maillot">Maillot</option>
                 <option value="short">Short</option>
             </select>
-                <select name="color" id="color">Couleur
-                    <option value="">TOUS</option>
-                <option value="black">Extérieur</option>
-                <option value="white">Domicile</option>
-            </select>
+                
                 <input type="submit" value="Filtrer">
                 </form>
             </div>
@@ -83,7 +79,7 @@
                             <a href="/backend/produit/<%= produit.idProduct %>">
                                 <img src="<%= imagesPaths[0] %>" alt="Image du produit">
                             </a>
-                                <div class="coeur"></div>
+                                <div class="coeur likediv"></div>
                                 <h3>
                                     <%= produit.name %>
                                 </h3>

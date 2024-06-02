@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/panier.css">
+    <link rel="stylesheet" href="../assets/css/produit.css">
     <link rel="stylesheet" href="../assets/css/global.css">
     <script src="../assets/js/panier.js" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
@@ -36,23 +37,20 @@
     <div id="cart-items"></div>
     <p id="total-price">Total: 0 EUR</p>
     <button id="clear-cart">Vider le panier</button>
+
+      
+    <form id="payment-form" style="width: 200px;">
+        <div id="card-element">
+            <!-- Stripe.js injectera le formulaire de saisie de la carte ici -->
+        </div>
+        <button id="submit-payment" style="height: 30px; width: 100px;">Payer</button>
+        <div id="card-errors" role="alert"></div>
+    </form>
 </section>
-  
-        <form id="payment-form" style="width: 200px; background-color: aqua;">
-            <div id="card-element">
-                <!-- Stripe.js injectera le formulaire de saisie de la carte ici -->
-            </div>
-            <button id="submit-payment" style="height: 30px; width: 100px;">Payer</button>
-            <div id="card-errors" role="alert"></div>
-        </form>
+
 
    
-        <footer>
-            <div class="nav-footer">
-                <a href="/backend/mentions"> CONTACT </a>
-                <a href="/backend/mentions"> MENTIONS LEGALES </a>
-            </div>
-        </footer>
+      
 
 </body>
 

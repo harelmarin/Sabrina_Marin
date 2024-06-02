@@ -56,6 +56,5 @@ app.use('/api/produits', produitApiRoutes);
 // Démarrage du serveur
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(optionBd);
     console.log(`API server running on port ${port}`);
 });

@@ -14,7 +14,7 @@ produitBackController.getIndex = async (req, res) => {
         res.render('acceuil', { produits });
     } catch (error) {
         console.error('Error fetching products:', error);
-        res.status(500).render('error', { errorMessage: "Erreur lors de la récupération des produits" });
+        res.status(500).render('security', { errorMessage: "Erreur lors de la récupération des produits" });
     }
 };
 // Rechercher un produit par son nom
@@ -32,10 +32,10 @@ produitBackController.searchProduct = async (req, res) => {
 
 // Afficher tous les produits avec filtre et pagination
 produitBackController.catalogue = async (req, res) => {
-    const { gender, type, colors, page = 1 } = req.query;
+    const { gender, type, page = 1 } = req.query;
     try {
         const response = await axios.get(`${apiBaseUrl}/catalogue`, {
-            params: { gender, type, colors, page, limit:2 }
+            params: { gender, type, page, limit:10 }
         });
 
         // Accès direct aux données de la réponse
@@ -61,7 +61,7 @@ produitBackController.getProduit = async (req, res) => {
         res.render('produit', { produit, imagesPaths });
     } catch (error) {
         console.log(error);
-        res.status(500).render('error', { errorMessage: "Erreur lors de la récupération du produit" });
+        res.status(500).render('security', { errorMessage: "Erreur lors de la récupération du produit" });
     }
 };
 
@@ -73,7 +73,7 @@ produitBackController.postAjouter = async (req, res) => {
         res.redirect('/backend/admin');
     } catch (error) {
         console.log(error);
-        res.status(500).render('error', { errorMessage: "Erreur lors de l'ajout du produit" });
+        res.status(500).render('security', { errorMessage: "Erreur lors de l'ajout du produit" });
     }
 };
 

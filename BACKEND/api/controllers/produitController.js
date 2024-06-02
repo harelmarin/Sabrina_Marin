@@ -66,7 +66,7 @@ produitController.searchProduct = (req, res) => {
 
 // Afficher tous les produits et pouvoir filtrer || pagination comprise
 produitController.catalogue = (req, res) => {
-    const { gender, type, colors, page = 1, limit = 10 } = req.query;
+    const { gender, type, page = 1, limit = 10 } = req.query;
 
     req.getConnection((erreur, connection) => {
         if (erreur) {
@@ -93,10 +93,6 @@ produitController.catalogue = (req, res) => {
             if (type) {
                 whereClauses.push("c.type = ?");
                 queryParams.push(type);
-            }
-            if (colors) {
-                whereClauses.push("c.colors = ?");
-                queryParams.push(colors);
             }
 
             let whereQuery = "";

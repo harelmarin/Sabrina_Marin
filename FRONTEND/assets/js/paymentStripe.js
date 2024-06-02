@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         var reductionPercentage = document.getElementById('product-reduction').dataset.reduction;
         var productName = document.getElementById('product-name').dataset.name;
-        var productDescription = `ACHAT DE '${productName}' CHEZ PYRAMIDE`;
+        var productDescription = `ACHAT DE '${productName}' CHEZ WETHEFOOT`;
         var productPrice = document.getElementById('product-price').dataset.price;
         var productCurrency = document.getElementById('product-price').dataset.currency;
         var quantity = document.getElementById('quantity').value;
