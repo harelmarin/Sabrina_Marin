@@ -7,7 +7,7 @@
 .container-carrousel {
     background-color: #F1F6F9;
     height:400px;
-    width: 1700px;
+    width:600px;
     box-shadow: 0px 15px 48px 0 rgba(0,0,0,0.16);
     padding: 40px;
     margin-left: 80px;
@@ -65,7 +65,9 @@
     font-family: 'Title';
     font-size: 30px;
 }
-
+#product-description{
+    width:500px
+}
 .container-text h3 {
     font-family: 'Thin';
     font-size: 15px;
