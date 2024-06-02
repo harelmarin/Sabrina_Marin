@@ -120,4 +120,26 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Produit ajouté au panier');
         console.log('Produit ajouté au panier', product);
     });
+
+    // masquer les descptions avec +100caracteres
+    var descriptionElement = document.getElementById("product-description");
+    var descriptionContainer = document.getElementById("description-container");
+    var showMoreBtn = document.getElementById("show-more-btn");
+
+    var description = descriptionElement.dataset.description;
+    var truncatedDescription = description.length > 100 ? description.slice(0, 100) + "..." : description;
+  
+    descriptionElement.textContent = truncatedDescription;
+
+    // display le bouton voir plus si la description > 100 caractères
+    if (description.length > 100) {
+        showMoreBtn.style.display = "block";
+    }
+   showMoreBtn.addEventListener("click", function() {
+        // remplacement de la description tronquée par la description complète
+        descriptionElement.textContent = description;
+        showMoreBtn.style.display = "none";
+    });
+    //ajouter le bouton au container
+    descriptionContainer.appendChild(showMoreBtn);
 });

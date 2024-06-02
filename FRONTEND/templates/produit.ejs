@@ -74,8 +74,11 @@
     <section class="container-text">
     <input type="hidden" id="produit-idProduct" data-id="<%= produit.idProduct %>">
     <h2 id="product-name" data-name="<%= produit.name %>"><%= produit.name %></h2>
-    <h3 id="product-description" data-description="<%= produit.description %>"><%= produit.description %></h3>
-    <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%= produit.price %> <%= produit.devise %></h4>
+    <div id="description-container">
+   <h3 id="product-description" data-description="<%= produit.description %>"></h3>
+  <button id="show-more-btn" style="display: none;">Voir plus</button>
+    </div>
+     <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%= produit.price %> <%= produit.devise %></h4>
     <p id="product-reduction" data-reduction="<%= produit.reduction %>" style="display: none;">Réduction: <%= produit.reduction %> %</p>
 
     <form id="product-form">
