@@ -8,22 +8,24 @@
     <link rel="stylesheet" href="../assets/css/global.css">
   
 </head>
+    
 <header class="header">
-    <a class="title" href="/home">
+    <a class="title" href="/backend/home">
         <h1>wethefoot</h1>
     </a>
     <nav class="Catalogue-Euro">
-        <a href="/catalogue">Catalogue</a>
-        <a href="/">Euro 2024</a>
+        <a href="/backend/catalogue">Catalogue</a>
+        <a href="#">Euro 2024</a>
     </nav>
-    <form action="/search" method="post">
-        <input type="text" name="recherche" id="recherche" placeholder="Search for a team, a brand..." autocomplete="off">
+    <form action="/backend/search" method="GET">
+        <input type="text" name="search" id="search" placeholder="Search for a team, a brand..." autocomplete="off">
     </form>
     <nav class="Fav-Panier">
-        <a href="/favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
-        <a href="/panier"><img src="../assets/img/sac-de-courses.png"></a>
+        <a href="/backend/favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
+        <a href="/backend/panier"><img src="../assets/img/sac-de-courses.png"></a>
     </nav>
 </header>
+
 <body>
 <section class="container-mentions">
     <h2>Mentions Légales </h2>
@@ -49,9 +51,9 @@
 
 <footer>
     <div class="nav-footer">
-        <a href="/mentions"> CONTACT </a>
-        <a href="/mentions"> MENTIONS LEGALES </a>
-</div>
+        <a href="/backend/mentions"> CONTACT </a>
+        <a href="/backend/mentions"> MENTIONS LEGALES </a>
+    </div>
 </footer>
 
 </body>

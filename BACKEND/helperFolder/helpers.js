@@ -1,6 +1,7 @@
 // helpers.js
 
 const helperUtils = {};
+const port = 3000;
 
 // Fonction pour obtenir les derniers produits ajoutés
 helperUtils.getLastestProducts = (connection, limit, callback) => {
@@ -111,12 +112,12 @@ helperUtils.searchFunction = (connection, query, callback) => {
             images: [],
           });
         }
-
-        // Ajouter l'image au produit correspondant
-        if (row.image_path) {
-          produitsMap.get(row.idProduct).images.push(row.image_path);
-        }
-      });
+     // Ajouter l'image au produit correspondant
+                if (row.image_path) {
+                    const imagePath = `http://localhost:${port}/api/${row.image_path.replace(/\\/g, '/')}`;
+                    produitsMap.get(row.idProduct).images.push(imagePath);
+                }
+            });
 
       // Convertir l'objet Map en tableau de produits
       const produits = Array.from(produitsMap.values());
