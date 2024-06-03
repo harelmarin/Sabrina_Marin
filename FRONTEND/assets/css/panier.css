@@ -17,7 +17,7 @@
 }
 
 .new p {
-  font-family: 'Bold';
+  font-family: 'Normal';
   font-weight: bolder;
 
 }
@@ -79,20 +79,20 @@
     margin-top: 15px;
     font-weight: bold;
     font-size: 18px;
-    font-family: 'Bold';
+    font-family: 'Normal';
   }
   .swiper h4 {
     margin-top: 5px;
     font-style: italic;
     color: #939292;
     font-size: 15px;
-    font-family: 'Thin';
+    font-family: 'Normal';
   }
 
   .swiper h5 {
     margin-top: 5px;
     font-size: 18px;
-    font-family: 'Bold';
+    font-family: 'Normal';
   }
 
   .coeur {
@@ -151,7 +151,7 @@
     font-size: 20px;
     margin-top: 40px;
     cursor: pointer;
-    font-family: 'Black';
+    font-family: 'MGCS';
 }
 
 .cart-item {
@@ -174,27 +174,27 @@
 .cart-item-details h4 {
   margin-top: 2px;
   font-size: 20px;
-  font-family: 'Thin';
+  font-family: 'Normal';
  }
 .cart-item-details h3 {
   font-size: 20px;
-  font-family: 'Bold';
+  font-family: 'Normal';
  }
 
  .cart-item-details h2 {
   font-size: 20px;
-  font-family: 'Bold';
+  font-family: 'Normal';
  }
 
  .cart-item-details p {
   margin-top: 40px;
   font-size: 15px;
-  font-family: 'Thin';
+  font-family: 'Normal';
  }
 
  .cart-item-details h5 {
   font-size: 15px;
-  font-family: 'Thin';
+  font-family: 'Normal';
   margin-left: 2px;
  
  }
@@ -202,7 +202,7 @@
  #total-price {
   margin-top: 50px;
   font-size: 20px;
-  font-family: 'Bold';
+  font-family: 'MGCS';
  }
 
  .container-paye {

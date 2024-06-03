@@ -3,6 +3,7 @@
     flex-direction: row;
     padding-top: 120px;
     overflow-x: hidden;
+    margin-bottom: 40px;
 }
 
 .container-carrousel {
@@ -64,28 +65,29 @@
 }
 
 .container-text h2 {
-    font-family: 'Title';
+    font-family: 'Normal';
     font-size: 30px;
 }
 #product-description{
-    width:70vw;
+    width:30vw;
 }
 .container-text h3 {
-    font-family: 'Thin';
+    font-family: 'Normal';
     font-size: 15px;
     margin-top: 10px;
 }
 
 .container-text h4 {
-    font-family: 'Regular';
+    font-family: 'Normal';
     font-size: 30px;
     margin-top: 20px;
 }
 
 .container-text p {
-    font-family: 'Thin';
+    font-family: 'Normal';
     font-size: 15px;
     margin-top: 50px;
+    font-weight: 'Thin';
 }
 
 .container-button {
@@ -120,6 +122,7 @@
     font-size: 20px;
     margin-top: 20px;
     cursor: pointer;
+    font-family: 'MGCS';
 }
 
 .swiper-container {
@@ -154,8 +157,13 @@
     cursor: pointer;
 }
 
+.color-button {
+    font-family: 'Normal';
+}
+
 h5 {
 margin-bottom: 10px;
+font-family: 'Normal';
 }
 
 .quantity {
@@ -173,19 +181,6 @@ margin-bottom: 10px;
     
 }
 
-.container-paiement {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-left: 80px;
-    display: flex;
-    flex-direction: column;
-}
-
-.container-paiement h3 {
-    font-family: 'Title';
-    font-size: 30px;
-}
-
 @media (max-width: 1070px) {
     .container-global {
         flex-direction: column;
@@ -199,6 +194,12 @@ margin-bottom: 10px;
     margin-top: 50px;  
     margin-left: 80px; 
 }
+}
+
+@media (max-width: 900px) {
+    #product-description{
+        width:50vw;
+    }
 }
 
 
