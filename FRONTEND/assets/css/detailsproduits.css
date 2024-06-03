@@ -236,7 +236,12 @@ margin-bottom: 10px;
 }
 }
 
+@media (max-width: 650px) {
+    .container-paiement {
+        margin-left: 30px;
 
+    }
+}
 @media (max-width: 545px) {
     .container-global {
         display: flex;
@@ -246,6 +251,9 @@ margin-bottom: 10px;
     }
     .container-carrousel {
         margin-left: 0;
+    }
+    h2 {
+        text-align: center;
     }
     .swiper-top img {
         width:250px;

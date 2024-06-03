@@ -1,6 +1,6 @@
 
 .container-produits {
-  margin-top: 40px;
+  margin-top: 80px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -83,6 +83,11 @@
 .produits p {
     font-size: 30px;
     font-family: 'Bold';
+}
+
+h2 {
+  font-size: 60px;
+  font-family: 'Bold';
 }
 
 @media (max-width: 980px) {
