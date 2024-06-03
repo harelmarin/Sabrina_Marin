@@ -1,7 +1,9 @@
 // Fonction de conversion de devise
 function convertCurrency(currency) {
     const currencyMapping = {
-        'EURO': 'eur'
+        'EURO': 'eur',
+        'DOOLARS': 'usd',
+        'POUNDS': 'gbp'
     };
     return currencyMapping[currency] || currency;
 }

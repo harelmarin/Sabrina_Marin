@@ -1,3 +1,4 @@
+//routes serveur backend
 const express = require('express');
 const produitBackController = require('../controllers/produitBackController');
 const paymentController = require('../controllers/paymentController');
@@ -8,10 +9,10 @@ router.get('/mentions', (req, res) => res.render('mentions'));
 router.get('/produit/:id', produitBackController.getProduit);
 router.post('/ajouter', produitBackController.postAjouter);
 router.get('/panier', (req, res) => res.render('panier'));
-router.get('/admin', (req, res) => res.render('admin'));
 router.get('/catalogue', produitBackController.catalogue);
 router.get('/search', produitBackController.searchProduct);
 
+router.get('/payment',(req, res)=>res.render('payment'))
 
 
 router.post('/payment/process',paymentController.processPayment);

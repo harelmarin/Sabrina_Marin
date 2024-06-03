@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const port = 3000; //port 
 
+//update la qté des produits payés
+
 produitController.admin= (req, res)=>{
     res.render('admin');
 }

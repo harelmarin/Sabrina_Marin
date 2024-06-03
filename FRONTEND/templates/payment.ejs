@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="../assets/js/paymentStripe.js"></script>
+    <link rel="stylesheet" href="../assets/css/payment.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
@@ -9,21 +11,34 @@
     <!--formulaire de payment-->
     <form id="payment-form" action="/backend/payment" method="get">
         <!--nom-->
+        <div class="div-container">
         <label for="name">Nom</label>
         <input type="text" name="name" id="name" required>
+    </div>
+        
         <!--prénom-->
+        <div class="div-container">
         <label for="firstname">Prénom</label>
         <input type="text" name="firstname" id="firstname" required>
+        </div>
         <!--adresse email-->
+
+        <div class="div-container">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" required>
+        </div>
         <!--adresse de livraison-->
+        <div class="div-container">
         <label for="address">Adresse:</label>
         <input type="text" id="address" name="address" autocomplete="off" width="500px">
         <ul id="suggestions" style="border: 1px solid #ccc; list-style: none; padding: 0;"></ul>
+        </div>
+       <!--carte de payment-->
+        <div class="div-container">
         <div>
             <label for="card-element">Carte de crédit ou de débit</label>
             <div id="card-element"></div>
+        </div>
         </div>
     </form>
 </body>
