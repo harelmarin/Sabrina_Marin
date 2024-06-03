@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
-        alert('Produit ajouté au panier');
         console.log('Produit ajouté au panier', product);
     });
 

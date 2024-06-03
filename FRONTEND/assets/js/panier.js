@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('cart');
         cartItemsDiv.innerHTML = '';
         document.getElementById('total-price').innerText = 'Total: 0 EUR';
-        alert('Panier vidé');
     });
 
     // Formulaire de paiement
