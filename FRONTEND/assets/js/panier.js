@@ -26,10 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
         productDetails.className = 'cart-item-details';
         productDetails.innerHTML = `
         <h3>${product.name}</h3>
-        <h2>${product.price} ${product.currency} x ${product.quantity}</h2>
-            <h3>Couleur: ${product.color}</h3>
-            <h3>Taille: ${product.size}</h3>
+        <h4>Taille : ${product.size}</h4>
+        <h5> Qté : ${product.quantity}</h5>
+        <p> Livraison en 3 à 6 jours </p>
+        <h2>${product.price} ${product.currency}</h2>
+       
         `;
+
 
         productDiv.appendChild(productImg);
         productDiv.appendChild(productDetails);
