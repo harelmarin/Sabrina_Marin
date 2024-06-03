@@ -26,13 +26,13 @@
 
 .container-decouvrir-text h2 {
     font-size: 25px;
-    font-family: 'Regular';
+    font-family: 'MGCS';
 }
 
 .container-decouvrir-text h3 {
     margin-top: 15px;
     font-size: 15px;
-    font-family: 'Thin';
+    font-family: 'Normal';
     font-style: italic;
     opacity: 0.7;
 }
@@ -53,6 +53,10 @@
     cursor: pointer;
 }
 
+.container-decouvrir-text button p {
+  font-family: 'MGCS';
+}
+
 .container-new {
     margin-top: 30px;
     padding-left: 140px; 
@@ -69,12 +73,12 @@
     font-size: 40px;
     text-align: center;
     color: #F1F6F9;
+    padding: 5px;
 }
 
 .new p {
-  font-family: 'Bold';
+  font-family: 'MGCS';
   font-weight: bolder;
-
 }
 
 .swiper {
@@ -108,7 +112,7 @@
     background-position: center;
     background-size: contain;
     position: absolute;
-    transform: translate(-100px, -250px);
+    transform: translate(-150px, -250px);
     z-index: 10;
   }
 
@@ -120,7 +124,7 @@
     width: 59px;
     height: 68px;
     position: absolute;
-    transform: translate(830px, -250px);
+    transform: translate(920px, -250px);
     z-index: 10;
 
   }
@@ -137,20 +141,20 @@
     margin-top: 15px;
     font-weight: bold;
     font-size: 18px;
-    font-family: 'Bold';
+    font-family: 'Normal';
   }
   .swiper h4 {
     margin-top: 5px;
     font-style: italic;
     color: #939292;
     font-size: 15px;
-    font-family: 'Thin';
+    font-family: 'Normal';
   }
 
   .swiper h5 {
     margin-top: 5px;
     font-size: 18px;
-    font-family: 'Bold';
+    font-family: 'Normal';
   }
 
   .coeur {
@@ -178,9 +182,17 @@
 }
 
 .container-decouvrir-text p{
-  font-family: 'Bold';
+  font-family: 'MGCS';
 }
+@media (max-width: 1390px) {
+  .swiper-button-next {
+    transform: translate(-100px, -250px);
+  }
 
+  .swiper-button-prev {
+    transform: translate(830px, -250px);
+  }
+}
 
 @media (max-width: 1255px) {
   .swiper-button-next {
