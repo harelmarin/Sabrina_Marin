@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         productImg.src = product.imagePath;
         productImg.alt = product.name;
         productImg.className = 'cart-item-image';
-        productImg.style.width='150px'
 
         const productDetails = document.createElement('div');
         productDetails.className = 'cart-item-details';
