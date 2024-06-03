@@ -6,7 +6,7 @@
 }
 
 h2 {
-    font-family: 'Regular';
+    font-family: 'MGCS';
     font-size: 60px;
     font-weight: 400;
 }
@@ -60,7 +60,7 @@ h2 {
 }
 
 .container-filter p {
-    font-family: 'Regular';
+    font-family: 'Normal';
     font-size: 30px;
     margin-right: 10px;
 }
@@ -113,7 +113,7 @@ transform: scale(1.02);
     margin-top: 15px;
     font-weight: bold;
     font-size: 18px;
-    font-family: 'Bold';
+    font-family: 'Normal';
   }
 
 .produits h4 {
@@ -121,13 +121,13 @@ transform: scale(1.02);
     font-style: italic;
     color: #939292;
     font-size: 15px;
-    font-family: 'Thin';
+    font-family: 'Normal';
   }
 
 .produits h5 {
     margin-top: 5px;
     font-size: 18px;
-    font-family: 'Bold';
+    font-family: 'Normal';
   }
 
 .pagination-container {
