@@ -8,21 +8,21 @@
 }
 
 .container-mentions h2 {
-    font-family: 'Regular';
+    font-family: 'MGCS';
     font-size: 60px;
     font-weight: 400;
     margin-top: 20px;
 }
 
 .container-mentions h3 {
-    font-family: 'Regular';
+    font-family: 'Normal';
     font-size: 30px;
     font-weight: 400;
     margin-top: 30px;
 }
 
 .container-mentions p  {
-    font-family: 'Thin';
+    font-family: 'Normal';
     font-size: 20px;
     font-weight: 400;
     margin-top: 15px;

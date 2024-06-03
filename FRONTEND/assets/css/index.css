@@ -1,6 +1,4 @@
 
-
-
 .container-index img {
     height: 780px;
     width: 100%;
@@ -222,6 +220,9 @@
   .swiper-button-prev {
     transform: translate(450px, -250px);
   }
+  .container-index img {
+    content: url(../img/img100px.jpg);
+}
 }
 
 @media (max-width: 900px) {
