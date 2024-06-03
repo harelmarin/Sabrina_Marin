@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (error) {
             document.getElementById('card-errors').textContent = error.message;
         } else {
-            var response = await fetch('/payment/process', {
+            var response = await fetch('/backend/payment/process', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 document.getElementById('card-errors').textContent = 'Erreur lors du traitement du paiement.';
             } else {
-                window.location.href = '/payment/confirmation'; // Rediriger vers la page de confirmation
+                window.location.href = '/backend/payment/confirmation'; // Rediriger vers la page de confirmation
             }
         }
     });
