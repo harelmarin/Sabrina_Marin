@@ -120,11 +120,21 @@ h2 {
   }
   }
 
-  @media (max-width: 540px) {
+  @media (max-width: 1000px) {
     h2 {
+    padding-top: 150px;
      text-align: center;
-     font-size: 30px;
+     font-size: 50px;
      padding-left: 0px;
+    }
+    .noresult {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 560x) {
+    h2 {
+     font-size: 30px;
     }
     .noresult {
       text-align: center;
