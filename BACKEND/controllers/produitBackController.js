@@ -35,7 +35,7 @@ produitBackController.catalogue = async (req, res) => {
     const { gender, type, page = 1 } = req.query;
     try {
         const response = await axios.get(`${apiBaseUrl}/catalogue`, {
-            params: { gender, type, page, limit:10 }
+            params: { gender, type, page, limit:8 }
         });
 
         // Accès direct aux données de la réponse

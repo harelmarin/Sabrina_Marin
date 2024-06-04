@@ -298,13 +298,13 @@
 
 .container-decouvrir-text h2 {
   font-size: 12px;
-  font-family: 'Regular';
+  font-family: 'MGCS';
 }
 
 .container-decouvrir-text h3 {
   margin-top: 15px;
   font-size: 8px;
-  font-family: 'Thin';
+  font-family: 'Normal';
   font-style: italic;
   opacity: 0.7;
 }
