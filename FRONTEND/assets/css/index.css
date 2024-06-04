@@ -51,6 +51,10 @@
     cursor: pointer;
 }
 
+.container-decouvrir-text button:hover {
+    transform: scale(1.02);
+}
+
 .container-decouvrir-text button p {
   font-family: 'MGCS';
 }
@@ -92,6 +96,14 @@
     border-radius: 5px;
     cursor: pointer;
     box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
+    opacity: 0.95;
+}
+
+.swiper img:hover {
+  translate: opacity 0.5s;
+  transform: scale(1.02);
+  opacity: 1;
+
 }
 
 
