@@ -1,4 +1,3 @@
-
 <!--    -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,10 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/catalogue.css">
     <link rel="stylesheet" href="../assets/css/global.css">
-    <script src="../assets/js/Convertion.js" defer></script>
-
+<script src="../assets/js/favoris.js" defer></script>
 </head>
-    
+
 <header class="header">
     <a class="title" href="/backend/home">
         <h1>wethefoot</h1>
@@ -47,25 +45,25 @@
             </div>
         </div>
         -->
-       
+
         <div class="container-filter">
             <div class="container-filter-content">
                 <form action="/backend/catalogue">
                     <p>Genre</p>
-                <select name="gender" id="gender">
-                  
-               <option value="">TOUS</option>
-                <option value="femme">Femme</option>
-                <option value="homme">Homme</option>
-            </select>
-            <p>Type</p>
-                <select name="type" id="type">
-                    <option value="">TOUS</option>
-                <option value="maillot">Maillot</option>
-                <option value="short">Short</option>
-            </select>
-                
-                <input type="submit" value="Filtrer">
+                    <select name="gender" id="gender">
+
+                        <option value="">TOUS</option>
+                        <option value="femme">Femme</option>
+                        <option value="homme">Homme</option>
+                    </select>
+                    <p>Type</p>
+                    <select name="type" id="type">
+                        <option value="">TOUS</option>
+                        <option value="maillot">Maillot</option>
+                        <option value="short">Short</option>
+                    </select>
+
+                    <input type="submit" value="Filtrer">
                 </form>
             </div>
         </div>
@@ -74,26 +72,28 @@
                 <h2>Aucun produit correspondant au filtre n'a été trouvé.</h2>
                 <% } else { %>
                     <% produits.forEach(produit=> { %>
-                        <div class="produits">
+                        <div class="produits post">
                             <% const imagesPaths = produit.images_paths; %>
                             <a href="/backend/produit/<%= produit.idProduct %>">
-                                <img src="<%= imagesPaths[0] %>" alt="Image du produit">
+                                <img src="<%= imagesPaths[0] %>" class="product-imagePath" alt="Image du produit">
                             </a>
-                                <div class="coeur likediv"></div>
-                                <h3>
-                                    <%= produit.name %>
-                                </h3>
-                                <h4>
-                                    <%= produit.gender %>
-                                </h4>
-                                <h5> Prix: <%= produit.price %>
-                                    
-                        <% if (produit.devise === 'EURO') { %>
-                                <%= produit.devise='€'  %>
-                        <% } else if (produit.devise === 'DOLLARS') { %>
-                                <%= produit.devise='$'  %>
-                        <% } %>
-                                </h5>
+                            <div class="coeur like"></div> <!--ajouté parmi les favoirs-->
+                            <input type="hidden" class="produit-idProduct" data-id="<%= produit.idProduct %>">
+                            <input type="hidden" class="produit-imagePath" data-imagePath="<%= imagesPaths[0] %>">
+                            <h3 class="product-name" data-name="<%= produit.name %>">
+                                <%= produit.name %>
+                            </h3>
+                            <h4 class="product-gender" data-name="<%= produit.gender %>">
+                                <%= produit.gender %>
+                            </h4>
+                            <h5 class="product-price" data-price="<%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %>" data-currency="<%= produit.devise %>">
+                                Prix: <%=Math.round( produit.price - (produit.price * produit.reduction / 100)) %>
+                                <% if (produit.devise === 'EURO') { %>
+                                    <%= produit.devise = '€' %>
+                                <% } else if (produit.devise === 'DOLLARS') { %>
+                                    <%= produit.devise = '$' %>
+                                <% } %>
+                            </h5>
                         </div>
                         <% }); %>
                             <% }; %>
@@ -101,13 +101,13 @@
 
         <section class="pagination-container">
             <div class="pagination">
-                <% if (typeof currentPage !== 'undefined' && currentPage > 1) { %>
+                <% if (typeof currentPage !=='undefined' && currentPage> 1) { %>
                     <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">
                         <img src="../assets/img/fleche-gauche.png" alt="fleche-gauche">
                     </a>
-                <% } %>
-            
-                <!-- <% if (typeof totalPages !== 'undefined') { %>
+                    <% } %>
+
+                        <!-- <% if (typeof totalPages !== 'undefined') { %>
                     <% for (let i = 1; i <= totalPages; i++) { %>
                         <a href="?page=<%= i %>&limit=<%= limit %>"
                            class="<%= currentPage === i ? 'active' : '' %>">
@@ -115,15 +115,16 @@
                         </a>
                     <% } %>
                 <% } %> -->
-            
-                <% if (typeof currentPage !== 'undefined' && typeof totalPages !== 'undefined' && currentPage < totalPages) { %>
-                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">
-                        <img src="../assets/img/fleche-droite.png" alt="fleche-droite">
-                    </a>
-                <% } %>
-            </div>            
+
+                        <% if (typeof currentPage !=='undefined' && typeof totalPages !=='undefined' && currentPage <
+                            totalPages) { %>
+                            <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">
+                                <img src="../assets/img/fleche-droite.png" alt="fleche-droite">
+                            </a>
+                            <% } %>
+            </div>
         </section>
-        
+
     </section>
 
 

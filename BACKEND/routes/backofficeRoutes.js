@@ -8,6 +8,7 @@ router.get('/home', produitBackController.getIndex);//page d'acceuil
 router.get('/mentions', (req, res) => res.render('mentions'));
 router.get('/produit/:id', produitBackController.getProduit);
 router.get('/panier', (req, res) => res.render('panier'));
+router.get('/favoris', (req, res) => res.render('favoris'));
 router.get('/catalogue', produitBackController.catalogue);
 router.get('/search', produitBackController.searchProduct);
 

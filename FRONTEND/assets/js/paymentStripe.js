@@ -7,16 +7,6 @@ function convertCurrency(currency) {
     };
     return currencyMapping[currency] || currency;
 }
-//fonction convertire la devise en symbole $ £
-function currencyMapping(currency) {
-    const currencyMapping = {
-        'EURO': '€',
-        'DOLLARS': '$',
-        'POUNDS': '£'
-    };
-    return currencyMapping[currency] || currency;
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     var stripe = Stripe('pk_test_51OkP9QKa0BEOKwek4AcHZOLCTI4gsDDZSCzWGrRjQt8hHy8sCueAiNxxwnjbUAPfEEtOXRiJ72nF2oO5puW0G8oW00efoSjW1x');
     var elements = stripe.elements();
@@ -31,16 +21,23 @@ document.addEventListener('DOMContentLoaded', function () {
         let cart = localStorage.getItem('cart');
         cart = cart ? JSON.parse(cart) : [];
         let totalAmount = 0;
-        let currency = currencyMapping(product.currency); // convertir 
-
+        let productDescription = `ACHAT DES PRODUITS  CHEZ WETHEFOOT`;
         cart.forEach(product => {
             currency = convertCurrency(product.currency); // Assurre que tous les produits ont la même devise
-            totalAmount += product.price * product.quantity;
+            totalAmount += (product.price-(product.price *product.reduction)/100 )* product.quantity;
         });
 
         // Conversion en centimes pour Stripe
         totalAmount = Math.round(totalAmount * 100);
 
+
+        //afficher le motant total a payer sur la page
+      const  productsAmount =document.getElementById('total-amount-div');
+
+      productsAmount.innerHTML = `
+        <h1> Total à payer: ${totalAmount / 100} </h1>
+    `;
+       
         var { paymentMethod, error } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement,
@@ -55,26 +52,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                   //les informations du paiement
-                    amount: totalAmount,
+                    amount: totalAmount, 
                     currency: currency,
-                    description: 'Paiement des produits du panier WETHEFOOT',
-                    cart: cart // Envoyer les détails du panier au backend
+                    source: paymentMethod.id,
+                    description: productDescription,
+                   cart: cart // Envoyer les détails du panier au backend
                 })
             });
 
             if (!response.ok) {
-                document.getElementById('card-errors').textContent = error.message;
+                document.getElementById('card-errors').textContent = 'Erreur lors du traitement du paiement.';
             } else {
-              
-
-                if (result.error) {
-                    document.getElementById('card-errors').textContent = result.error.message;
-                }else{
-                    localStorage.removeItem('cart');
-                    window.location.href = '/backend/payment/confirmation'; // redirection du client confirmation
-    
-                } }
+                console.log("payment réussi")
+                //vider le panier
+                localStorage.removeItem('cart');
+                window.location.href = '/backend/payment/confirmation'; // Rediriger vers la page de confirmation
+            }
         }
     });
 });

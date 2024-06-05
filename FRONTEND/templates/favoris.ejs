@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Favoris</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/catalogue.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <script src="../assets/js/displayFav.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+</head>
+<header class="header">
+    <a class="title" href="/backend/home">
+        <h1>wethefoot</h1>
+    </a>
+    <form action="/backend/search" method="GET">
+        <input type="text" name="search" id="search" placeholder="Search for a team, a brand..." autocomplete="off">
+    </form>
+    <nav class="Fav-Panier">
+        <a href="/backend/catalogue">Catalogue</a>
+        <a href="/backend/favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
+        <a href="/backend/panier"><img src="../assets/img/sac-de-courses.png"></a>
+    </nav>
+</header>
+<section class="container-produits" id="favoris-container">
+ <% if() %>  
+</section>
+<a href="/backend/catalogue"><button> <p> Commencer vos achats </p> </button></a>
+
+
+
+<footer>
+    <div class="nav-footer">
+        <a href="/backend/mentions"> CONTACT </a>
+        <a href="/backend/mentions"> MENTIONS LEGALES </a>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="../assets/js/carrousel.js"></script>
+
+</body>
+</html>

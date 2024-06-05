@@ -75,14 +75,14 @@
    <h3 id="product-description" data-description="<%= produit.description %>"></h3>
   <button id="show-more-btn" style="display: none;">Voir plus</button>
     </div>
-     <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%= produit.price %> 
+     <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%=  Math.round(produit.price - (produit.price * produit.reduction / 100)) %> 
         
         <% if (produit.devise === 'EURO') { %>
             <%= produit.devise='€'  %>
     <% } else if (produit.devise === 'DOLLARS') { %>
             <%= produit.devise='$'  %>
     <% } %></h4>
-    <p id="product-reduction" data-reduction="<%= produit.reduction %>" style="display: none;">Réduction: <%= produit.reduction %> %</p>
+    <p id="product-reduction" data-reduction="<%= produit.reduction %>"> </p>
     <p id="product-quantity" data-reduction="<%= produit.quantity %>" >Quantité: <%= produit.quantity %> </p>
 
     <form id="product-form">

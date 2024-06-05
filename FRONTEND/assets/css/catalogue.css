@@ -104,6 +104,16 @@ opacity: 1;
     background-size: cover;
     cursor: pointer;
   }
+.coeur_like {
+    position: absolute;
+    top: 15px;
+    left: 260px;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    cursor: pointer;
+    background-image: url('../img/coeurplein.png');
+  }
 .container-filter-content form {
     display: flex;
     flex-direction: row;
@@ -133,9 +143,7 @@ opacity: 1;
     opacity: 1;
 }
 
-.coeur:hover {
-    background-image: url('../img/coeurplein.png');
-  }
+
 
 .produits {
     height: 400px;

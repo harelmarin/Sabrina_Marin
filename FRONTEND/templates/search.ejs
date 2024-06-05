@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Search</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/search.css">
     <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body>
-    
+
     <header class="header">
         <a class="title" href="/backend/home">
             <h1>wethefoot</h1>
@@ -24,47 +25,83 @@
             <a href="/backend/panier"><img src="../assets/img/sac-de-courses.png"></a>
         </nav>
     </header>
-    
+
     <section>
-        <h2 >Resultats de recherche</h2>
-       
-        <% if (produits.length === 0) { %>
-<h2>AUCUN RESULTATS NE CORRESPOND A VOTRE RECHERCHE</h2>
-        <% } else { %>
-            <div class="container-produits">
-              
-            <% let hasResults = false; %>
-            <% produits.forEach(produit => { %>
-                <% const productName = produit.name.toLowerCase(); %>
-                <% const searchTerm = search.toLowerCase(); %>
-                <% if (productName.includes(searchTerm)) { %>
-                    <% hasResults = true; %>
+        <h2>Resultats de recherche</h2>
 
-                            <section class="produits"> 
+        <% if (produits.length===0) { %>
+            <h2>AUCUN RESULTATS NE CORRESPOND A VOTRE RECHERCHE</h2>
+            <% } else { %>
+                <div class="container-produits">
 
-                        <a href="/backend/produit/<%= produit.idProduct %>">
-                            <img src="<%= produit.images[0] %>" alt="Image du produit" width="150px">
-                        </a>
-                            <div class="coeur"></div>
-                        <h3><%= produit.name %></h3>
-                        <h4>Genre: <%= produit.gender %></h4>
-                        <h5 class="old-price">Prix: <%= produit.price %> <%= produit.devise %></h5>
-                        <p><%= produit.reduction %> %</p>
-                    </section>
-                
-                       
-                <% } %>
-            <% }); %>
-            <% if (!hasResults) { %>
-                    <p class="noresult">Aucun produit correspondant à votre recherche.</p>
-           
-            <% } %>
-        <% } %>
+                    <% let hasResults=false; %>
+                        <% produits.forEach(produit=> { %>
+                            <% const productName=produit.name.toLowerCase(); %>
+                                <% const searchTerm=search.toLowerCase(); %>
+                                    <% if (productName.includes(searchTerm)) { %>
+                                        <% hasResults=true; %>
 
-</div>
+                                            <section class="produits">
 
-</section>
-    
+                                                <a href="/backend/produit/<%= produit.idProduct %>">
+                                                    <img src="<%= produit.images[0] %>" alt="Image du produit"
+                                                        width="150px">
+                                                </a>
+                                                <div class="coeur"></div>
+                                                <h3>
+                                                    <%= produit.name %>
+                                                </h3>
+                                                <h4>Genre: <%= produit.gender %>
+                                                </h4>
+                                                <!-- if reduction === 0 => display none-->
+                                                <% if (produit.reduction===0) { %>
+                                                    <p></p>
+                                                    
+                                                    <h3 class="new-price">
+                                                        <%= Math.round(produit.price - (produit.price * produit.reduction /
+                                                            100)) %>
+                                                            <% if (produit.devise==='EURO' ) { %>
+                                                                <%= produit.devise='€' %>
+                                                                    <% } else if (produit.devise==='DOLLARS' ) { %>
+                                                                        <%= produit.devise='$' %>
+                                                                            <% } %>
+                                                    </h3>
+                                                    <% } %>
+
+                                                        <% if (produit.reduction !==0) { %>
+                                                            <h5 class="old-price">Prix: <%= produit.price %>
+                                                                <% if (produit.devise==='EURO' ) { %>
+                                                                    <%= produit.devise='€' %>
+                                                                        <% } else if (produit.devise==='DOLLARS' ) { %>
+                                                                            <%= produit.devise='$' %>
+                                                                                <% } %>
+                                                        </h5>
+                                                        <h3 class="new-price">
+                                                            <%= Math.round(produit.price - (produit.price * produit.reduction /
+                                                                100)) %>
+                                                                <%= produit.devise%>
+                                                               
+                                                        </h3>
+                                                            <p>
+                                                                <%= produit.reduction %> %
+                                                            </p>
+                                                            <% } %>
+                                            </section>
+
+
+                                            <% } %>
+                                                <% }); %>
+                                                    <% if (!hasResults) { %>
+                                                        <p class="noresult">Aucun produit correspondant à votre
+                                                            recherche.</p>
+
+                                                        <% } %>
+                                                            <% } %>
+
+                </div>
+
+    </section>
+
 
 </body>
 

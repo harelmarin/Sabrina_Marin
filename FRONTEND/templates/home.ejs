@@ -61,7 +61,7 @@
                                 <h4>
                                     <%= produit.gender %>
                                 </h4>
-                                <h5> Prix: <%= produit.price %>
+                                <h5 class="new-price">Prix: <%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %> 
                                         <% if (produit.devise==='EURO' ) { %>
                                             <%= produit.devise='€' %>
                                                 <% } else if (produit.devise==='DOLLARS' ) { %>
