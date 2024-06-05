@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (existingProductIndex > -1) {
             cart[existingProductIndex].quantity += product.quantity;
+            alert('la quantité du produit a été modifiée')
         } else {
             cart.push(product);
         }

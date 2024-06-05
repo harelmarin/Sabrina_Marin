@@ -16,7 +16,7 @@
     <script src="../assets/js/produit.js"></script>
     <style>
         .selected {
-            background-color: #ddd;
+            background-color: #b1b1b1;
         }
     </style>
 </head>
@@ -75,7 +75,13 @@
    <h3 id="product-description" data-description="<%= produit.description %>"></h3>
   <button id="show-more-btn" style="display: none;">Voir plus</button>
     </div>
-     <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%= produit.price %> <%= produit.devise %></h4>
+     <h4 id="product-price" data-price="<%= produit.price %>" data-currency="<%= produit.devise %>"><%= produit.price %> 
+        
+        <% if (produit.devise === 'EURO') { %>
+            <%= produit.devise='€'  %>
+    <% } else if (produit.devise === 'DOLLARS') { %>
+            <%= produit.devise='$'  %>
+    <% } %></h4>
     <p id="product-reduction" data-reduction="<%= produit.reduction %>" style="display: none;">Réduction: <%= produit.reduction %> %</p>
     <p id="product-quantity" data-reduction="<%= produit.quantity %>" >Quantité: <%= produit.quantity %> </p>
 
@@ -83,13 +89,25 @@
 
 
                 <section class="container-choix">
-            <label> <h5> Sélectionner un maillot </h5></label>
+            <label> <h5> Sélectionner un <%= produit.type %> </h5></label>
             <div class="container-button">
-            <% produit.colors.split(',').forEach((color, index) => { %>
-            <button type="button" class="color-button <%= index === 0 ? 'selected' : '' %>" data-color="<%= color %>">
-                <%= color.charAt(0).toUpperCase() + color.slice(1) %>
-            </button>
-            <% }); %>
+                <% produit.colors.split(',').forEach((color, index) => { 
+                    let displayColor = color;
+                    if (produit.type === 'Maillot') {
+                        switch (color) {
+                            case 'black':
+                                displayColor = 'Exterieure';
+                                break;
+                            case 'white':
+                                displayColor = 'Domicile';
+                                break;
+                        }
+                    }
+                %>
+                    <button type="button" class="color-button <%= index === 0 ? 'selected' : '' %>" data-color="<%= color %>">
+                        <%= displayColor.charAt(0).toUpperCase() + displayColor.slice(1) %>
+                    </button>
+                <% }); %>
         </div>
 
         <div>

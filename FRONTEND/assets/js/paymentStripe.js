@@ -7,6 +7,15 @@ function convertCurrency(currency) {
     };
     return currencyMapping[currency] || currency;
 }
+//fonction convertire la devise en symbole $ £
+function currencyMapping(currency) {
+    const currencyMapping = {
+        'EURO': '€',
+        'DOLLARS': '$',
+        'POUNDS': '£'
+    };
+    return currencyMapping[currency] || currency;
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     var stripe = Stripe('pk_test_51OkP9QKa0BEOKwek4AcHZOLCTI4gsDDZSCzWGrRjQt8hHy8sCueAiNxxwnjbUAPfEEtOXRiJ72nF2oO5puW0G8oW00efoSjW1x');
@@ -22,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let cart = localStorage.getItem('cart');
         cart = cart ? JSON.parse(cart) : [];
         let totalAmount = 0;
-        let currency = 'eur'; // Par défaut, définir sur EUR
+        let currency = currencyMapping(product.currency); // convertir 
 
         cart.forEach(product => {
             currency = convertCurrency(product.currency); // Assurre que tous les produits ont la même devise
@@ -46,23 +55,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                   //les informations du paiement
                     amount: totalAmount,
                     currency: currency,
-                    paymentMethodId: paymentMethod.id, // Envoyer l'ID de la méthode de paiement
                     description: 'Paiement des produits du panier WETHEFOOT',
                     cart: cart // Envoyer les détails du panier au backend
                 })
             });
 
             if (!response.ok) {
-                document.getElementById('card-errors').textContent = 'Erreur lors du traitement du paiement.';
+                document.getElementById('card-errors').textContent = error.message;
             } else {
-                var { clientSecret } = await response.json();
-                //cnfirmer le pauement avec le clientSECret
-                var result = await stripe.confirmCardPayment(clientSecret, {
-                    payment_method: paymentMethod.id,
-                    use_stripe_sdk: true,
-                });
+              
 
                 if (result.error) {
                     document.getElementById('card-errors').textContent = result.error.message;
