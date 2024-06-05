@@ -30,7 +30,7 @@
 <body>
     <section class="container-catalogue">
         <h2> Tous nos Maillots </h2>
-
+        <!--
         <div class="container-marque">
             <div class="marque">
                 <img src="../assets/img/adidas.png"> <p>Adidas</p>
@@ -45,18 +45,20 @@
                 <p class="other"> Autres marques </p>
             </div>
         </div>
+        -->
        
         <div class="container-filter">
-            <p> Filtre </p> <img src="../assets/img/filtre.png">
             <div class="container-filter-content">
                 <form action="/backend/catalogue">
-                <select name="gender" id="gender">Genre
+                    <p>Genre</p>
+                <select name="gender" id="gender">
+                  
                <option value="">TOUS</option>
                 <option value="femme">Femme</option>
                 <option value="homme">Homme</option>
             </select>
-            
-                <select name="type" id="type">Type
+            <p>Type</p>
+                <select name="type" id="type">
                     <option value="">TOUS</option>
                 <option value="maillot">Maillot</option>
                 <option value="short">Short</option>

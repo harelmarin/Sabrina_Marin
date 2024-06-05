@@ -23,9 +23,12 @@
     cursor: pointer;
      margin-right:  20px;
     box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
+    opacity: 0.95
 }
 .container-produits img:hover{
     transform: scale(1.02);
+    translate: opacity 0.5s;
+    opacity: 1;
 }
 .coeur {
     position: absolute;
@@ -88,8 +91,16 @@
 }
 
 h2 {
+  padding-top: 120px;
   font-size: 60px;
+  font-family: 'MGCS';
+  padding-left: 80px;
+}
+
+.noresult {
+  font-size: 50px;
   font-family: 'Normal';
+  margin-top: 100px;
 }
 
 @media (max-width: 980px) {
@@ -107,4 +118,25 @@ h2 {
   .container-catalogue {
     padding-left: 0;
   }
+  }
+
+  @media (max-width: 1000px) {
+    h2 {
+    padding-top: 150px;
+     text-align: center;
+     font-size: 50px;
+     padding-left: 0px;
+    }
+    .noresult {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 560x) {
+    h2 {
+     font-size: 30px;
+    }
+    .noresult {
+      text-align: center;
+    }
   }

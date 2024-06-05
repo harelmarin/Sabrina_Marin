@@ -181,6 +181,14 @@ font-family: 'Normal';
     
 }
 
+#show-more-btn {
+    background-color: #333333;
+    color: #F1F6F9;
+    border-radius: 5px;
+    padding: 3px;
+    cursor: pointer;
+}
+
 @media (max-width: 1070px) {
     .container-global {
         flex-direction: column;
@@ -192,7 +200,6 @@ font-family: 'Normal';
     
 .container-text {
     margin-top: 50px;  
-    margin-left: 80px; 
 }
 }
 

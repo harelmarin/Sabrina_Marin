@@ -108,6 +108,7 @@ nav a {
     font-size:20px;
     font-family: 'Normal';
     color: #000;
+    opacity: 0.8;
 }
 nav a:hover {
     opacity: 1; 

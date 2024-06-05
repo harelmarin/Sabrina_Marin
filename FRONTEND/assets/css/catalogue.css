@@ -50,16 +50,18 @@ h2 {
 }
 
 .container-filter {
+    margin-top: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 80vw;
     height: 150px;
     border-top: 0.5px solid black;
-    border-bottom: 0.5px solid black
+    border-bottom: 0.5px solid black;
 }
 
 .container-filter p {
+    color: black;
     font-family: 'Normal';
     font-size: 30px;
     margin-right: 10px;
@@ -84,10 +86,14 @@ h2 {
     margin-right: 40px;
     cursor: pointer;
     box-shadow:0px 15px 48px 0 rgba(0,0,0,0.16);
+    opacity: 0.95;
 }
 .container-produits img:hover{
 transform: scale(1.02);
+translate: opacity 0.5s;
+opacity: 1;
 }
+
 .coeur {
     position: absolute;
     top: 15px;
@@ -98,6 +104,34 @@ transform: scale(1.02);
     background-size: cover;
     cursor: pointer;
   }
+.container-filter-content form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80vw;
+}
+.container-filter-content select {
+    background-color: #333333;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+    color: #F1F6F9;
+    text-align: center;
+    font-family: 'Normal';
+    margin-right: 100px;
+}
+
+.container-filter-content input {
+    width: 240px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #F1F6F9;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 1;
+}
 
 .coeur:hover {
     background-image: url('../img/coeurplein.png');
@@ -166,3 +200,36 @@ transform: scale(1.02);
         padding-left: 40px;
     }
     }
+    @media (max-width: 670px) {
+        .container-filter-content form {
+           margin-right: 0px;
+        }
+        .container-filter-content p {
+             font-size: 12px;
+         }
+         .container-filter-content input {
+            width: 120px;
+            height: 40px;
+            font-size: 14px;
+        }
+        .container-filter-content select {
+            
+            margin-right: 20px;
+        }
+
+         }
+    @media (max-width: 540px) {
+       h2 {
+        text-align: center;
+        font-size: 30px;
+       }
+
+       .container-catalogue {
+        padding-left: 0px;
+       }
+       .container-filter {
+        margin-left: 20px;
+        margin-right: 30px;
+       }
+
+        }
