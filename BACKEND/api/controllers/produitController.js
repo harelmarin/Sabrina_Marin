@@ -7,6 +7,51 @@ const path = require('path');
 const port = 3000; //port 
 
 //update la qté des produits payés
+produitController.deductQuantity = async (req, res) => {
+    const { id } = req.params;
+    const { quantity } = req.body;
+console.log("fonction open");
+
+    if (!quantity || quantity <= 0) {
+        return res.status(400).json({ error: 'Quantité invalide' });
+    }
+
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ error: 'Erreur de connexion à la base de données' });
+        } else {
+            connection.query(
+                'SELECT quantity FROM produits WHERE idProduct = ?',
+                [id],
+                (erreur, resultat) => {
+                    if (erreur) {
+                        console.log(erreur);
+                        return res.status(500).json({ error: 'Erreur lors de la récupération du produit' });
+                    } else if (resultat.length === 0) {
+                        return res.status(404).json({ error: 'Produit non trouvé' });
+                    } else if (resultat[0].quantity < quantity) {
+                        return res.status(400).json({ error: 'Quantité insuffisante en stock' });
+                    } else {
+                        connection.query(
+                            'UPDATE produits SET quantity = quantity - ? WHERE idProduct = ?',
+                            [quantity, id],
+                            (erreur, resultat) => {
+                                if (erreur) {
+                                    console.log(erreur);
+                                    return res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' });
+                                } else {
+                                    console.log(" mise a jour  de la quantité ok");
+                                    res.json({ success: true, message: 'Quantité mise à jour avec succès' });
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+        }
+    });
+};
 
 produitController.admin= (req, res)=>{
     res.render('admin');

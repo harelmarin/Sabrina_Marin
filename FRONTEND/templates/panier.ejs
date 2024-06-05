@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <title>Panier</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/panier.css">
-    <link rel="stylesheet" href="../assets/css/produit.css">
-    <link rel="stylesheet" href="../assets/css/global.css">
+    <title>Panier</title>
+    <link rel="stylesheet" href="/assets/css/panier.css">
+    <link rel="stylesheet" href="/assets/css/produit.css">
+    <link rel="stylesheet" href="/assets/css/global.css">
     <script src="../assets/js/panier.js" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
-    
     <header class="header">
         <a class="title" href="/backend/home">
             <h1>wethefoot</h1>
@@ -27,29 +25,15 @@
             <a href="/backend/panier"><img src="../assets/img/sac-de-courses.png"></a>
         </nav>
     </header>
-    
 
-<section class="container-panier">
-    <h1>Votre Panier</h1>
-    <div id="cart-items"></div>
-    <section class="container-paye">
-    <p id="total-price">Total : 0€  </p>
-   
-    <button id="clear-cart">Vider le panier</button>
-
-  
-</section>
-</section>
-
-<footer>
-    <div class="nav-footer">
-        <a href="/backend/mentions"> CONTACT </a>
-        <a href="/backend/mentions"> MENTIONS LEGALES </a>
-    </div>
-</footer>
-   
-      
-
+    <section class="container-panier">
+        <h1>Votre Panier</h1>
+        <div id="cart-items"></div>
+        <section class="container-paye">
+            <p id="total-price">Total : 0€</p>
+            <button id="clear-cart">Vider le panier</button>
+            <button id="checkout-button" onclick="window.location.href='/backend/payment'">Payer</button>
+        </section>
+    </section>
 </body>
-
 </html>

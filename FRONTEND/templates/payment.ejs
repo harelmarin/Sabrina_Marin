@@ -1,81 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <script src="../assets/js/paymentStripe.js"></script>
-    <link rel="stylesheet" href="../assets/css/payment.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Paiement</title>
+    <link rel="stylesheet" href="../assets/css/payment.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="../assets/js/paymentStripe.js" defer></script>
 </head>
 <body>
-    <!--formulaire de payment-->
-    <form id="payment-form" action="/backend/payment" method="get">
-        <!--nom-->
+    <form id="payment-form">
+       
         <div class="div-container">
-        <label for="name">Nom</label>
-        <input type="text" name="name" id="name" required>
-    </div>
-        
-        <!--prénom-->
-        <div class="div-container">
-        <label for="firstname">Prénom</label>
-        <input type="text" name="firstname" id="firstname" required>
+            <label for="address">Adresse</label>
+            <input type="text" id="address" name="address" autocomplete="off" required>
+            <ul id="suggestions" style="border: 1px solid #ccc; list-style: none; padding: 0;"></ul>
         </div>
-        <!--adresse email-->
-
         <div class="div-container">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
-        </div>
-        <!--adresse de livraison-->
-        <div class="div-container">
-        <label for="address">Adresse:</label>
-        <input type="text" id="address" name="address" autocomplete="off" width="500px">
-        <ul id="suggestions" style="border: 1px solid #ccc; list-style: none; padding: 0;"></ul>
-        </div>
-       <!--carte de payment-->
-        <div class="div-container">
-        <div>
             <label for="card-element">Carte de crédit ou de débit</label>
             <div id="card-element"></div>
         </div>
-        </div>
+        <button type="submit">Payer</button>
+        <div id="card-errors" role="alert"></div>
     </form>
-</body>
-<script >
-    document.addEventListener('DOMContentLoaded', function () {
-const addressInput = document.getElementById('address');
-const suggestionsList = document.getElementById('suggestions');
 
-addressInput.addEventListener('input', async function () {
-    const query = addressInput.value;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addressInput = document.getElementById('address');
+            const suggestionsList = document.getElementById('suggestions');
 
-    if (query.length < 3) {
-        suggestionsList.innerHTML = '';
-        return;
-    }
+            addressInput.addEventListener('input', async function () {
+                const query = addressInput.value;
 
-    const response = await fetch(`https://data.geopf.fr/geocodage/completion?text=${query}&type=PositionOfInterest,StreetAddress&maximumResponses=5`);
-    const data = await response.json();
+                if (query.length < 3) {
+                    suggestionsList.innerHTML = '';
+                    return;
+                }
 
-    if (data.status === 'OK') {
-        suggestionsList.innerHTML = '';
+                const response = await fetch(`https://data.geopf.fr/geocodage/completion?text=${query}&type=PositionOfInterest,StreetAddress&maximumResponses=5`);
+                const data = await response.json();
 
-        data.results.forEach(result => {
-            const listItem = document.createElement('li');
-            listItem.textContent = result.fulltext;
-            listItem.style.cursor = 'pointer';
+                if (data.status === 'OK') {
+                    suggestionsList.innerHTML = '';
 
-            listItem.addEventListener('click', function () {
-                addressInput.value = result.fulltext;
-                suggestionsList.innerHTML = '';
+                    data.results.forEach(result => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = result.fulltext;
+                        listItem.style.cursor = 'pointer';
+
+                        listItem.addEventListener('click', function () {
+                            addressInput.value = result.fulltext;
+                            suggestionsList.innerHTML = '';
+                        });
+
+                        suggestionsList.appendChild(listItem);
+                    });
+                }
             });
-
-            suggestionsList.appendChild(listItem);
         });
-    }
-});
-});
-
-</script>
+    </script>
+</body>
 </html>

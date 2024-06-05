@@ -35,7 +35,7 @@ produitBackController.catalogue = async (req, res) => {
     const { gender, type, page = 1 } = req.query;
     try {
         const response = await axios.get(`${apiBaseUrl}/catalogue`, {
-            params: { gender, type, page, limit:10 }
+            params: { gender, type, page, limit:8 }
         });
 
         // Accès direct aux données de la réponse
@@ -62,21 +62,6 @@ produitBackController.getProduit = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).render('security', { errorMessage: "Erreur lors de la récupération du produit" });
-    }
-};
-
-
-// Ajouter un produit (pour admin)
-produitBackController.postAjouter = async (req, res) => {
-    try {
-        console.log('req.body:', req.body);
-        console.log('req.files:', req.files);
-
-        await axios.post(`${apiBaseUrl}/ajouter`, req.body);
-        res.redirect('/backend/admin');
-    } catch (error) {
-        console.error('Erreur lors de l\'ajout du produit:', error);
-        res.status(500).render('security', { errorMessage: "Erreur lors de l'ajout du produit" });
     }
 };
 
