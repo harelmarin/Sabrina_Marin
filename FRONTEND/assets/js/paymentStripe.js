@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let productDescription = `ACHAT DES PRODUITS  CHEZ WETHEFOOT`;
         cart.forEach(product => {
             currency = convertCurrency(product.currency); // Assurre que tous les produits ont la même devise
-            totalAmount += (product.price-(product.price *product.reduction)/100 )* product.quantity;
+            totalAmount += (product.price - (product.price * product.reduction) / 100) * product.quantity;
         });
 
         // Conversion en centimes pour Stripe
@@ -32,12 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         //afficher le motant total a payer sur la page
-      const  productsAmount =document.getElementById('total-amount-div');
+        const productsAmount = document.getElementById('total-amount-div');
 
-      productsAmount.innerHTML = `
+        productsAmount.innerHTML = `
         <h1> Total à payer: ${totalAmount / 100} </h1>
     `;
-       
+
         var { paymentMethod, error } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement,
@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    amount: totalAmount, 
+                    amount: totalAmount,
                     currency: currency,
                     source: paymentMethod.id,
                     description: productDescription,
-                   cart: cart // Envoyer les détails du panier au backend
+                    cart: cart // Envoyer les détails du panier au backend
                 })
             });
 
@@ -68,6 +68,40 @@ document.addEventListener('DOMContentLoaded', function () {
                 localStorage.removeItem('cart');
                 window.location.href = '/backend/payment/confirmation'; // Rediriger vers la page de confirmation
             }
+        }
+    });
+    //
+    //
+    //suggestions d'aadresses
+    const addressInput = document.getElementById('address');
+    const suggestionsList = document.getElementById('suggestions');
+
+    addressInput.addEventListener('input', async function () {
+        const query = addressInput.value;
+
+        if (query.length < 3) {
+            suggestionsList.innerHTML = '';
+            return;
+        }
+
+        const response = await fetch(`https://data.geopf.fr/geocodage/completion?text=${query}&type=PositionOfInterest,StreetAddress&maximumResponses=5`);
+        const data = await response.json();
+
+        if (data.status === 'OK') {
+            suggestionsList.innerHTML = '';
+
+            data.results.forEach(result => {
+                const listItem = document.createElement('li');
+                listItem.textContent = result.fulltext;
+                listItem.style.cursor = 'pointer';
+
+                listItem.addEventListener('click', function () {
+                    addressInput.value = result.fulltext;
+                    suggestionsList.innerHTML = '';
+                });
+
+                suggestionsList.appendChild(listItem);
+            });
         }
     });
 });
