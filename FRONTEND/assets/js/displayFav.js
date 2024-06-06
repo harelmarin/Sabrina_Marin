@@ -9,18 +9,24 @@ function currencyMapping(currency) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const favorisContainer = document.getElementById('favoris-container');
-
     let LikeCart = localStorage.getItem('favoris');
     LikeCart = LikeCart ? JSON.parse(LikeCart) : [];
+
+    new Sortable(favorisContainer, {
+        animation: 150, 
+        onEnd: updateOrder 
+    });
+
     if (LikeCart.length > 0) {
         LikeCart.forEach((product) => {
             let currency = currencyMapping(product.currency);
             const productElement = document.createElement('div');
             productElement.classList.add('favoris-item');
             productElement.classList.add('produits');
+            productElement.setAttribute('data-id', product.id); // Ajouter un attribut de données pour stocker l'ID du favori
 
             productElement.innerHTML = `
-            <a href="/backend/produit/<%=${product.id} %>">
+            <a href="/backend/produit/${product.id}">
               <img src="${product.imagePath}" alt="${product.name}" class="favoris-image">
                 </a>
                 
@@ -40,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 productElement.remove();
             });
             favorisContainer.appendChild(productElement);
+           
         });
     } else {
         favorisContainer.innerHTML = '<h1>Vos Favoris sont vides </h1>';
@@ -54,3 +61,12 @@ function removeFavoris(productId) {
 
     localStorage.setItem('favoris', JSON.stringify(LikeCart));
 }
+
+function updateOrder(event) {
+    const items = event.target.querySelectorAll('.favoris-item');
+    const newOrder = [];
+    items.forEach(item => {
+      newOrder.push(parseInt(item.getAttribute('data-id')));
+    });
+    console.log('Nouvel ordre des favoris :', newOrder);
+  }

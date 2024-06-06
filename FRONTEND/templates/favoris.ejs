@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/catalogue.css">
     <link rel="stylesheet" href="../assets/css/global.css">
     <script src="../assets/js/displayFav.js" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js" defer></script>
 </head>
 <header class="header">
     <a class="title" href="/backend/home">
@@ -22,8 +22,7 @@
         <a href="/backend/panier"><img src="../assets/img/sac-de-courses.png"></a>
     </nav>
 </header>
-<section class="container-produits" id="favoris-container">
- <% if() %>  
+<section class="container-produits sortable-list" id="favoris-container">
 </section>
 <a href="/backend/catalogue"><button> <p> Commencer vos achats </p> </button></a>
 

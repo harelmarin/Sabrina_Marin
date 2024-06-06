@@ -66,6 +66,9 @@
                     <input type="submit" value="Filtrer">
                 </form>
             </div>
+            <button id="sort-button">
+                Trier par prix
+            </button>
         </div>
         <div class="container-produits">
             <% if (produits.length===0){ %>
@@ -136,5 +139,33 @@
     </footer>
 
 </body>
+<script defer>
+// Fonction de tri des produits par prix
+function trierProduitsParPrix() {
+  // Récupérer tous les éléments de produit
+  const produits = document.getElementsByClassName('produits');
 
+  // Convertir la liste d'éléments en tableau pour pouvoir trier
+  const produitsArray = Array.from(produits);
+
+  // Trier les produits en fonction du prix
+  produitsArray.sort((a, b) => {
+    const prixA = parseFloat(a.querySelector('.product-price').getAttribute('data-price'));
+    const prixB = parseFloat(b.querySelector('.product-price').getAttribute('data-price'));
+
+    return prixA - prixB;
+  });
+  const containerProduits = document.querySelector('.container-produits');
+  containerProduits.innerHTML = '';
+
+  // Réinsérer les produits triés dans le bon ordre
+  produitsArray.forEach(produit => {
+    containerProduits.appendChild(produit);
+  });
+}
+
+// Gestionnaire d'événements pour le clic sur le bouton de tri
+const sortButton = document.getElementById('sort-button');
+sortButton.addEventListener('click', trierProduitsParPrix);
+</script>
 </html>
