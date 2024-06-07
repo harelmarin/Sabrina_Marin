@@ -27,3 +27,14 @@
     font-weight: 400;
     margin-top: 15px;
 }
+
+@media (max-width: 980px) {
+    .container-mentions h2 {
+        text-align: center;
+    }
+    .container-mentions {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    
+  }
