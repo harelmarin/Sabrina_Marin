@@ -150,6 +150,30 @@ opacity: 1;
     margin-bottom: 30px;
     position: relative;
 }
+.produitsfav {
+    margin-bottom: 30px;
+}
+
+.produitsfav h3 {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Normal';
+  }
+
+.produitsfav h4 {
+    margin-top: 5px;
+    font-style: italic;
+    color: #939292;
+    font-size: 15px;
+    font-family: 'Normal';
+  }
+
+.produitsfav h5 {
+    margin-top: 5px;
+    font-size: 18px;
+    font-family: 'Normal';
+  }
 
 .produits h3 {
     margin-top: 15px;
@@ -196,6 +220,57 @@ opacity: 1;
     padding: 10px;
 }
 
+#favoris-container {
+    height: 100%;
+}
+
+.Textfav {
+    font-family: 'MGCS';
+    font-size: 60px;
+    font-weight: 400;
+    padding-top: 120px;
+    padding-left: 80px;
+}
+
+.remove-button {    
+    margin-top: 10px;
+    background-color: #333333;
+    color: #F1F6F9;
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 5px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    transform: scale(1.05);
+}
+
+.Achat {
+    width: 300px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #F1F6F9;
+    font-size: 20px;
+    margin-top: 40px;
+    cursor: pointer;
+    font-family: 'MGCS';
+}
+
+.container-achat {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+#favoris-image {
+    margin-top: 40px;
+    margin-right: 0px;
+}
 
 @media (max-width: 1395px) {
     .marque {
@@ -241,3 +316,15 @@ opacity: 1;
        }
 
         }
+
+
+        @media (max-width:900px) {
+            .Textfav {
+                text-align: center;
+                padding-left: 0px;
+                margin: 0px;
+            }
+            .container-produits img {
+                margin-right: 0px;
+            }
+    }
