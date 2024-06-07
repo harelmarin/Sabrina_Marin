@@ -7,6 +7,9 @@ function convertCurrency(currency) {
     };
     return currencyMapping[currency] || currency;
 }
+//afficher le prix total sur la page
+const productsAmount = document.getElementById('products-amount');
+// Stripe
 document.addEventListener('DOMContentLoaded', function () {
     var stripe = Stripe('pk_test_51OkP9QKa0BEOKwek4AcHZOLCTI4gsDDZSCzWGrRjQt8hHy8sCueAiNxxwnjbUAPfEEtOXRiJ72nF2oO5puW0G8oW00efoSjW1x');
     var elements = stripe.elements();
@@ -32,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         //afficher le motant total a payer sur la page
-        const productsAmount = document.getElementById('total-amount-div');
 
         productsAmount.innerHTML = `
         <h1> Total à payer: ${totalAmount / 100} </h1>

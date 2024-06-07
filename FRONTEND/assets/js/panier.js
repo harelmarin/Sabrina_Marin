@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
         productDiv.className = 'cart-item';
 
         const productImg = document.createElement('img');
-        productImg.src = product.imagePath;
-        productImg.alt = product.name;
+        productImg.src = product.imagePath;             
+        productImg.alt = product.name;                 
         prodID= product.id
         productImg.className = 'cart-item-image';                     
         const productDetails = document.createElement('div');
