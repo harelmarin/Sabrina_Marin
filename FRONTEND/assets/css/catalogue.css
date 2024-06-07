@@ -276,6 +276,16 @@ opacity: 1;
     margin-right: 0px;
 }
 
+#sort-button {
+    background-color: #333333;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+    color: #F1F6F9;
+    text-align: center;
+    font-family: 'Normal';
+    margin-right: 100px;
+}
 @media (max-width: 1395px) {
     .marque {
         width: 200px;
