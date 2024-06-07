@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let currency = currencyMapping(product.currency);
             const productElement = document.createElement('div');
             productElement.classList.add('favoris-item');
-            productElement.classList.add('produits');
+            productElement.classList.add('produitsfav');
 
             productElement.innerHTML = `
             <a href="/backend/produit/${product.id}">
