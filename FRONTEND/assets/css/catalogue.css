@@ -10,7 +10,11 @@ h2 {
     font-size: 60px;
     font-weight: 400;
 }
+h6{
+    font-size: 30px;
+    margin-top: 10px;
 
+}
 .container-marque {
     width: 80vw;
     height: 100%;

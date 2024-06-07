@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/catalogue.css">
+    <link rel="stylesheet" href="../assets/css/search.css">
     <link rel="stylesheet" href="../assets/css/global.css">
 <script src="../assets/js/favoris.js" defer></script>
 </head>
@@ -89,14 +90,36 @@
                             <h4 class="product-gender" data-name="<%= produit.gender %>">
                                 <%= produit.gender %>
                             </h4>
-                            <h5 class="product-price" data-price="<%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %>" data-currency="<%= produit.devise %>">
-                                Prix: <%=Math.round( produit.price - (produit.price * produit.reduction / 100)) %>
-                                <% if (produit.devise === 'EURO') { %>
-                                    <%= produit.devise = '€' %>
-                                <% } else if (produit.devise === 'DOLLARS') { %>
-                                    <%= produit.devise = '$' %>
-                                <% } %>
-                            </h5>
+                                <!-- if reduction === 0 => display none-->
+                                <% if (produit.reduction===0) { %>
+                                    <p></p>
+                                    
+                                    <h6 class="new-price product-price">
+                                        <%= Math.round(produit.price - (produit.price * produit.reduction /
+                                            100)) %>
+                                            <% if (produit.devise==='EURO' ) { %>
+                                                <%= produit.devise='€' %>
+                                                    <% } else if (produit.devise==='DOLLARS' ) { %>
+                                                        <%= produit.devise='$' %>
+                                                            <% } %>
+                                    </h6>
+                                    <% } %>
+                                        
+                                            <% if (produit.reduction !==0) { %>
+                                                <h3 class="old-price product-price" data-price="<%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %>" data-currency="<%= produit.devise %>">
+                                                    Prix: <%= produit.price %>
+                                                    <% if (produit.devise === 'EURO') { %>
+                                                        <%= produit.devise = '€' %>
+                                                    <% } else if (produit.devise === 'DOLLARS') { %>
+                                                        <%= produit.devise = '$' %>
+                                                    <% } %>
+                                                </h3>
+                                                <h6 class="new-price product-price" data-price="<%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %>" data-currency="<%= produit.devise %>">
+                                                    <%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %>
+                                                    <%= produit.devise %>
+                                                </h6>
+                                                <% } %>
+                            
                         </div>
                         <% }); %>
                             <% }; %>
