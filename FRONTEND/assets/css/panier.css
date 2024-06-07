@@ -142,7 +142,7 @@
     margin-bottom: 60px;
 }
 
-.container-panier button {
+.container-paye button {
     width: 300px;
     height: 80px;
     border-radius: 5px;
@@ -211,7 +211,35 @@
   margin-bottom: 100px;
   flex-direction: column;
 }
+ .remove-button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+  margin-left: 50px;
+  background-color: #F1F6F9;
 
+ }
+
+ .remove-button:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+ }
+.remove-button img{
+  width: 20px;
+  height: 20px;
+} 
+#clear-cart {
+  width: 150px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #333333;
+  color: #F1F6F9;
+  font-size: 15px;
+  margin-top: 40px;
+  cursor: pointer;
+  font-family: 'MGCS';
+}
 @media (max-width: 1255px) {
   .swiper-button-next {
     transform: translate(-50px, -250px);

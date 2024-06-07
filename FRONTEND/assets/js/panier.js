@@ -44,8 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         //le  bouton pour pouvoir supprimer un produit du panier
         const removeButton = document.createElement('button');
-        removeButton.innerText = 'Supprimer';
+        const ImgSupp = document.createElement('img');
+        ImgSupp.src = '../assets/img/fermer.png';
         removeButton.className = 'remove-button';
+        removeButton.appendChild(ImgSupp);
+        
         productDiv.appendChild(removeButton);
         removeButton.addEventListener('click', function() {
             cart = cart.filter(p => p.id !== product.id);
