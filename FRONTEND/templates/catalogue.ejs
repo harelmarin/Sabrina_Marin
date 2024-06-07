@@ -95,7 +95,7 @@
                                 <% if (produit.reduction===0) { %>
                                     <p></p>
                                     
-                                    <h6 class="new-price product-price">
+                                    <h6 class="new-price product-price" data-price="<%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %>" data-currency="<%= produit.devise %>">
                                         <%= Math.round(produit.price - (produit.price * produit.reduction /
                                             100)) %>
                                             <% if (produit.devise==='EURO' ) { %>
@@ -107,7 +107,7 @@
                                     <% } %>
                                         
                                             <% if (produit.reduction !==0) { %>
-                                                <h3 class="old-price product-price" data-price="<%= Math.round( produit.price - (produit.price * produit.reduction / 100)) %>" data-currency="<%= produit.devise %>">
+                                                <h3 class="old-price">
                                                     Prix: <%= produit.price %>
                                                     <% if (produit.devise === 'EURO') { %>
                                                         <%= produit.devise = '€' %>
@@ -166,6 +166,7 @@
 <script defer>
 // Fonction de tri des produits par prix
 function trierProduitsParPrix() {
+    event.preventDefault();
   // Récupérer tous les éléments de produit
   const produits = document.getElementsByClassName('produits');
 
@@ -174,8 +175,8 @@ function trierProduitsParPrix() {
 
   // Trier les produits en fonction du prix
   produitsArray.sort((a, b) => {
-    const prixA = parseFloat(a.querySelector('.product-price').getAttribute('data-price'));
-    const prixB = parseFloat(b.querySelector('.product-price').getAttribute('data-price'));
+    const prixA = parseFloat(a.querySelector('.new-price').getAttribute('data-price'));
+    const prixB = parseFloat(b.querySelector('.new-price').getAttribute('data-price'));
 
     return prixA - prixB;
   });
