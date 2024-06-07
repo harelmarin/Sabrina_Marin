@@ -9,6 +9,7 @@ function currencyMapping(currency) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const favorisContainer = document.getElementById('favoris-container');
+
     let LikeCart = localStorage.getItem('favoris');
     LikeCart = LikeCart ? JSON.parse(LikeCart) : [];
 
@@ -23,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const productElement = document.createElement('div');
             productElement.classList.add('favoris-item');
             productElement.classList.add('produits');
-            productElement.setAttribute('data-id', product.id); // Ajouter un attribut de données pour stocker l'ID du favori
 
             productElement.innerHTML = `
             <a href="/backend/produit/${product.id}">
