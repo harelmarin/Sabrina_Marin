@@ -126,6 +126,50 @@ helperUtils.searchFunction = (connection, query, callback) => {
     }
   });
 };
-
+//enregistre un user dans la base de donées
+helperUtils.saveUser = (connection, user, callback) => {
+  connection.query(
+      'INSERT INTO users (name, firstname, email, address, code) VALUES (?, ?, ?, ?, ?)',
+      [user.name, user.firstname, user.email, user.address, user.code],
+      (erreur, resultats) => {
+          if (erreur) {
+              console.log(erreur);
+              callback(erreur, null);
+          } else {
+              callback(null, resultats);
+          }
+      }
+  );
+}
+//getUserByEmail : verfi si un user est déjà enregistré
+helperUtils.getUserByEmail = (connection, email, callback) => {
+  connection.query(
+      'SELECT * FROM users WHERE email = ?',
+      [email],
+      (erreur, resultats) => {
+          if (erreur) {
+              console.log(erreur);
+              callback(erreur, null);
+          } else {
+              callback(null, resultats);
+          }
+      }
+  );  
+}
+//lier un user et les produit ataché insertBuy(connection, product.id, user.insertId, product.quantity)
+helperUtils.insertBuy = (connection, idProduct, idUser, quantity, callback) => {
+  connection.query(
+      'INSERT INTO buy (idProduct, idUser, quantity) VALUES (?, ?, ?)',
+      [idProduct, idUser, quantity],
+      (erreur, resultats) => {
+          if (erreur) {
+              console.log(erreur);
+              callback(erreur, null);
+          } else {
+              callback(null, resultats);
+          }
+      }
+  );
+}
 
  module.exports = helperUtils;

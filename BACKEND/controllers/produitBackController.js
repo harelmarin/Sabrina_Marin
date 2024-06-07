@@ -67,15 +67,5 @@ produitBackController.getProduit = async (req, res) => {
 
 //envoyer un code de confirmation à l'utilisateur
 // Fonction pour générer un code de confirmation aléatoire
-function genererCodeConfirmation() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = '';
-  
-    for (let i = 0; i < 6; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      code += characters[randomIndex];
-    }
-  
-    return code;
-  }
+
 module.exports = produitBackController;

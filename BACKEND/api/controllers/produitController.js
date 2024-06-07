@@ -359,5 +359,63 @@ produitController.postAjouter = (req, res) => {
     });
 };
 
+//ajout d'un user et de sa commande
+produitController.addUserCommand=(req, res)=>{
+    const {name, firstname, email, address, confirmationCode, cart} = req.body;
+    if (!name || !firstname || !email || !address || !confirmationCode || !cart) {
+        return res.status(400).json({ error: 'Champs requis manquants' });
+    }
+
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ error: 'Erreur de connexion à la base de données' });
+        } else {
+            connection.beginTransaction(async (erreur) => {
+                if (erreur) {
+                    console.log(erreur);
+                    return res.status(500).json({ error: 'Erreur lors de la transaction' });
+                }
+
+                try {
+                    // Enregistrer l'utilisateur dans la base de données
+                    //verifier si le user est déjà present
+                    const userExist =  helperUtils.getUserByEmail(connection, email);
+                  
+                    if (userExist.length > 0) {
+                        return res.status(400).json({ error: 'Cet email est déjà utilisé' });
+                    }else{
+                    // Enregistrer l'utilisateur dans la base de données
+                    const user = await helperUtils.insertUser(connection, name, firstname, email, address, confirmationCode);
+                    console.log("user", user);
+
+                    // Lier l'utilisateur et les produits achetés
+                    for (let product of cart) {
+                        await helperUtils.insertBuy(connection, product.id, user.insertId, product.quantity);
+                    }
+                }
+                    connection.commit((erreur) => {
+                        if (erreur) {
+                            connection.rollback(() => {
+                                console.log(erreur);
+                                return res.status(500).json({ error: 'Erreur lors de la confirmation de la transaction' });
+                            });
+                        } else {
+                            console.log('Commande ajoutée avec succès');
+                            res.json({ success: true, message: 'Commande ajoutée avec succès' });
+                        }
+                    });
+                } catch (error) {
+                    connection.rollback(() => {
+                        console.log(error);
+                        return res.status(500).json({ error: 'Erreur lors de l\'ajout de la commande' });
+                    });
+                }
+            });
+        }
+    });
+}
+
+
 
 module.exports = produitController;

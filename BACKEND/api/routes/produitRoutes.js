@@ -8,4 +8,5 @@ router.get('/catalogue', produitController.catalogue);
 router.get('/:id', produitController.getProduit);
 router.post('/ajouter', produitController.postAjouter);
 router.post('/:id/deduct', produitController.deductQuantity);
+router.post('/addUser', produitController.incrementQuantity);
 module.exports = router;
