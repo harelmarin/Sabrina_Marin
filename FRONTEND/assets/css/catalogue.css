@@ -305,6 +305,13 @@ opacity: 1;
     justify-content: center;
     margin-bottom: 50px;
 }
+
+.titre-fav {
+    margin-top: 50px;
+    font-family: 'MGCS';
+    font-size: 30px;
+    text-align: center;
+}
 @media (max-width: 1395px) {
     .marque {
         width: 200px;
@@ -358,7 +365,6 @@ opacity: 1;
         margin-left: 20px;
        }
        .container-produits {
-        padding-left: 20px;
         padding-right: 20px;
        }
  }

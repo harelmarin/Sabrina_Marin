@@ -101,6 +101,7 @@ h2 {
   font-size: 50px;
   font-family: 'Normal';
   margin-top: 100px;
+  margin-bottom: 50px;
 }
 
 @media (max-width: 980px) {
@@ -117,6 +118,9 @@ h2 {
   }
   .container-catalogue {
     padding-left: 0;
+  }
+  .noresult {
+    margin-top: 50px;
   }
   }
 

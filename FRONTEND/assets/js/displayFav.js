@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
            
         });
     } else {
-        favorisContainer.innerHTML = '<h1>Vos Favoris sont vides </h1>';
+        favorisContainer.innerHTML = '<h5 class="titre-fav">Vos Favoris sont vides </h5>';
     }
 });
 
