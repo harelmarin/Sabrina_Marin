@@ -237,7 +237,7 @@ opacity: 1;
 
 .Textfav {
     font-family: 'MGCS';
-    font-size: 60px;
+    font-size: 40px;
     font-weight: 400;
     padding-top: 120px;
     padding-left: 80px;
@@ -269,6 +269,7 @@ opacity: 1;
     margin-top: 40px;
     cursor: pointer;
     font-family: 'MGCS';
+    margin-bottom: 50px
 }
 
 .container-achat {
@@ -313,6 +314,9 @@ opacity: 1;
         display: flex;
         align-items: center;
         padding-left: 40px;
+    }
+    .Textfav {
+        text-align: center;
     }
     }
     @media (max-width: 670px) {

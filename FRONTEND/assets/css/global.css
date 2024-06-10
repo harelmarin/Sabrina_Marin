@@ -41,7 +41,7 @@
 
 @font-face {
     font-family: 'MGCS';
-    src: url(../font/Fontspring-DEMO-integralcf-bold.otf);
+    src: url(../font/IntegralCF-Bold.ttf);
 }
 
 @font-face {
@@ -69,6 +69,8 @@ footer {
     justify-content: center;
     align-items: center;
     font-family: 'Normal';
+    position: fixed;
+    bottom: 0;
   }
 
 body {

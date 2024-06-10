@@ -114,7 +114,7 @@ footer {
   }
 }
 
-@media (max-width: 6000px) {
+@media (max-width: 600px) {
   
 button[type="submit"] {
   width: 300px;
