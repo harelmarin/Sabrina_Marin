@@ -150,6 +150,46 @@ const addProductsToOrder = (connection, userId, cart, res) => {
 };
 
 
+//afficher l'historique de commande de l'utilisateur
+produitController.displayCommand = (req, res) => {
+    const userId = req.params.userId; // Assurez-vous que l'ID utilisateur est passé en tant que paramètre de route
+
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            return res.status(500).json({ error: "Erreur de connexion à la base de données" });
+        }
+
+        // Rrécupérer les commandes de l'utilisateur
+        connection.query(
+            'SELECT buy.idBuy, buy.idProduct, buy.quantity, produits.name AS productName, produits.price AS productPrice, produits.reduction AS productReduction ' +
+            'FROM buy JOIN produits ON buy.idProduct = produits.idProduct WHERE buy.idUser = ?',
+            [userId],
+            (erreur, resultats) => {
+                if (erreur) {
+                    console.log(erreur);
+                    return res.status(500).json({ error: "Erreur lors de la récupération des commandes" });
+                }
+
+                if (resultats.length === 0) {
+                    return res.status(404).json({ message: "Aucune commande trouvée pour cet utilisateur" });
+                }
+
+                // Structurer les résultats en un tableau d'objets
+                const orders = resultats.map(row => ({
+                    idBuy: row.idBuy,
+                    productId: row.idProduct,
+                    productName: row.productName,
+                    quantity: row.quantity,
+                    productPrice: row.productPrice,
+                    productReduction: row.productReduction,
+                }));
+
+                // Envoyer la réponse au client
+                res.json({ success: true, orders: orders });
+            }
+        );
+    });
+};
 
     
 

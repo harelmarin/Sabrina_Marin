@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes</title>
+</head>
+<body>
+    <h1>Vos Commandes</h1>
+    <% if (commands.length === 0) { %>
+        <h2>Aucune commande trouvée pour cet utilisateur.</h2>
+    <% } else { %>   
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Réduction</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% commands.forEach(produit => { %>
+                <tr>
+                    
+                    <td><a href="/backend/produit/<%= produit.productId %>"><%= produit.productName %></a></td>
+                    
+                    <td><%= produit.quantity %></td>
+                    <td><%= produit.productPrice %></td>
+                    <td><%= produit.productReduction %></td>
+                    <td><%= Math.round((produit.productPrice - (produit.productPrice * produit.productReduction / 100)) * produit.quantity) %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>

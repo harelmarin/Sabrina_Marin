@@ -15,6 +15,8 @@ router.get('/login', (req, res) => res.render('login'))
 router.get('/catalogue', produitBackController.catalogue);
 router.get('/search', produitBackController.searchProduct);
 
+router.get('/user/:id/commands', produitBackController.displayCommand)
+
 router.post('/connection', produitBackController.connection);
 router.post('/signup', produitBackController.inscription);
 

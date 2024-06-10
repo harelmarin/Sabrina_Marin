@@ -120,5 +120,21 @@ produitBackController.getProduit = async (req, res) => {
     }
 };
 
-
+//afficher les commande du user
+produitBackController.displayCommand = async (req, res) => {
+    // Vérifier si l'utilisateur est connecté
+    if (!req.session.userId) {
+        return res.redirect('/backend/login');
+    }
+    const userId = req.session.userId;
+    try {
+        const response = await axios.get(`${apiBaseUrl}/user/${userId}/commands`);
+        const commands = response.data.orders;
+        console.log(commands)
+        res.render('commands', { commands });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('security', { errorMessage: "Erreur lors de la récupération des commandes" });
+    }
+};
 module.exports = produitBackController;
