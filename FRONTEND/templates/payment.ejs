@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paiement</title>
-    <link rel="stylesheet" href="../assets/css/payment.css">
+
+      <link rel="stylesheet" href="../assets/css/payment.css">
     <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/spinner.css">
+    <script src="../assets/js/spinner.js" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="../assets/js/paymentStripe.js" defer></script>
 </head>
@@ -24,60 +27,34 @@
     </nav>
 </header>
 <body>
-    <section class="container-payement">
-        <h2>Paiement</h2>
-        <div id="total-amount-div"></div>
     <form id="payment-form">
-        <section class="first-container">
+        <div id="total-amount-div"></div>
         <div class="div-container">
-            <label for="address"></label>
-            <input type="text" id="name" name="name" required minlength="3">
-            <placeholder> Nom </placeholder>
+            <label for="name">Nom</label>
+            <!-- Utiliser la variable name pour remplir le champ du nom -->
+            <input type="text" id="name" name="name" value="<%= name %>" required minlength="3" readonly>
         </div>
-
         <div class="div-container">
-            <label for="address"></label>
-            <input type="text" id="firstname" name="firstname" required minlength="3">
-            <placeholder> Prénom </placeholder>
+            <label for="firstname">Prénom</label>
+            <input type="text" id="firstname" name="firstname" value="<%= firstname %>" required minlength="3" readonly>
         </div>
-    </section>
-    <section class="second-container">
-
         <div class="div-container">
-            <label for="address"></label>
-            <input type="email" id="email" name="email" required>
-            <placeholder> Adresse mail </placeholder>
+            <label for="email">Email</label>
+           <input type="email" id="email" name="email" value="<%= email %>" required readonly>
         </div>
-
         <div class="div-container">
-            <label for="address"></label>
-            <input type="text" id="address" name="address" autocomplete="off" width="500px">
-            <placeholder> Adresse physique </placeholder>
-            <ul id="suggestions"></ul>
-
+            <label for="address">Adresse:</label>
+            <input type="text" id="address" name="address" autocomplete="off">
+            <ul id="suggestions" style="border: 1px solid #ccc; list-style: none; padding: 0;"></ul>
         </div>
-    </section>
-        <div class="carte">
+        <div class="div-container">
             <label for="card-element">Carte de crédit ou de débit</label>
             <div id="card-element"></div>
         </div>
-
         <button type="submit">Payer</button>
         <div id="card-errors" role="alert"></div>
     </form>
-</section>
-<footer>
-    <div class="nav-footer">
-        <a href="/backend/mentions"> CONTACT </a>
-        <a href="/backend/mentions"> MENTIONS LEGALES </a>
-    </div>
-</footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-           
-        });
-    </script>
+    
+
 </body>
-
-
 </html>

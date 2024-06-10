@@ -6,6 +6,59 @@ const produitBackController = {};
 // Configuration de l'URL de base de l'API
 const apiBaseUrl = 'http://localhost:3000/api/produits';
 
+produitBackController.renderPaymentPage = async (req, res) => {
+    try {
+        // Vérifier si l'utilisateur est connecté
+        if (!req.session.userId) {
+            return res.redirect('/backend/login');
+        }
+        const userId = req.session.userId;
+        console.log('l id récupré est :  ' + userId);
+        console.log(`${apiBaseUrl}/user/${userId}`);
+        const response = await axios.get(`${apiBaseUrl}/user/${userId}`);
+
+        if (response.data.success) {
+            const { name, firstname, email } = response.data.user;
+            console.log(name+ "   " +firstname+ "   "+ email );
+            res.render('payment', { name, firstname, email });
+        } else {
+            return res.status(500).json({ success: false, error: "Impossible de récupérer les informations de l'utilisateur" });
+        }
+    } catch (error) {
+        return res.status(500).json({ success: false, error: "Erreur lors de la récupération des informations de l'utilisateur" });
+    }
+};
+// Requête pour inscrire un utilisateur
+produitBackController.inscription = async (req, res) => {
+    try {
+        const response = await axios.post(`${apiBaseUrl}/InscriptionUser`, req.body);
+        res.redirect('/backend/payment'); 
+    } catch (error) {
+        return res.status(500).json({ success: false, error: "Erreur lors de la requête à l'API" });
+ 
+        // Redirige vers la page d'inscription en cas d'erreur
+    }
+};
+
+// Requête pour la connexion d'un utilisateur
+produitBackController.connection = async (req, res) => {
+    try {
+        const response = await axios.post(`${apiBaseUrl}/connectionUser`, req.body);
+        if (response.data.success) {
+            req.session.userId = response.data.userId;
+            console.log("connexion réussie  du user "+req.session.userId);
+            res.redirect('/backend/payment');
+        } else {
+            return res.status(400).json({ success: false, error: response.data.error });
+        }
+    } catch (error) {
+        return res.status(500).json({ success: false, error: "Erreur lors de la requête à l'API" });
+    }
+};
+
+
+
+
 // Page d'accueil avec les derniers nouveaux produits
 produitBackController.getIndex = async (req, res) => {
     try {
@@ -58,7 +111,7 @@ produitBackController.getProduit = async (req, res) => {
         const response = await axios.get(`${apiBaseUrl}/${id}`);
         const produit = response.data.produit;
         const imagesPaths = response.data.imagesPaths;
-        res.render('produit', { produit, imagesPaths });
+            res.render('produit', { produit, imagesPaths });
     } catch (error) {
         console.log(error);
         res.status(500).render('security', { errorMessage: "Erreur lors de la récupération du produit" });

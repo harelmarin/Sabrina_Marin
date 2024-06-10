@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmation de Paiement</title>
     <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/spinner.css">
+    <script src="../assets/js/spinner.js" defer></script>
 </head>
     
 <header class="header">
@@ -23,13 +25,16 @@
 </header>
 
 <body>
+    <div id="loading-spinner">
+        <div class="spinner"></div>
+    </div>
     <div class="confirmation">
         <h1>Confirmation de Paiement</h1>
         <p><%= message %></p>
     </div>
 
     <div class="container-panier">
-        <a href="/panier"><button>Retour au panier</button></a>
+        <a href="/backend/panier"><button>Retour au panier</button></a>
     </div>
     
     <footer>

@@ -8,5 +8,11 @@ router.get('/catalogue', produitController.catalogue);
 router.get('/:id', produitController.getProduit);
 router.post('/ajouter', produitController.postAjouter);
 router.post('/:id/deduct', produitController.deductQuantity);
-router.post('/addUser', produitController.incrementQuantity);
+router.post('/addUserCommand', produitController.addUserCommand);
+
+router.get('/user/:id', produitController.getUserById);
+
+router.post('/connectionUser', produitController.userConnection);
+router.post('/InscriptionUser', produitController.userInscription);
+
 module.exports = router;

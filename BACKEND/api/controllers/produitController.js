@@ -4,13 +4,197 @@ const helperUtils = require('../../helperFolder/helpers');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const bcrypt= require('bcrypt');
+const saltRounds=10;
 const port = 3000; //port 
 
+//connexion du user
+produitController.userConnection=(req, res)=>{
+    
+    console.log("connection function open ");
+    const {email , password}= req.body;
+    if(!email|| !password){
+        return res.status(400).send({ error: "TOUS LES CHAMPS SONT RECQUIS "})
+    }
+    req.getConnection((erreur, connection)=>{
+        if(erreur){
+            return res.status(500).json({error:"erreur lors de la connexion a la base de données"});
+        }
+        helperUtils.getUserByEmail(connection, email, (erreur,resultats)=>{
+    
+            if (erreur|| resultats.length === 0){
+                console.log("Utilisateur non trouvé ");
+                return res.status(400).json({error: "Utilisateur non trouvé "});
+            }
+            const user= resultats[0];
+            bcrypt.compare(password, user.password, (err, isMatch)=>{
+                if(err|| !isMatch){
+                    
+                console.log("MOT DE PASSE INCORECTE");
+                    return res.status(400).json({error:"Mot de passe incorrect"});
+           }
+           console.log("connexion réussie  du user   "+ user.idUser);
+           res.status(200).json({success:"true", message:"connexion réussie", userId: user.idUser})
+            })
+        })
+    })
+}
+
+
+//inscription d'un user 
+produitController.userInscription=(req, res)=>{
+    console.log("userInscription function open");
+    const {name, firstname, email, password}= req.body;
+
+    if (!name || !firstname || !email || !password ) {
+        console.log("Champ incomplet");
+        return res.status(400).send({ error: 'Champs requis manquants' });
+    }
+    req.getConnection((erreur, connection)=>{
+        if(erreur){s
+            return res.status(500).json({ error: "Erreur de connexion à la base de données" });
+        }
+        helperUtils.getUserByEmail(connection, email,(erreur, resultats)=>{
+            if(resultats.length>0){
+                console.log("L'utilisateur existe déjà");
+                return res.status(400).json({error:"L'utilisateur existe déjà"});
+            }else {
+                bcrypt.hash(password, saltRounds,(err,hash)=>{
+                    if(err){
+                        return res.status(500).json({error:"ERREUR LORS DU HASHAGE DU MOT DE PASSE "});
+                }
+            helperUtils.insertUser(connection, name , firstname, email,hash,(erreur,userResultats)=>{
+                if(erreur){
+                    return res.status(500).json({error:"ERREUR LORS DE L AJOUT DE L UTILISATEUR "});
+                }
+                console.log("Utilisateur ajouté avec succès")
+                res.status(200).json({success:true, message:"Utilisateur ajouté avec succès"});
+            });
+            });
+            }
+        });
+    });
+};
+
+//afficher un user a partir de son id
+produitController.getUserById = (req, res) => {
+    console.log("getUserById function open");
+    const id = req.params.id; 
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            return res.status(500).json({ error: "Erreur de connexion à la base de données" });
+        }
+
+        helperUtils.getUserById(connection, id, (erreur, resultats) => {
+            if (erreur) {
+                return res.status(500).json({ error: "Erreur lors de la récupération de l'utilisateur" });
+            }
+
+            if (resultats.length === 0) {
+                return res.status(404).json({ error: "Utilisateur non trouvé" });
+            }
+console.log("utilisateur est:  "+resultats[0])
+            res.json({ success: true, user: resultats[0] }); // Ajoutez success: true
+        });
+    });
+};
+
+
+//ajout de la commande dun user
+produitController.addUserCommand = (req, res) => {
+    const { userId, address, cart } = req.body;
+    console.log("addUserCommand  lid d de la session    " + userId);
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            return res.status(500).json({ error: "Erreur de connexion à la base de données" });
+        }
+
+        // Mettre à jour l'adresse de l'utilisateur
+        helperUtils.updateAddress(connection, userId, address, (erreur, resultats) => {
+            if (erreur) {
+                return res.status(500).json({ error: "Erreur lors de la mise à jour de l'adresse" });
+            }
+
+            // Ajouter les produits à la commande
+            addProductsToOrder(connection, userId, cart, res);
+        });
+    });
+};
+
+// Fonction pour ajouter les produits à la commande
+const addProductsToOrder = (connection, userId, cart, res) => {
+    const promises = cart.map(product => {
+        return new Promise((resolve, reject) => {
+            helperUtils.insertBuy(connection, product.id, userId, product.quantity, (erreur, resultats) => {
+                if (erreur) {
+                    console.log(erreur);
+                    reject(erreur);
+                } else {
+                    resolve(resultats);
+                }
+            });
+        });
+    });
+
+    Promise.all(promises)
+    .then(() => {
+        console.log('Commande ajoutée avec succès  '+userId);
+        res.json({ success: true, message: 'Commande ajoutée avec succès', userId:userId });
+   })
+        .catch((erreur) => {
+            console.log(erreur);
+            res.status(500).json({ error: 'Erreur lors de l\'ajout de la commande' });
+        });
+};
+
+
+
+    
+
+
+//page d'accueil avec les derniers nouveaux produits
+produitController.getIndex = (req, res) => {
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log(erreur);
+        } else {
+            connection.query(
+                `SELECT p.*, c.gender, c.type, c.colors, c.size,
+                 GROUP_CONCAT(i.path) AS images_paths
+                FROM produits p
+                JOIN caracteristiques c ON p.idCaracter = c.idCaracter
+                LEFT JOIN images i ON p.idProduct = i.idProduct
+                GROUP BY p.idProduct;
+                `, (erreur, resultats) => {
+                if (erreur) {
+                    console.log(erreur);
+                } else {
+                    //appel de la fonction pour afficher les 5 derniers produits
+                    const limite = 5;
+                    helperUtils.getLastestProducts(connection, limite, (erreur, derniersProduits) => {
+                        if (erreur) {
+                            console.log(erreur);
+                        } else {
+                            // Ajustement  des chemins d'image pour correspondre à l'URL de l'API
+                            resultats.forEach(produit => {
+                                produit.images_paths = produit.images_paths.split(',').map(path => `http://localhost:${port}/api/${path.replace(/\\/g, '/')}`);
+                            });
+                            derniersProduits.forEach(produit => {
+                                produit.images_paths = produit.images_paths.split(',').map(path => `http://localhost:${port}/api/${path.replace(/\\/g, '/')}`);
+                            });
+                            res.json({ produits: resultats, lastProducts: derniersProduits });
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
 //update la qté des produits payés
 produitController.deductQuantity = async (req, res) => {
     const { id } = req.params;
     const { quantity } = req.body;
-console.log("fonction open");
+console.log("deductQuantity         fonction open");
 
     if (!quantity || quantity <= 0) {
         return res.status(400).json({ error: 'Quantité invalide' });
@@ -52,49 +236,6 @@ console.log("fonction open");
         }
     });
 };
-
-produitController.admin= (req, res)=>{
-    res.render('admin');
-}
-//page d'accueil avec les derniers nouveaux produits
-produitController.getIndex = (req, res) => {
-    req.getConnection((erreur, connection) => {
-        if (erreur) {
-            console.log(erreur);
-        } else {
-            connection.query(
-                `SELECT p.*, c.gender, c.type, c.colors, c.size,
-                 GROUP_CONCAT(i.path) AS images_paths
-                FROM produits p
-                JOIN caracteristiques c ON p.idCaracter = c.idCaracter
-                LEFT JOIN images i ON p.idProduct = i.idProduct
-                GROUP BY p.idProduct;
-                `, (erreur, resultats) => {
-                if (erreur) {
-                    console.log(erreur);
-                } else {
-                    //appel de la fonction pour afficher les 5 derniers produits
-                    const limite = 5;
-                    helperUtils.getLastestProducts(connection, limite, (erreur, derniersProduits) => {
-                        if (erreur) {
-                            console.log(erreur);
-                        } else {
-                            // Ajustement  des chemins d'image pour correspondre à l'URL de l'API
-                            resultats.forEach(produit => {
-                                produit.images_paths = produit.images_paths.split(',').map(path => `http://localhost:${port}/api/${path.replace(/\\/g, '/')}`);
-                            });
-                            derniersProduits.forEach(produit => {
-                                produit.images_paths = produit.images_paths.split(',').map(path => `http://localhost:${port}/api/${path.replace(/\\/g, '/')}`);
-                            });
-                            res.json({ produits: resultats, lastProducts: derniersProduits });
-                        }
-                    });
-                }
-            });
-        }
-    });
-};
-
 // Rechercher un produit par son nom
 produitController.searchProduct = (req, res) => {
     const search = req.query.search;
@@ -358,63 +499,6 @@ produitController.postAjouter = (req, res) => {
         });
     });
 };
-
-//ajout d'un user et de sa commande
-produitController.addUserCommand=(req, res)=>{
-    const {name, firstname, email, address, confirmationCode, cart} = req.body;
-    if (!name || !firstname || !email || !address || !confirmationCode || !cart) {
-        return res.status(400).json({ error: 'Champs requis manquants' });
-    }
-
-    req.getConnection((erreur, connection) => {
-        if (erreur) {
-            console.log(erreur);
-            return res.status(500).json({ error: 'Erreur de connexion à la base de données' });
-        } else {
-            connection.beginTransaction(async (erreur) => {
-                if (erreur) {
-                    console.log(erreur);
-                    return res.status(500).json({ error: 'Erreur lors de la transaction' });
-                }
-
-                try {
-                    // Enregistrer l'utilisateur dans la base de données
-                    //verifier si le user est déjà present
-                    const userExist =  helperUtils.getUserByEmail(connection, email);
-                  
-                    if (userExist.length > 0) {
-                        return res.status(400).json({ error: 'Cet email est déjà utilisé' });
-                    }else{
-                    // Enregistrer l'utilisateur dans la base de données
-                    const user = await helperUtils.insertUser(connection, name, firstname, email, address, confirmationCode);
-                    console.log("user", user);
-
-                    // Lier l'utilisateur et les produits achetés
-                    for (let product of cart) {
-                        await helperUtils.insertBuy(connection, product.id, user.insertId, product.quantity);
-                    }
-                }
-                    connection.commit((erreur) => {
-                        if (erreur) {
-                            connection.rollback(() => {
-                                console.log(erreur);
-                                return res.status(500).json({ error: 'Erreur lors de la confirmation de la transaction' });
-                            });
-                        } else {
-                            console.log('Commande ajoutée avec succès');
-                            res.json({ success: true, message: 'Commande ajoutée avec succès' });
-                        }
-                    });
-                } catch (error) {
-                    connection.rollback(() => {
-                        console.log(error);
-                        return res.status(500).json({ error: 'Erreur lors de l\'ajout de la commande' });
-                    });
-                }
-            });
-        }
-    });
-}
 
 
 

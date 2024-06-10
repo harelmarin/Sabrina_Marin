@@ -126,11 +126,14 @@ helperUtils.searchFunction = (connection, query, callback) => {
     }
   });
 };
-//enregistre un user dans la base de donées
-helperUtils.saveUser = (connection, user, callback) => {
+
+
+
+// Fonction pour insérer un utilisateur
+helperUtils.insertUser = (connection, name, firstname, email,password, callback) => {
   connection.query(
-      'INSERT INTO users (name, firstname, email, address, code) VALUES (?, ?, ?, ?, ?)',
-      [user.name, user.firstname, user.email, user.address, user.code],
+      'INSERT INTO users (name, firstname, email, password) VALUES (?, ?, ?, ?)',
+      [name, firstname, email, password],
       (erreur, resultats) => {
           if (erreur) {
               console.log(erreur);
@@ -140,8 +143,42 @@ helperUtils.saveUser = (connection, user, callback) => {
           }
       }
   );
-}
-//getUserByEmail : verfi si un user est déjà enregistré
+};
+
+//  pour mettre à jour l'addresse de l'utilisateur
+helperUtils.updateAddress = (connection, userId, address, callback) => {
+  connection.query(
+      'UPDATE users SET address = ? WHERE idUser = ?',
+      [address, userId],
+      (erreur, resultats) => {
+          if (erreur) {
+              console.log(erreur);
+              callback(erreur, null);
+          } else {
+              callback(null, resultats);
+          }
+      }
+  );
+};
+
+// lier un utilisateur et les produits attachés
+helperUtils.insertBuy = (connection, idProduct, idUser, quantity, callback) => {
+  connection.query(
+    //'SELECT quantity FROM produits WHERE idProduct = ?',
+      'INSERT INTO buy (idProduct, idUser, quantity) VALUES (?, ?, ?)',
+      [idProduct, idUser, quantity],
+      (erreur, resultats) => {
+          if (erreur) {
+              console.log(erreur);
+              callback(erreur, null);
+          } else {
+              callback(null, resultats);
+          }
+      }
+  );
+};
+
+// Fonction pour obtenir un utilisateur par email
 helperUtils.getUserByEmail = (connection, email, callback) => {
   connection.query(
       'SELECT * FROM users WHERE email = ?',
@@ -154,13 +191,16 @@ helperUtils.getUserByEmail = (connection, email, callback) => {
               callback(null, resultats);
           }
       }
-  );  
-}
-//lier un user et les produit ataché insertBuy(connection, product.id, user.insertId, product.quantity)
-helperUtils.insertBuy = (connection, idProduct, idUser, quantity, callback) => {
+  );
+};
+
+
+
+// Fonction pour obtenir les informations de l'utilisateur
+helperUtils.getUserById = (connection, userId, callback) => {
   connection.query(
-      'INSERT INTO buy (idProduct, idUser, quantity) VALUES (?, ?, ?)',
-      [idProduct, idUser, quantity],
+      'SELECT * FROM users WHERE idUser = ?',
+      [userId],
       (erreur, resultats) => {
           if (erreur) {
               console.log(erreur);
@@ -170,6 +210,7 @@ helperUtils.insertBuy = (connection, idProduct, idUser, quantity, callback) => {
           }
       }
   );
-}
+};
+
 
  module.exports = helperUtils;

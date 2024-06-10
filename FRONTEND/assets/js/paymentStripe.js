@@ -20,25 +20,23 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        // Charger les produits du panier
+
         let cart = localStorage.getItem('cart');
         cart = cart ? JSON.parse(cart) : [];
         let totalAmount = 0;
-        let productDescription = `ACHAT DES PRODUITS  CHEZ WETHEFOOT`;
+        let productDescription = `ACHAT DES PRODUITS CHEZ WETHEFOOT`;
+        let Currency = "eur";
         cart.forEach(product => {
-            currency = convertCurrency(product.currency); // Assurre que tous les produits ont la même devise
             totalAmount += (product.price - (product.price * product.reduction) / 100) * product.quantity;
-        });
 
-        // Conversion en centimes pour Stripe
+            // Vérifiez si currency est toujours null et si oui, affectez-lui la devise actuelle du produit
+           
+        });
+        if (Currency === null) {
+            throw new Error("Aucune devise n'a été trouvée pour les produits dans le panier.");
+        }
         totalAmount = Math.round(totalAmount * 100);
 
-
-        //afficher le motant total a payer sur la page
-
-        productsAmount.innerHTML = `
-        <h1> Total à payer: ${totalAmount / 100} </h1>
-    `;
 
         var { paymentMethod, error } = await stripe.createPaymentMethod({
             type: 'card',
@@ -48,30 +46,74 @@ document.addEventListener('DOMContentLoaded', function () {
         if (error) {
             document.getElementById('card-errors').textContent = error.message;
         } else {
-            var response = await fetch('/backend/payment/process', {
+            var emailResponse = await fetch('/backend/payment/sendConfirmationEmail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    amount: totalAmount,
-                    currency: currency,
-                    source: paymentMethod.id,
-                    description: productDescription,
-                    cart: cart // Envoyer les détails du panier au backend
+                    name: form.name.value,
+                    firstname: form.firstname.value,
+                    email: form.email.value,
+                    address: form.address.value
                 })
             });
 
-            if (!response.ok) {
-                document.getElementById('card-errors').textContent = 'Erreur lors du traitement du paiement.';
+            if (!emailResponse.ok) {
+                document.getElementById('card-errors').textContent = 'Erreur lors de l\'envoi de l\'email de confirmation.';
             } else {
-                console.log("payment réussi")
-                //vider le panier
-                localStorage.removeItem('cart');
-                window.location.href = '/backend/payment/confirmation'; // Rediriger vers la page de confirmation
+                document.getElementById('submitCode').onclick = function () {
+                    const enteredCode = document.getElementById('confirmationCode').value;
+                    // Traitez le code de confirmation ici
+                    console.log("Code de confirmation entré : " + enteredCode);
+                    closeModal();
+                }
+                
+                var confirmUserResponse = await fetch('/backend/payment/confirmUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: form.name.value,
+                        firstname: form.firstname.value,
+                        email: form.email.value,
+                        address: form.address.value,
+                        enteredCode: enteredCode,
+                        cart: cart,
+                    })
+                });
+
+                if (!confirmUserResponse.ok) {
+                    document.getElementById('card-errors').textContent = 'Erreur lors de la confirmation du code.';
+                } else {
+
+                    var paymentResponse = await fetch('/backend/payment/process', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            amount: totalAmount,
+                            currency: Currency,
+                            source: paymentMethod.id,
+                            description: productDescription,
+                            cart: cart,
+                        })
+                    });
+
+                    if (!paymentResponse.ok) {
+                        document.getElementById('card-errors').textContent = 'Erreur lors du traitement du paiement.';
+                    } else {
+                        console.log("payment réussi");
+                        localStorage.removeItem('cart');
+                        window.location.href = '/backend/payment/confirmation';
+                    }
+                }
             }
         }
     });
+
     //
     //
     //suggestions d'aadresses
