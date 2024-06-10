@@ -67,8 +67,10 @@ produitController.userInscription=(req, res)=>{
                 if(erreur){
                     return res.status(500).json({error:"ERREUR LORS DE L AJOUT DE L UTILISATEUR "});
                 }
-                console.log("Utilisateur ajouté avec succès")
-                res.status(200).json({success:true, message:"Utilisateur ajouté avec succès"});
+                //recuoerer l'id de l'utilisateur autoincrementé
+                const userId= userResultats.insertId;
+                console.log("Utilisateur ajouté avec succès", userId);
+                res.status(200).json({success:true, message:"Utilisateur ajouté avec succès", userId});
             });
             });
             }
@@ -93,7 +95,7 @@ produitController.getUserById = (req, res) => {
             if (resultats.length === 0) {
                 return res.status(404).json({ error: "Utilisateur non trouvé" });
             }
-console.log("utilisateur est:  "+resultats[0])
+console.log("utilisateur est:  "+resultats[0].name)
             res.json({ success: true, user: resultats[0] }); // Ajoutez success: true
         });
     });

@@ -32,7 +32,9 @@ produitBackController.renderPaymentPage = async (req, res) => {
 produitBackController.inscription = async (req, res) => {
     try {
         const response = await axios.post(`${apiBaseUrl}/InscriptionUser`, req.body);
-        res.redirect('/backend/payment'); 
+        req.session.userId = response.data.userId;
+        console.log("inscription réussie  du user "+req.session.userId);
+            res.redirect('/backend/payment');
     } catch (error) {
         return res.status(500).json({ success: false, error: "Erreur lors de la requête à l'API" });
  
@@ -118,7 +120,5 @@ produitBackController.getProduit = async (req, res) => {
     }
 };
 
-//envoyer un code de confirmation à l'utilisateur
-// Fonction pour générer un code de confirmation aléatoire
 
 module.exports = produitBackController;

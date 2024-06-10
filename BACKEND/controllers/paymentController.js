@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const dotenvPath = path.resolve(__dirname, '../.env');
 
 let confirmationCode;
-// Configuration de l'URL de base de l'API
+
 const apiBaseUrl = 'http://localhost:3000/api/produits';
 
 if (fs.existsSync(dotenvPath)) {
@@ -16,6 +16,7 @@ if (fs.existsSync(dotenvPath)) {
     console.log('.env file not found');
 }
 const paymentController = {};
+
 function genererCodeConfirmation() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let code = '';
@@ -59,10 +60,9 @@ paymentController.sendConfirmationEmail = async (req, res) => {
     }
 };
 
-
 paymentController.confirmUser = async (req, res) => {
     try {
-        const { name, firstname, email, address, enteredCode, cart } = req.body;
+        const { address, enteredCode, cart } = req.body;
         const userId = req.session.userId;  //recup de l'id de la session
         if (enteredCode !== confirmationCode) {
             console.log("le code de confirmation   " + confirmationCode);
@@ -75,19 +75,17 @@ paymentController.confirmUser = async (req, res) => {
         console.log("le code entré   " + enteredCode);
         console.log("CODE CORRECT")
 
-        const user = {
-            name,
-            firstname,
-            email,
-            address,
-            userId,
-            cart
-        };
-
-        const response = await axios.post(`${apiBaseUrl}/addUserCommand`, user);//ajout de lacommande
-        // Vérifier la réponse pour voir si `userId` est présent
+        // Ajouter la commande de l'utilisateur
+        const user = { userId, address, cart };
+        const response = await axios.post(`${apiBaseUrl}/addUserCommand`, user);
+        
+        // Si la commande est ajoutée avec succès, déduire les quantités des produits
         if (response.data && response.data.userId) {
-            console.log('userId:', response.data.userId);
+            for (let product of cart) {
+                await axios.post(`${apiBaseUrl}/${product.id}/deduct`, {
+                    quantity: product.quantity
+                });
+            }
             res.status(200).json({ userId: response.data.userId });
         } else {
             console.error('userId is missing in the response:', response.data);
@@ -101,31 +99,26 @@ paymentController.confirmUser = async (req, res) => {
 
 paymentController.processPayment = async (req, res) => {
     try {
-        console.log("process payment ")
-        const { amount, currency, source, description, cart } = req.body;
-console.log(amount, currency, source, description, cart )
+        console.log("process payment ");
+        const { amount, currency, source, description } = req.body;
+
         // Validate request data
-        if (!amount || !currency || !source || !description || !cart) {
+        if (!amount || !currency || !source || !description) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
-        //creer le paiement avec stripe
+
+        // Créer le paiement avec Stripe
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
             currency: currency,
             payment_method_types: ['card'],
             description: description,
             payment_method: source,
-            confirm: true //confirmation paiement immédiatement
+            confirm: true // Confirmation paiement immédiatement
         });
 
-        // Deduct product quantities
-        for (let product of cart) {
-            await axios.post(`${apiBaseUrl}/${product.id}/deduct`, {
-                quantity: product.quantity
-            });
-        }
-
-        // Si le paiement est réussi,
+        // Si le paiement est réussi, envoyer un email de confirmation
+        // Note: Le cart ne doit pas être envoyé ici, il sera utilisé après la confirmation
         res.status(200).json({ message: 'Paiement réussi', paymentIntent: paymentIntent });
 
     } catch (error) {
@@ -141,9 +134,6 @@ paymentController.confirmation = async (req, res) => {
         console.error('Erreur lors de la confirmation du paiement:', error);
         res.status(500).json({ error: 'Erreur lors de la confirmation du paiement' });
     }
-
 };
-
-
 
 module.exports = paymentController;

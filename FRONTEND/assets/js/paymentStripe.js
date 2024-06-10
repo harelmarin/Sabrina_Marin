@@ -7,8 +7,6 @@ function convertCurrency(currency) {
     };
     return currencyMapping[currency] || currency;
 }
-//afficher le prix total sur la page
-const productsAmount = document.getElementById('products-amount');
 // Stripe
 document.addEventListener('DOMContentLoaded', function () {
     var stripe = Stripe('pk_test_51OkP9QKa0BEOKwek4AcHZOLCTI4gsDDZSCzWGrRjQt8hHy8sCueAiNxxwnjbUAPfEEtOXRiJ72nF2oO5puW0G8oW00efoSjW1x');
@@ -17,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
     cardElement.mount('#card-element');
 
     var form = document.getElementById('payment-form');
-    let enteredCode = ''; //code de confirmation éntré
+    let enteredCode = ''; // code de confirmation entré
+    
 
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
@@ -43,92 +42,92 @@ document.addEventListener('DOMContentLoaded', function () {
         if (error) {
             document.getElementById('card-errors').textContent = error.message;
         } else {
-            var emailResponse = await fetch('/backend/payment/sendConfirmationEmail', {
+            var paymentResponse = await fetch('/backend/payment/process', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: form.name.value,
-                    firstname: form.firstname.value,
-                    email: form.email.value,
-                    address: form.address.value
+                    amount: totalAmount,
+                    currency: Currency,
+                    source: paymentMethod.id,
+                    description: productDescription,
                 })
             });
 
-            if (!emailResponse.ok) {
-                document.getElementById('card-errors').textContent = 'Erreur lors de l\'envoi de l\'email de confirmation.';
+            if (!paymentResponse.ok) {
+                const errorData = await paymentResponse.json();
+                document.getElementById('card-errors').textContent = errorData.error.message || 'Erreur lors du traitement du paiement.';
             } else {
-                // Modal logic
-                const modal = document.getElementById("confirmationModal");
-                const span = document.getElementsByClassName("close")[0];
+                var emailResponse = await fetch('/backend/payment/sendConfirmationEmail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: form.name.value,
+                        firstname: form.firstname.value,
+                        email: form.email.value,
+                        address: form.address.value
+                    })
+                });
 
-                function showModal() {
-                    modal.style.display = "block";
-                }
+                if (!emailResponse.ok) {
+                    document.getElementById('card-errors').textContent = 'Erreur lors de l\'envoi de l\'email de confirmation.';
+                } else {
+                    // Modal logic
+                    const modal = document.getElementById("confirmationModal");
+                    const span = document.getElementsByClassName("close")[0];
 
-                function closeModal() {
-                    modal.style.display = "none";
-                }
+                    function showModal() {
+                        modal.style.display = "block";
+                    }
 
-                span.onclick = function () {
-                    closeModal();
-                }
+                    function closeModal() {
+                        modal.style.display = "none";
+                    }
 
-                window.onclick = function (event) {
-                    if (event.target == modal) {
+                    span.onclick = function () {
                         closeModal();
                     }
-                }
 
-                document.getElementById('submitCode').onclick = function () {
-                    enteredCode = document.getElementById('confirmationCode').value;
-                    console.log("Code de confirmation entré : " + enteredCode);
-                    closeModal();
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            closeModal();
+                        }
+                    }
 
-                    // Appeler la fonction de confirmation après la fermeture du modal
-                    confirmUser();
-                }
+                    document.getElementById('submitCode').onclick = function () {
+                        enteredCode = document.getElementById('confirmationCode').value;
+                        console.log("Code de confirmation entré : " + enteredCode);
+                        closeModal();
 
-                showModal();
+                        // Appeler la fonction de confirmation après la fermeture du modal
+                        confirmUser();
+                    }
 
-                async function confirmUser() {
-                    var confirmUserResponse = await fetch('/backend/payment/confirmUser', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            name: form.name.value,
-                            firstname: form.firstname.value,
-                            email: form.email.value,
-                            address: form.address.value,
-                            enteredCode: enteredCode,
-                            cart: cart,
-                        })
-                    });
+                    showModal();
 
-                    if (!confirmUserResponse.ok) {
-                        document.getElementById('card-errors').textContent = 'Erreur lors de la confirmation du code.';
-                    } else {
-                        var paymentResponse = await fetch('/backend/payment/process', {
+                    async function confirmUser() {
+                        var confirmUserResponse = await fetch('/backend/payment/confirmUser', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                amount: totalAmount,
-                                currency: Currency,
-                                source: paymentMethod.id,
-                                description: productDescription,
+                                name: form.name.value,
+                                firstname: form.firstname.value,
+                                email: form.email.value,
+                                address: form.address.value,
+                                enteredCode: enteredCode,
                                 cart: cart,
                             })
                         });
 
-                        if (!paymentResponse.ok) {
-                            document.getElementById('card-errors').textContent =paymentResponse.error;
+                        if (!confirmUserResponse.ok) {
+                            document.getElementById('card-errors').textContent = 'Erreur lors de la confirmation du code.';
                         } else {
-                            console.log("payment réussi");
+                            console.log("confirmation réussie");
                             localStorage.removeItem('cart');
                             window.location.href = '/backend/payment/confirmation';
                         }
@@ -138,9 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    //
-    //
-    //suggestions d'aadresses
+    // Suggestions d'adresses
     const addressInput = document.getElementById('address');
     const suggestionsList = document.getElementById('suggestions');
 
