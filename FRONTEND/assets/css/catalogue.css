@@ -2,7 +2,8 @@
 .container-cataloguee {
     height: 100%;
     padding-top: 120px;
-    padding-left: 80px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 
@@ -58,6 +59,7 @@ h6{
 }
 
 .container-filter {
+    margin-left: 50px;
     margin-right: 40px;
     margin-top: 40px;
     display: flex;
@@ -293,6 +295,15 @@ opacity: 1;
     margin-right: 100px;
 }
 
+.fleche-nav {
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
 @media (max-width: 1395px) {
     .marque {
         width: 200px;
@@ -309,8 +320,9 @@ opacity: 1;
            margin-right: 0px;
         }
         .allmaillot {
-    
+            font-size: 40px;
             padding-top: 50px;
+            text-align: center;
         }
         .container-filter-content p {
              font-size: 12px;
@@ -330,10 +342,6 @@ opacity: 1;
          }
         }
     @media (max-width: 540px) {
-       h2 {
-        text-align: center;
-        font-size: 30px;
-       }
 
        .container-cataloguee {
         padding-left: 0px;
@@ -344,6 +352,10 @@ opacity: 1;
        }
        .container-filter input {
         margin-left: 20px;
+       }
+       .container-produits {
+        padding-left: 20px;
+        padding-right: 20px;
        }
  }
 

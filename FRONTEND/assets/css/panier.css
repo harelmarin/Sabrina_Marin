@@ -142,6 +142,9 @@
     margin-bottom: 60px;
 }
 
+.container-paye {
+  margin-left: 0px;
+}
 .container-paye button {
     width: 300px;
     height: 80px;
