@@ -17,9 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
     cardElement.mount('#card-element');
 
     var form = document.getElementById('payment-form');
+    let enteredCode = ''; //code de confirmation éntré
+
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
-
 
         let cart = localStorage.getItem('cart');
         cart = cart ? JSON.parse(cart) : [];
@@ -28,15 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let Currency = "eur";
         cart.forEach(product => {
             totalAmount += (product.price - (product.price * product.reduction) / 100) * product.quantity;
-
-            // Vérifiez si currency est toujours null et si oui, affectez-lui la devise actuelle du produit
-           
         });
         if (Currency === null) {
             throw new Error("Aucune devise n'a été trouvée pour les produits dans le panier.");
         }
         totalAmount = Math.round(totalAmount * 100);
-
 
         var { paymentMethod, error } = await stripe.createPaymentMethod({
             type: 'card',
@@ -62,52 +59,79 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!emailResponse.ok) {
                 document.getElementById('card-errors').textContent = 'Erreur lors de l\'envoi de l\'email de confirmation.';
             } else {
-                document.getElementById('submitCode').onclick = function () {
-                    const enteredCode = document.getElementById('confirmationCode').value;
-                    // Traitez le code de confirmation ici
-                    console.log("Code de confirmation entré : " + enteredCode);
+                // Modal logic
+                const modal = document.getElementById("confirmationModal");
+                const span = document.getElementsByClassName("close")[0];
+
+                function showModal() {
+                    modal.style.display = "block";
+                }
+
+                function closeModal() {
+                    modal.style.display = "none";
+                }
+
+                span.onclick = function () {
                     closeModal();
                 }
-                
-                var confirmUserResponse = await fetch('/backend/payment/confirmUser', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: form.name.value,
-                        firstname: form.firstname.value,
-                        email: form.email.value,
-                        address: form.address.value,
-                        enteredCode: enteredCode,
-                        cart: cart,
-                    })
-                });
 
-                if (!confirmUserResponse.ok) {
-                    document.getElementById('card-errors').textContent = 'Erreur lors de la confirmation du code.';
-                } else {
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        closeModal();
+                    }
+                }
 
-                    var paymentResponse = await fetch('/backend/payment/process', {
+                document.getElementById('submitCode').onclick = function () {
+                    enteredCode = document.getElementById('confirmationCode').value;
+                    console.log("Code de confirmation entré : " + enteredCode);
+                    closeModal();
+
+                    // Appeler la fonction de confirmation après la fermeture du modal
+                    confirmUser();
+                }
+
+                showModal();
+
+                async function confirmUser() {
+                    var confirmUserResponse = await fetch('/backend/payment/confirmUser', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            amount: totalAmount,
-                            currency: Currency,
-                            source: paymentMethod.id,
-                            description: productDescription,
+                            name: form.name.value,
+                            firstname: form.firstname.value,
+                            email: form.email.value,
+                            address: form.address.value,
+                            enteredCode: enteredCode,
                             cart: cart,
                         })
                     });
 
-                    if (!paymentResponse.ok) {
-                        document.getElementById('card-errors').textContent = 'Erreur lors du traitement du paiement.';
+                    if (!confirmUserResponse.ok) {
+                        document.getElementById('card-errors').textContent = 'Erreur lors de la confirmation du code.';
                     } else {
-                        console.log("payment réussi");
-                        localStorage.removeItem('cart');
-                        window.location.href = '/backend/payment/confirmation';
+                        var paymentResponse = await fetch('/backend/payment/process', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                amount: totalAmount,
+                                currency: Currency,
+                                source: paymentMethod.id,
+                                description: productDescription,
+                                cart: cart,
+                            })
+                        });
+
+                        if (!paymentResponse.ok) {
+                            document.getElementById('card-errors').textContent =paymentResponse.error;
+                        } else {
+                            console.log("payment réussi");
+                            localStorage.removeItem('cart');
+                            window.location.href = '/backend/payment/confirmation';
+                        }
                     }
                 }
             }

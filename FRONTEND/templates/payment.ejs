@@ -28,6 +28,16 @@
 </header>
 <body>
     <form id="payment-form">
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p>Veuillez entrer le code de confirmation envoyé à votre adresse email :</p>
+              <input type="text" id="confirmationCode" />
+              <button id="submitCode" data-toggle="modal">Submit</button>
+            </div>
+          </div>
+          
+
         <div id="total-amount-div"></div>
         <div class="div-container">
             <label for="name">Nom</label>
