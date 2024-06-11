@@ -101,12 +101,12 @@ paymentController.processPayment = async (req, res) => {
     try {
         console.log("process payment ");
         const { amount, currency, source, description } = req.body;
-
+        console.log(amount , currency , source, description);
         // Validate request data
         if (!amount || !currency || !source || !description) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
-
+      
         // Créer le paiement avec Stripe
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
@@ -116,9 +116,7 @@ paymentController.processPayment = async (req, res) => {
             payment_method: source,
             confirm: true // Confirmation paiement immédiatement
         });
-
-        // Si le paiement est réussi, envoyer un email de confirmation
-        // Note: Le cart ne doit pas être envoyé ici, il sera utilisé après la confirmation
+        console.log(paymentIntent);
         res.status(200).json({ message: 'Paiement réussi', paymentIntent: paymentIntent });
 
     } catch (error) {
