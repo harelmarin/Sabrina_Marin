@@ -5,27 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paiement</title>
-
-      <link rel="stylesheet" href="../assets/css/payment.css">
-    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/payment.css">
     <link rel="stylesheet" href="../assets/css/spinner.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
     <script src="../assets/js/spinner.js" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="../assets/js/paymentStripe.js" defer></script>
 </head>
-<header class="header">
-    <a class="title" href="/backend/home">
-        <h1>wethefoot</h1>
-    </a>
-    <form action="/backend/search" method="GET">
-        <input type="text" name="search" id="search" placeholder="Search for a team, a brand..." autocomplete="off">
-    </form>
-    <nav class="Fav-Panier">
-        <a href="/backend/catalogue">Catalogue</a>
-        <a href="/backend/favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
-        <a href="/backend/panier"><img src="../assets/img/sac-de-courses.png"></a>
-    </nav>
-</header>
 <body>
     <div id="loading-spinner">
         <div class="spinner"></div>
@@ -38,10 +24,12 @@
               <input type="text" id="confirmationCode" />
               <button id="submitCode" data-toggle="modal">Submit</button>
             </div>
-          </div>
-          
+          </div>    
 
-        <div id="total-amount-div"></div>
+          <h2>Paiement</h2>
+          
+        <section class="container-payement">
+            <section class="first-container">
         <div class="div-container">
             <label for="name">Nom</label>
             <!-- Utiliser la variable name pour remplir le champ du nom -->
@@ -51,6 +39,8 @@
             <label for="firstname">Prénom</label>
             <input type="text" id="firstname" name="firstname" value="<%= firstname %>" required minlength="3" readonly>
         </div>
+        </section>
+        <section class="second-container">
         <div class="div-container">
             <label for="email">Email</label>
            <input type="email" id="email" name="email" value="<%= email %>" required readonly>
@@ -60,6 +50,7 @@
             <input type="text" id="address" name="address" autocomplete="off">
             <ul id="suggestions" style="border: 1px solid #ccc; list-style: none; padding: 0;"></ul>
         </div>
+    </section>
         <div class="div-container">
             <label for="card-element">Carte de crédit ou de débit</label>
             <div id="card-element"></div>
@@ -67,6 +58,7 @@
         <button type="submit">Payer</button>
         <div id="card-errors" role="alert"></div>
     </form>
+
     
 
 </body>

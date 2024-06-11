@@ -1,0 +1,50 @@
+.confirmation {
+    padding-top: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 40px;
+    text-align: center;
+    font-family: 'MGCS';
+    margin-bottom: 30px;
+}
+
+p {
+    font-family: 'Normal';
+    font-size: 20px     ;
+}
+.container-panier button{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #F1F6F9;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.container-panier button:hover {
+    transform: scale(1.02);
+}
+.container-panier button p {
+    font-family: 'MGCS';
+}
+.container-panier a {
+    text-decoration: none;
+    color: #F1F6F9;
+    text-align: center;
+}
+
+.container-panier {
+    display: flex;
+    justify-content: center;
+}
