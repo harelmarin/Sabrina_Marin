@@ -7,15 +7,7 @@ form{
 #card-element{
   width: 500px;
 }
-#total-amount-div{
-  margin-top: 30px;
-  background-color: #333333;
-  color: #F1F6F9;
-  width: 200px;
-  height: 50px;
-  border: #333333;
-  border-radius: 5px;
-}
+
 
 label {
   font-size: 16px;
@@ -47,7 +39,6 @@ button[type="submit"] {
 .container-payement {
   display: flex;
   flex-direction: column;
-  padding-top: 120px;
   padding-left: 80px;
 }
 
@@ -58,6 +49,7 @@ button[type="submit"] {
 h2 {
   font-size: 60px;
   font-family: 'MGCS';
+  margin-left: 80px;
 }
 
 #payment-form {
@@ -67,6 +59,7 @@ h2 {
 .div-container {
   display:flex;
   flex-direction: column;
+  margin-top: 50px;
 }
 
 .first-container {
@@ -90,6 +83,7 @@ h2 {
 
 ul {
   list-style: none;
+  width: 40vw;
 }
 
 footer {
@@ -122,4 +116,14 @@ button[type="submit"] {
   #card-element{
     width: 275px;
   }
+  h2 {
+    text-align: center;
+    margin-left: 0;
+    font-size: 40px;
+  }
+ .container-payement {
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+}
 }
