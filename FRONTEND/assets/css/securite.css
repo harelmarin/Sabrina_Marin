@@ -1,0 +1,17 @@
+.container-securité {
+    padding-top: 150px;
+}
+
+h2 {
+    
+    font-size: 40px;
+    text-align: center;
+    font-family: 'MGCS';
+}
+
+p {
+    margin-top: 50px;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Normal';
+}

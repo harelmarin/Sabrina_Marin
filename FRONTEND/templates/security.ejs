@@ -4,13 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/securite.css">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oups!!</title>
 </head>
+<header class="header">
+    <a class="title" href="/backend/home">
+        <h1>wethefoot</h1>
+    </a>
+    <form action="/backend/search" method="GET">
+        <input type="text" name="search" id="search" placeholder="Search for a team, a brand..." autocomplete="off">
+    </form>
+    <nav class="Fav-Panier">
+        <a href="/backend/catalogue">Catalogue</a>
+        <a href="/backend/favoris"><img src="../assets/img/contour-en-forme-de-coeur.png"></a>
+        <a href="/backend/panier"><img src="../assets/img/sac-de-courses.png"></a>
+    </nav>
+</header>
 <body>
-    <section class="container-index">
-    <h1>Page de sécurité</h1>
+    <section class="container-securité">
+    <h2>Page de sécurité</h2>
     <% if(errorMessage) { %>
         <p><%= errorMessage %></p>
     <% } %>
