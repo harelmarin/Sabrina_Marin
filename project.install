@@ -1,0 +1,13 @@
+npm install express
+npm install mysql
+npm install express-myconnection
+npm install body-parser
+npm install dotenv
+npm install ejs
+npm install axios
+npm install cors
+npm install express-session
+npm install connect-flash
+npm install nodemailer
+npm install bcrypt                         
+npm install stripe

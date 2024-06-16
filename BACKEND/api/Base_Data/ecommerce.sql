@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 10 juin 2024 à 09:52
+-- Généré le : dim. 16 juin 2024 à 14:22
 -- Version du serveur : 8.2.0
 -- Version de PHP : 8.2.13
 
@@ -39,26 +39,25 @@ CREATE TABLE IF NOT EXISTS `buy` (
   PRIMARY KEY (`idBuy`),
   KEY `idProduct` (`idProduct`),
   KEY `idUser` (`idUser`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `buy`
 --
 
 INSERT INTO `buy` (`idBuy`, `idProduct`, `idUser`, `quantity`) VALUES
-(1, 5, 3, 1),
-(2, 5, 3, 1),
 (3, 5, 3, 1),
-(4, 5, 3, 1),
-(5, 5, 3, 1),
-(6, 5, NULL, 1),
-(7, 5, 3, 1),
+(23, 15, 3, 2),
+(22, 8, 3, 1),
+(21, 13, 3, 1),
+(20, 8, 3, 1),
 (8, 17, 3, 1),
 (9, 15, 3, 1),
-(10, 15, 3, 1),
-(11, 9, 3, 1),
-(12, 15, 3, 1),
-(13, 9, 3, 1);
+(19, 11, 3, 1),
+(18, 5, 3, 2),
+(17, 9, 3, 1),
+(16, 16, 3, 1),
+(15, 17, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -205,17 +204,17 @@ CREATE TABLE IF NOT EXISTS `produits` (
 INSERT INTO `produits` (`idProduct`, `name`, `quantity`, `price`, `devise`, `reduction`, `description`, `idCaracter`) VALUES
 (1, 'MAILLOT REAL DE MADRID', 15, 120.00, 'EURO', 12.00, 'Le maillot Homme du Real Madrid revisite la tradition avec une touche dorée. Conservant une base blanc immaculé, ce maillot unique perpétue un héritage iconique, avec un design élégant inspiré de l\'histoire d\'un club de football légendaire.', 1),
 (4, 'MAILLOT REAL DE MADRID', 8, 110.00, 'EURO', 2.00, 'Le maillot femme du Real Madrid : un symbole de passion et d’élégance. Confortable, stylé et représentatif de l’histoire prestigieuse du club. Un choix incontournable pour les supportrices qui veulent afficher leur amour pour le football et leur équipe préférée.', 5),
-(5, 'MAILLOT  ARSENAL 23/24', 12, 150.20, 'EURO', 4.99, 'Le maillot pour femme d’Arsenal : une fusion parfaite entre style et performance. Affichez votre soutien avec ce vêtement emblématique, conçu pour les passionnées de football. Confortable et élégant, il vous accompagnera avec fierté dans chaque match.', 6),
-(8, 'MAILLOT FC BAYERN 23/24', 149, 157.00, 'EURO', 0.00, 'Le maillot FC Bayern 23/24 incarne l\'élégance et la tradition de l\'un des clubs les plus prestigieux d\'Europe. Conçu avec un design moderne et épuré, il arbore les couleurs emblématiques du club bavarois : le rouge vibrant et le blanc éclatant. Fabriqué avec des matériaux de haute qualité, il offre un confort optimal et une grande respirabilité, idéal pour les performances sportives.', 8),
-(9, 'MAILLOT REAL DE MADRID 23/24', 72, 200.00, 'EURO', 59.00, 'Découvrez le maillot Real Madrid 23/24, un incontournable pour tous les fans des Merengues. Arborant les couleurs emblématiques blanc et or, ce maillot signé Adidas est conçu en tissu AEROREADY pour une évacuation optimale de la transpiration, assurant confort et performance. Les détails soignés, tels que l\'écusson brodé et les bandes Adidas, ajoutent une touche de qualité et de style. Disponible en plusieurs tailles, il convient à tous les supporters, petits et grands.', 10),
+(5, 'MAILLOT  ARSENAL 23/24', 10, 150.20, 'EURO', 4.99, 'Le maillot pour femme d’Arsenal : une fusion parfaite entre style et performance. Affichez votre soutien avec ce vêtement emblématique, conçu pour les passionnées de football. Confortable et élégant, il vous accompagnera avec fierté dans chaque match.', 6),
+(8, 'MAILLOT FC BAYERN 23/24', 147, 157.00, 'EURO', 0.00, 'Le maillot FC Bayern 23/24 incarne l\'élégance et la tradition de l\'un des clubs les plus prestigieux d\'Europe. Conçu avec un design moderne et épuré, il arbore les couleurs emblématiques du club bavarois : le rouge vibrant et le blanc éclatant. Fabriqué avec des matériaux de haute qualité, il offre un confort optimal et une grande respirabilité, idéal pour les performances sportives.', 8),
+(9, 'MAILLOT REAL DE MADRID 23/24', 71, 200.00, 'EURO', 59.00, 'Découvrez le maillot Real Madrid 23/24, un incontournable pour tous les fans des Merengues. Arborant les couleurs emblématiques blanc et or, ce maillot signé Adidas est conçu en tissu AEROREADY pour une évacuation optimale de la transpiration, assurant confort et performance. Les détails soignés, tels que l\'écusson brodé et les bandes Adidas, ajoutent une touche de qualité et de style. Disponible en plusieurs tailles, il convient à tous les supporters, petits et grands.', 10),
 (10, 'MAILLOT ESPAGNE 23/24', 65, 250.00, 'EURO', 30.00, 'Découvrez le maillot officiel de l\'équipe d\'Espagne pour femme, saison 23/24. Ce maillot emblématique est conçu pour les vraies passionnées de football. Fabriqué avec des matériaux de haute qualité, il offre un confort optimal et une durabilité exceptionnelle. Sa coupe féminine épouse parfaitement les formes pour un look élégant sur et en dehors du terrain. Doté des dernières technologies, il garantit une évacuation rapide de la transpiration pour vous garder au sec et à l\'aise pendant les match', 11),
-(11, 'SHORT  ESSENTIALS 3', 25, 50.00, 'EURO', 0.00, 'Découvrez le short Essentials 3 pour femme, parfait pour vos séances d\'entraînement et moments de détente. Conçu avec des matériaux de haute qualité, il offre un confort exceptionnel et une grande liberté de mouvement. Sa coupe ajustée et son design moderne en font un choix idéal pour rester active tout en restant stylée. La taille élastique avec cordon de serrage assure un ajustement parfait, tandis que les poches latérales ajoutent une touche pratique.', 12),
-(12, 'SHORT ADICOLOR 3 BANDES', 20, 40.00, 'EURO', 0.00, 'Un classique réinventé. Ce short adidas revisite une silhouette classique avec des détails tendance. Le molleton doux assure un maximum de confort tout au long de la journée. Un logo Trèfle brodé reste fidèle à l\'héritage adidas, tout comme les 3 bandes sur les côtés.\r\n\r\nLe coton de ce produit a été sourcé via Better Cotton. Cette organisation utilise une approche de traçabilité appelée « Mass Balance ».', 13),
-(16, 'MAILLOT FC BAYERN 24/25', 10, 130.00, 'EURO', 0.00, 'Un maillot domicile rayé classique revisité. Créés à partir de trois nuances de rouge, les rayures sinueuses de ce maillot FC Bayern adidas sont formées de minuscules losanges pour une touche signature du club. Conçu pour offrir un maximum de confort aux fans de football et leur permettre de montrer leur soutien, il est équipé de la technologie AEROREADY qui évacue la transpiration et orné d\'un blason du club brodé.', 17),
-(13, 'MAILLOT ITALIE 24', 14, 150.00, 'EURO', 0.00, 'Joue pour le drapeau. Le rouge, le blanc et le vert du drapeau « il Tricolore » occupent une place de choix dans le design unique de ce maillot extérieur adidas de l\'Italie. Un blason de l\'équipe tissé sur la poitrine ajoute une touche d\'inspiration football. La technologie AEROREADY évacue la transpiration pour que tu puisses porter ce t-shirt sur le terrain, mais son principal objectif est de rendre chaque fan fier de sa nation.\r\n\r\nCe produit est conçu avec des matériaux 100 % recyclés. ', 14),
+(11, 'SHORT  ESSENTIALS 3', 24, 50.00, 'EURO', 0.00, 'Découvrez le short Essentials 3 pour femme, parfait pour vos séances d\'entraînement et moments de détente. Conçu avec des matériaux de haute qualité, il offre un confort exceptionnel et une grande liberté de mouvement. Sa coupe ajustée et son design moderne en font un choix idéal pour rester active tout en restant stylée. La taille élastique avec cordon de serrage assure un ajustement parfait, tandis que les poches latérales ajoutent une touche pratique.', 12),
+(12, 'SHORT ADICOLOR 3 BANDES', 19, 40.00, 'EURO', 0.00, 'Un classique réinventé. Ce short adidas revisite une silhouette classique avec des détails tendance. Le molleton doux assure un maximum de confort tout au long de la journée. Un logo Trèfle brodé reste fidèle à l\'héritage adidas, tout comme les 3 bandes sur les côtés.\r\n\r\nLe coton de ce produit a été sourcé via Better Cotton. Cette organisation utilise une approche de traçabilité appelée « Mass Balance ».', 13),
+(16, 'MAILLOT FC BAYERN 24/25', 9, 130.00, 'EURO', 0.00, 'Un maillot domicile rayé classique revisité. Créés à partir de trois nuances de rouge, les rayures sinueuses de ce maillot FC Bayern adidas sont formées de minuscules losanges pour une touche signature du club. Conçu pour offrir un maximum de confort aux fans de football et leur permettre de montrer leur soutien, il est équipé de la technologie AEROREADY qui évacue la transpiration et orné d\'un blason du club brodé.', 17),
+(13, 'MAILLOT ITALIE 24', 13, 150.00, 'EURO', 0.00, 'Joue pour le drapeau. Le rouge, le blanc et le vert du drapeau « il Tricolore » occupent une place de choix dans le design unique de ce maillot extérieur adidas de l\'Italie. Un blason de l\'équipe tissé sur la poitrine ajoute une touche d\'inspiration football. La technologie AEROREADY évacue la transpiration pour que tu puisses porter ce t-shirt sur le terrain, mais son principal objectif est de rendre chaque fan fier de sa nation.\r\n\r\nCe produit est conçu avec des matériaux 100 % recyclés. ', 14),
 (14, 'MAILLOT MANCHESTER UNITED 23/24', 20, 100.00, 'EURO', 0.00, 'Un club, une ville. Affiche fièrement les couleurs de ton équipe avec le maillot domicile 23/24 de Manchester United.\r\n\r\nCe maillot est un clin d\'œil à l\'influence internationale de Manchester United. Reprenant les éléments d\'un pont voisin datant de la Révolution industrielle, il affiche un motif géométrique répété inspiré de la Rose de Lancashire à l\'avant. La technologie thermorégulatrice HEAT.', 15),
-(15, 'MAILLOT ARGENTINE 24', 9, 140.00, 'EURO', 0.00, 'Arbore les couleurs de l\'Argentine avec ce maillot extérieur adidas inspiré de la scène musicale nationale. Affichant des éléments métallisés et une nuance de bleu unique, ce maillot de football est conçu pour offrir un maximum de confort aux fans avec ses inserts en mesh et la technologie AEROREADY qui évacue la transpiration. Un blason de l\'équipe tissé occupe le devant de la scène lorsque tu chantes pour encourager les joueurs.', 16),
-(17, 'MAILLOT ALLEMAGNE 24', 11, 100.00, 'EURO', 0.00, 'Un style de supporter de football traditionnel réinventé. Ce maillot extérieur de l\'Allemagne adidas affiche un design inspiré des plumes d\'aigle sur la poitrine, avec des touches de violet et de bleu flashy. La technologie AEROREADY qui évacue la transpiration et un blason de l\'équipe tissé premium en font un t-shirt confortable qui t\'accompagne pendant l\'effort.', 18);
+(15, 'MAILLOT ARGENTINE 24', 7, 140.00, 'EURO', 0.00, 'Arbore les couleurs de l\'Argentine avec ce maillot extérieur adidas inspiré de la scène musicale nationale. Affichant des éléments métallisés et une nuance de bleu unique, ce maillot de football est conçu pour offrir un maximum de confort aux fans avec ses inserts en mesh et la technologie AEROREADY qui évacue la transpiration. Un blason de l\'équipe tissé occupe le devant de la scène lorsque tu chantes pour encourager les joueurs.', 16),
+(17, 'MAILLOT ALLEMAGNE 24', 9, 100.00, 'EURO', 0.00, 'Un style de supporter de football traditionnel réinventé. Ce maillot extérieur de l\'Allemagne adidas affiche un design inspiré des plumes d\'aigle sur la poitrine, avec des touches de violet et de bleu flashy. La technologie AEROREADY qui évacue la transpiration et un blason de l\'équipe tissé premium en font un t-shirt confortable qui t\'accompagne pendant l\'effort.', 18);
 
 -- --------------------------------------------------------
 
@@ -239,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`idUser`, `name`, `firstname`, `email`, `password`, `address`) VALUES
-(3, 'mama', 'papa', 'sabrinaeloundou33@gmail.com', '$2b$10$l2WL93OgcyLcl30BzoI1ruUOcQTe9PYHCcNcGJIvFLWXeqktEmKr.', '12 Rue Lecourbe, 75015 Paris'),
+(3, 'mama', 'papa', 'sabrinaeloundou33@gmail.com', '$2b$10$l2WL93OgcyLcl30BzoI1ruUOcQTe9PYHCcNcGJIvFLWXeqktEmKr.', '14 Rue Lecourbe, 75015 Paris'),
 (6, 'eloundou', 'sabrina', 'sabrinaeloundou@ynov.com', '$2b$10$cAveYeUXwH5S5YO6WTgbueeKyc.zwqEJRhAMxAZQshHSG7V9Xi7lC', '');
 COMMIT;
 

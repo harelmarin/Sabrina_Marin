@@ -15,93 +15,76 @@ WETHEFOOT est une boutique en ligne de vente de maillots de football. Ce projet 
 ### Étape 1: Cloner le dépôt
 
 Cloner le dépôt de notre projet WETHEFOOT:
-
-bash
-git clone https://github.com/votre-utilisateur/wethefoot.git
-cd wethefoot
-
+git clone https://github.com/harelmarin/Sabrina_Marin
+et indiquer le dossier dans lequel depot sera cloné.
 
 ### Étape 2: Installer les dépendances
-
-Accédez aux dossiers du serveur API et du backend pour installer les dépendances nécessaires.
-
-Pour le serveur API :
-
-bash
-cd API
-npm install
-
-
-Pour le serveur backend :
-
-bash
-cd ../backend
-npm install
+La liste des installations nécessaires sont situés dans le fichier project.install
 
 
 ### Étape 3: Configuration de l'environnement
 
-Créer un fichier .env à la racine du projet (au même niveau que les dossiers API et backend) et y ajouter les configurations suivantes:
+Créer un fichier .env à la racine du dossier BACKEND  et y ajouter les configurations situées dans le fichier env.example :
 
-
-DB_HOST=localhost
-DB_USER=your_mysql_user
-DB_PASSWORD=your_mysql_password
-DB_NAME=ecommerce
-PORT=3000
 
 
 ### Étape 4: Configuration de la base de données
 
-Assurez-vous d'avoir MySQL installé et configuré sur votre machine. Créez une base de données nommée ecommerce et importez-y les tables nécessaires.
+Assurez-vous d'avoir MySQL installé et configuré sur votre machine.
 
+Créez une base de données  en copiant le script situé dans le fichier ecommerce.sql (voir l'arborecence des fichiers définis plus bas ) et en l'excutant dans votre espace 
+
+![alt text](image.png)
 ### Étape 5: Lancer les serveurs
+Ouvrir 2 terminaux 
 
-Pour le serveur API :
-
-bash
-cd API
+1er terminal Pour le serveur API :
+cd ../backend
+cd api
 node server.js
 
 
-Pour le serveur backend :
-
-bash
+2eme terminal Pour le serveur backend :
 cd ../backend
-node app.js
+npm start 
+
+### Étape 5: Ouvrir la page d'acceuil de la boutique
+Ouvrir un navigateur et accéder à l'adresse : 
+### http://localhost:8000/backend/home
 
 
-## Arborescence des fichiers
-
-Voici une vue d'ensemble de l'arborescence des fichiers :
-
-
-wethefoot/
+## STRUCTURE DES FICHIERS DU DOSSIER BACKEND
+BACKEND/
 ├── API/
+│   ├── controllers/
+│   │   ├── produitController.js
 │   ├── routes/
 │   │   ├── produitRoutes.js
 │   │   ├── viewRoutes.js
-│   ├── server.js
-│   ├── .env
+│   ├── Base_Data/
+│   │   ├── ecommerce.sql
 │   ├── Images_BD/
 │   ├── assets/
 │   ├── views/
-├── backend/
-│   ├── routes/
-│   │   ├── backofficeRoutes.js
-│   ├── app.js
-│   ├── .env
-│   ├── ../FRONTEND/
-│   │   ├── assets/
-│   │   ├── templates/
-└── .env
+│   ├── server.js
+|
+├── contollers/
+├── routes/
+├── assets/
+├── templates/
+├── app.js
+├── package.json
+├── .env
+├── README.md
 
 
 ## Utilisation
 
-- *API Server*: Le serveur API est accessible via le port spécifié dans votre fichier .env (par défaut, 3000). Les endpoints principaux sont /api/produits pour les produits et / pour les vues.
+- *API Server*: Le serveur API est accessible via le port spécifié dans votre fichier .env (par défaut, 3000). 
+Les endpoints principaux sont /api/produits pour les produits et / pour les vues.
+
 - *Backend Server*: Le serveur backend est accessible via le port 8000. Les endpoints principaux sont /backend pour le back-office.
 
 ## Conclusion
 
-Votre projet WETHEFOOT est maintenant configuré et prêt à être utilisé. Vous pouvez étendre les fonctionnalités en ajoutant de nouvelles routes, en améliorant l'interface utilisateur, ou en optimisant la base de données. Bon développement !
+Le projet WETHEFOOT est maintenant configuré et prêt à être utilisé.

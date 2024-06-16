@@ -2,7 +2,6 @@
 const express = require('express');
 const produitBackController = require('../controllers/produitBackController');
 const paymentController = require('../controllers/paymentController');
-const { checkAuth } = require('./middleware');
 const router = express.Router();
 
 router.get('/load',(req, res)=>res.render('load'));//page de chargement 
