@@ -1,7 +1,7 @@
 ### WETHEFOOT - Boutique en ligne de vente de maillots
 
 ## Introduction
-
+👋 Hello,
 WETHEFOOT est une boutique en ligne de vente de maillots de football. Ce projet comporte deux serveurs principaux : un serveur pour l'API et un serveur pour le backend. Ce guide vous expliquera comment configurer et lancer ces deux serveurs.
 
 ## Prérequis
