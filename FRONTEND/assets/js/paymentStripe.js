@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let enteredCode = ''; // code de confirmation entré
 
     form.addEventListener('submit', async function (event) {
+        document.getElementById('card-errors').textContent = ""
         event.preventDefault();
 
         let cart = localStorage.getItem('cart');
