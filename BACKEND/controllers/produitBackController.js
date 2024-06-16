@@ -66,6 +66,7 @@ produitBackController.getIndex = async (req, res) => {
     try {
         const response = await axios.get(`${apiBaseUrl}/`);
         const produits = response.data.lastProducts;
+        
         res.render('home', { produits });
     } catch (error) {
         console.error('Error fetching products:', error);
