@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let enteredCode = ''; // code de confirmation entré
 
     form.addEventListener('submit', async function (event) {
-        document.getElementById('card-errors').textContent = ""
+        document.getElementById('card-errors').textContent = "traitement en cours..."
         event.preventDefault();
 
         let cart = localStorage.getItem('cart');
