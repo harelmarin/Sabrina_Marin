@@ -39,14 +39,14 @@ Créez une base de données  en copiant le script situé dans le fichier ecommer
 Ouvrir 2 terminaux 
 
 1er terminal Pour le serveur API :
-cd ../backend
-cd api
-node server.js
+- cd ../backend
+- cd api
+- node server.js
 
 
 2eme terminal Pour le serveur backend :
-cd ../backend
-npm start 
+- cd ../backend
+- puis npm start 
 
 ### Étape 5: Ouvrir la page d'acceuil de la boutique
 Ouvrir un navigateur et accéder à l'adresse : 
@@ -75,7 +75,6 @@ BACKEND/
 ├── app.js
 ├── package.json
 ├── .env
-├── README.md
 
 
 ## Utilisation
