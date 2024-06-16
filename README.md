@@ -56,7 +56,7 @@ Ouvrir un navigateur et accéder à l'adresse :
 ## STRUCTURE DES FICHIERS DU DOSSIER BACKEND
 BACKEND/
 ├── API/
-│   ├── controllers/
+│   ├── controllers/                                                                               
 │   │   ├── produitController.js
 │   ├── routes/
 │   │   ├── produitRoutes.js
