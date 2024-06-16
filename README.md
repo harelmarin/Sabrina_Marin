@@ -54,28 +54,7 @@ Ouvrir un navigateur et accéder à l'adresse :
 
 
 ## STRUCTURE DES FICHIERS DU DOSSIER BACKEND
-BACKEND/
-├── API/
-│   ├── controllers/
-│   │   ├── produitController.js
-│   ├── routes/
-│   │   ├── produitRoutes.js
-│   │   ├── viewRoutes.js
-│   ├── Base_Data/
-│   │   ├── ecommerce.sql
-│   ├── Images_BD/
-│   ├── assets/
-│   ├── views/
-│   ├── server.js
-|
-├── contollers/
-├── routes/
-├── assets/
-├── templates/
-├── app.js
-├── package.json
-├── .env
-
+![alt text](image-1.png)
 
 ## Utilisation
 
