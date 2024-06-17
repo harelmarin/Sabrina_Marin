@@ -23,6 +23,8 @@ L'ouvir avec l'éditeur de code (VS CODE par exemple)
 Après avoir téléchargé le dossier le décompresser, L'ouvir avec l'éditeur de code (VS CODE par exemple)
 
 ### Étape 2: Installer les dépendances
+- ouvrir le terminal sur vsCode (ctrl + j ).
+-  positionner vous dans le repertoire backend/ ===> cd ../backend
 La liste des installations nécessaires sont situés dans le fichier project.install
 
 
@@ -30,8 +32,6 @@ La liste des installations nécessaires sont situés dans le fichier project.ins
 
 -Créer un fichier .env à la racine du dossier BACKEND 
 
-- ouvrir le terminal sur vsCode (ctrl + j ).
--  positionner vous dans le repertoire backend/ ===> cd ../backend
 - ajouter les configurations situées dans le fichier env.example.
 
 ### Étape 4: Configuration de la base de données
