@@ -31,10 +31,6 @@ const optionBd = {
     database: 'ecommerce'
 };
 
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-console.log('PORT:', process.env.PORT);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));

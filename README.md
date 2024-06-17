@@ -12,11 +12,15 @@ WETHEFOOT est une boutique en ligne de vente de maillots de football. Ce projet 
 
 ## Installation
 
-### Étape 1: Cloner le dépôt
+### Étape 1: Cloner le dépôt || télécharger le dossier compréssé du projet
 
-Cloner le dépôt de notre projet WETHEFOOT:
+- option1: Cloner le dépôt de notre projet WETHEFOOT:
 git clone https://github.com/harelmarin/Sabrina_Marin
 et indiquer le dossier dans lequel depot sera cloné.
+L'ouvir avec l'éditeur de code (VS CODE par exemple)
+
+- option2:  télécharger le dossier compréssé du projet:
+Après avoir téléchargé le dossier le décompresser, L'ouvir avec l'éditeur de code (VS CODE par exemple)
 
 ### Étape 2: Installer les dépendances
 La liste des installations nécessaires sont situés dans le fichier project.install
@@ -24,31 +28,34 @@ La liste des installations nécessaires sont situés dans le fichier project.ins
 
 ### Étape 3: Configuration de l'environnement
 
-Créer un fichier .env à la racine du dossier BACKEND  et y ajouter les configurations situées dans le fichier env.example :
+-Créer un fichier .env à la racine du dossier BACKEND 
 
-
+- ouvrir le terminal sur vsCode (ctrl + j ).
+-  positionner vous dans le repertoire backend/ ===> cd ../backend
+- ajouter les configurations situées dans le fichier env.example.
 
 ### Étape 4: Configuration de la base de données
 
 Assurez-vous d'avoir MySQL installé et configuré sur votre machine.
 
-Créez une base de données  en copiant le script situé dans le fichier ecommerce.sql (voir l'arborecence des fichiers définis plus bas ) et en l'excutant dans votre espace 
+Créez une base de données  en copiant le script situé dans le fichier ecommerce.sql situé dans le répertoire api/ (voir l'arborecence des fichiers définis plus bas ) et en l'excutant dans votre espace.
 
 ![alt text](image.png)
 ### Étape 5: Lancer les serveurs
-Ouvrir 2 terminaux 
+Ouvrir 2 terminaux.
 
 1er terminal Pour le serveur API :
 - cd ../backend
 - cd api
 - node server.js
-
+![alt text](image-2.png)
 
 2eme terminal Pour le serveur backend :
 - cd ../backend
 - puis npm start 
+![alt text](image-3.png)
 
-### Étape 5: Ouvrir la page d'acceuil de la boutique
+### Étape 5: Ouvrir la page d'acceuil de la boutique une fois que tous les serveurs sont lancés
 Ouvrir un navigateur et accéder à l'adresse : 
 ### http://localhost:8000/backend/home
 
